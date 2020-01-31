@@ -1,0 +1,100 @@
+enum Permission {
+  ADMIN
+  CUSTOMER
+}
+
+type User {
+  id: ID! @id
+  email: String! @unique
+  name: String
+  menus: [Menu]
+  permissions: Permission
+  password: String!
+
+  # Refresh Token
+  resetToken: String
+  resetTokenExpiry: Float
+
+  # Menu Ordering
+  table: Table
+  cart: Cart
+  orders: [Order]
+}
+
+type Menu {
+  id: ID! @id
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+  published: Boolean! @default(value: false)
+  title: String!
+  author: User
+  menuItems: [MenuItem]
+}
+
+type MenuItem {
+  id: ID! @id
+  basePrice: String!
+  description: String
+  menu: Menu
+  options: [MenuChoice]
+  name: String!
+  image: String
+  largeImage: String
+  menuHeader: MenuHeader
+}
+
+type MenuChoice {
+  id: ID! @id
+  header: String!
+  subHeader: String
+  selections: [MenuSelection]
+}
+
+type MenuSelection {
+  id: ID! @id
+  name: String!
+  selected: Boolean @default(value: false)
+  valueAdd: String
+  menuChoice: MenuChoice
+}
+
+type MenuHeader {
+  id: ID! @id
+  name: String!
+  subHeader: String
+  menuItems: [MenuItem]
+  menu: Menu
+}
+
+# User Cart
+type Table {
+  id: ID! @id
+  customers: [User] @relation(link: TABLE)
+  carts: [Cart]
+}
+
+type Cart {
+  id: ID! @id
+  orders: [Order]
+  customer: User! @relation(link: TABLE)
+  table: Table
+  total: Int!
+}
+
+type Order {
+  id: ID! @id
+  items: [OrderItem!]!
+  total: Int!
+  customer: User! @relation(link: INLINE)
+  charge: String!
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+}
+
+type OrderItem {
+  id: ID! @id
+  title: String!
+  price: Int!
+  quantity: Int! @default(value: 1)
+  customer: User! @relation(link: INLINE)
+}
