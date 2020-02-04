@@ -1,4 +1,5 @@
 enum Permission {
+  OWNER
   ADMIN
   CUSTOMER
 }
@@ -7,9 +8,10 @@ type User {
   id: ID! @id
   email: String! @unique
   name: String
-  menus: [Menu]
-  permissions: Permission
+  permissions: Permission @default(value: CUSTOMER)
   password: String!
+  organizations: [Organization]
+    @relation(link: TABLE, name: "AssociatedOrganizations")
 
   # Refresh Token
   resetToken: String
@@ -21,14 +23,22 @@ type User {
   orders: [Order]
 }
 
+type Organization {
+  id: ID! @id
+  name: String!
+  users: [User] @relation(link: TABLE, name: "UsersConnected")
+  menus: [Menu] @relation(link: TABLE, name: "MenusConnected")
+  owner: User! @relation(link: TABLE, name: "OrganizationOwner")
+}
+
 type Menu {
   id: ID! @id
   createdAt: DateTime! @createdAt
   updatedAt: DateTime! @updatedAt
   published: Boolean! @default(value: false)
   title: String!
-  author: User
   menuItems: [MenuItem]
+  organization: Organization! @relation(link: INLINE, name: "OrganizationMenu")
 }
 
 type MenuItem {

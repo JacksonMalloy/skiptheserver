@@ -336,15 +336,15 @@ export interface NexusGenInputs {
     id?: string | null; // ID
   }
   MenuCreateInput: { // input type
-    author?: NexusGenInputs['UserCreateOneWithoutMenusInput'] | null; // UserCreateOneWithoutMenusInput
     id?: string | null; // ID
     menuItems?: NexusGenInputs['MenuItemCreateManyWithoutMenuInput'] | null; // MenuItemCreateManyWithoutMenuInput
+    organization: NexusGenInputs['OrganizationCreateOneWithoutMenusInput']; // OrganizationCreateOneWithoutMenusInput!
     published?: boolean | null; // Boolean
     title: string; // String!
   }
-  MenuCreateManyWithoutAuthorInput: { // input type
+  MenuCreateManyWithoutOrganizationInput: { // input type
     connect?: NexusGenInputs['MenuWhereUniqueInput'][] | null; // [MenuWhereUniqueInput!]
-    create?: NexusGenInputs['MenuCreateWithoutAuthorInput'][] | null; // [MenuCreateWithoutAuthorInput!]
+    create?: NexusGenInputs['MenuCreateWithoutOrganizationInput'][] | null; // [MenuCreateWithoutOrganizationInput!]
   }
   MenuCreateOneInput: { // input type
     connect?: NexusGenInputs['MenuWhereUniqueInput'] | null; // MenuWhereUniqueInput
@@ -354,15 +354,15 @@ export interface NexusGenInputs {
     connect?: NexusGenInputs['MenuWhereUniqueInput'] | null; // MenuWhereUniqueInput
     create?: NexusGenInputs['MenuCreateWithoutMenuItemsInput'] | null; // MenuCreateWithoutMenuItemsInput
   }
-  MenuCreateWithoutAuthorInput: { // input type
+  MenuCreateWithoutMenuItemsInput: { // input type
     id?: string | null; // ID
-    menuItems?: NexusGenInputs['MenuItemCreateManyWithoutMenuInput'] | null; // MenuItemCreateManyWithoutMenuInput
+    organization: NexusGenInputs['OrganizationCreateOneWithoutMenusInput']; // OrganizationCreateOneWithoutMenusInput!
     published?: boolean | null; // Boolean
     title: string; // String!
   }
-  MenuCreateWithoutMenuItemsInput: { // input type
-    author?: NexusGenInputs['UserCreateOneWithoutMenusInput'] | null; // UserCreateOneWithoutMenusInput
+  MenuCreateWithoutOrganizationInput: { // input type
     id?: string | null; // ID
+    menuItems?: NexusGenInputs['MenuItemCreateManyWithoutMenuInput'] | null; // MenuItemCreateManyWithoutMenuInput
     published?: boolean | null; // Boolean
     title: string; // String!
   }
@@ -991,14 +991,14 @@ export interface NexusGenInputs {
     id?: string | null; // ID
   }
   MenuUpdateDataInput: { // input type
-    author?: NexusGenInputs['UserUpdateOneWithoutMenusInput'] | null; // UserUpdateOneWithoutMenusInput
     menuItems?: NexusGenInputs['MenuItemUpdateManyWithoutMenuInput'] | null; // MenuItemUpdateManyWithoutMenuInput
+    organization?: NexusGenInputs['OrganizationUpdateOneRequiredWithoutMenusInput'] | null; // OrganizationUpdateOneRequiredWithoutMenusInput
     published?: boolean | null; // Boolean
     title?: string | null; // String
   }
   MenuUpdateInput: { // input type
-    author?: NexusGenInputs['UserUpdateOneWithoutMenusInput'] | null; // UserUpdateOneWithoutMenusInput
     menuItems?: NexusGenInputs['MenuItemUpdateManyWithoutMenuInput'] | null; // MenuItemUpdateManyWithoutMenuInput
+    organization?: NexusGenInputs['OrganizationUpdateOneRequiredWithoutMenusInput'] | null; // OrganizationUpdateOneRequiredWithoutMenusInput
     published?: boolean | null; // Boolean
     title?: string | null; // String
   }
@@ -1014,16 +1014,16 @@ export interface NexusGenInputs {
     data: NexusGenInputs['MenuUpdateManyDataInput']; // MenuUpdateManyDataInput!
     where: NexusGenInputs['MenuScalarWhereInput']; // MenuScalarWhereInput!
   }
-  MenuUpdateManyWithoutAuthorInput: { // input type
+  MenuUpdateManyWithoutOrganizationInput: { // input type
     connect?: NexusGenInputs['MenuWhereUniqueInput'][] | null; // [MenuWhereUniqueInput!]
-    create?: NexusGenInputs['MenuCreateWithoutAuthorInput'][] | null; // [MenuCreateWithoutAuthorInput!]
+    create?: NexusGenInputs['MenuCreateWithoutOrganizationInput'][] | null; // [MenuCreateWithoutOrganizationInput!]
     delete?: NexusGenInputs['MenuWhereUniqueInput'][] | null; // [MenuWhereUniqueInput!]
     deleteMany?: NexusGenInputs['MenuScalarWhereInput'][] | null; // [MenuScalarWhereInput!]
     disconnect?: NexusGenInputs['MenuWhereUniqueInput'][] | null; // [MenuWhereUniqueInput!]
     set?: NexusGenInputs['MenuWhereUniqueInput'][] | null; // [MenuWhereUniqueInput!]
-    update?: NexusGenInputs['MenuUpdateWithWhereUniqueWithoutAuthorInput'][] | null; // [MenuUpdateWithWhereUniqueWithoutAuthorInput!]
+    update?: NexusGenInputs['MenuUpdateWithWhereUniqueWithoutOrganizationInput'][] | null; // [MenuUpdateWithWhereUniqueWithoutOrganizationInput!]
     updateMany?: NexusGenInputs['MenuUpdateManyWithWhereNestedInput'][] | null; // [MenuUpdateManyWithWhereNestedInput!]
-    upsert?: NexusGenInputs['MenuUpsertWithWhereUniqueWithoutAuthorInput'][] | null; // [MenuUpsertWithWhereUniqueWithoutAuthorInput!]
+    upsert?: NexusGenInputs['MenuUpsertWithWhereUniqueWithoutOrganizationInput'][] | null; // [MenuUpsertWithWhereUniqueWithoutOrganizationInput!]
   }
   MenuUpdateOneInput: { // input type
     connect?: NexusGenInputs['MenuWhereUniqueInput'] | null; // MenuWhereUniqueInput
@@ -1041,17 +1041,17 @@ export interface NexusGenInputs {
     update?: NexusGenInputs['MenuUpdateWithoutMenuItemsDataInput'] | null; // MenuUpdateWithoutMenuItemsDataInput
     upsert?: NexusGenInputs['MenuUpsertWithoutMenuItemsInput'] | null; // MenuUpsertWithoutMenuItemsInput
   }
-  MenuUpdateWithWhereUniqueWithoutAuthorInput: { // input type
-    data: NexusGenInputs['MenuUpdateWithoutAuthorDataInput']; // MenuUpdateWithoutAuthorDataInput!
+  MenuUpdateWithWhereUniqueWithoutOrganizationInput: { // input type
+    data: NexusGenInputs['MenuUpdateWithoutOrganizationDataInput']; // MenuUpdateWithoutOrganizationDataInput!
     where: NexusGenInputs['MenuWhereUniqueInput']; // MenuWhereUniqueInput!
   }
-  MenuUpdateWithoutAuthorDataInput: { // input type
-    menuItems?: NexusGenInputs['MenuItemUpdateManyWithoutMenuInput'] | null; // MenuItemUpdateManyWithoutMenuInput
+  MenuUpdateWithoutMenuItemsDataInput: { // input type
+    organization?: NexusGenInputs['OrganizationUpdateOneRequiredWithoutMenusInput'] | null; // OrganizationUpdateOneRequiredWithoutMenusInput
     published?: boolean | null; // Boolean
     title?: string | null; // String
   }
-  MenuUpdateWithoutMenuItemsDataInput: { // input type
-    author?: NexusGenInputs['UserUpdateOneWithoutMenusInput'] | null; // UserUpdateOneWithoutMenusInput
+  MenuUpdateWithoutOrganizationDataInput: { // input type
+    menuItems?: NexusGenInputs['MenuItemUpdateManyWithoutMenuInput'] | null; // MenuItemUpdateManyWithoutMenuInput
     published?: boolean | null; // Boolean
     title?: string | null; // String
   }
@@ -1059,9 +1059,9 @@ export interface NexusGenInputs {
     create: NexusGenInputs['MenuCreateInput']; // MenuCreateInput!
     update: NexusGenInputs['MenuUpdateDataInput']; // MenuUpdateDataInput!
   }
-  MenuUpsertWithWhereUniqueWithoutAuthorInput: { // input type
-    create: NexusGenInputs['MenuCreateWithoutAuthorInput']; // MenuCreateWithoutAuthorInput!
-    update: NexusGenInputs['MenuUpdateWithoutAuthorDataInput']; // MenuUpdateWithoutAuthorDataInput!
+  MenuUpsertWithWhereUniqueWithoutOrganizationInput: { // input type
+    create: NexusGenInputs['MenuCreateWithoutOrganizationInput']; // MenuCreateWithoutOrganizationInput!
+    update: NexusGenInputs['MenuUpdateWithoutOrganizationDataInput']; // MenuUpdateWithoutOrganizationDataInput!
     where: NexusGenInputs['MenuWhereUniqueInput']; // MenuWhereUniqueInput!
   }
   MenuUpsertWithoutMenuItemsInput: { // input type
@@ -1070,7 +1070,6 @@ export interface NexusGenInputs {
   }
   MenuWhereInput: { // input type
     AND?: NexusGenInputs['MenuWhereInput'][] | null; // [MenuWhereInput!]
-    author?: NexusGenInputs['UserWhereInput'] | null; // UserWhereInput
     createdAt?: any | null; // DateTime
     createdAt_gt?: any | null; // DateTime
     createdAt_gte?: any | null; // DateTime
@@ -1098,6 +1097,7 @@ export interface NexusGenInputs {
     menuItems_some?: NexusGenInputs['MenuItemWhereInput'] | null; // MenuItemWhereInput
     NOT?: NexusGenInputs['MenuWhereInput'][] | null; // [MenuWhereInput!]
     OR?: NexusGenInputs['MenuWhereInput'][] | null; // [MenuWhereInput!]
+    organization?: NexusGenInputs['OrganizationWhereInput'] | null; // OrganizationWhereInput
     published?: boolean | null; // Boolean
     published_not?: boolean | null; // Boolean
     title?: string | null; // String
@@ -1496,6 +1496,160 @@ export interface NexusGenInputs {
   OrderWhereUniqueInput: { // input type
     id?: string | null; // ID
   }
+  OrganizationCreateInput: { // input type
+    id?: string | null; // ID
+    menus?: NexusGenInputs['MenuCreateManyWithoutOrganizationInput'] | null; // MenuCreateManyWithoutOrganizationInput
+    name: string; // String!
+    owner: NexusGenInputs['UserCreateOneInput']; // UserCreateOneInput!
+    users?: NexusGenInputs['UserCreateManyInput'] | null; // UserCreateManyInput
+  }
+  OrganizationCreateManyInput: { // input type
+    connect?: NexusGenInputs['OrganizationWhereUniqueInput'][] | null; // [OrganizationWhereUniqueInput!]
+    create?: NexusGenInputs['OrganizationCreateInput'][] | null; // [OrganizationCreateInput!]
+  }
+  OrganizationCreateOneWithoutMenusInput: { // input type
+    connect?: NexusGenInputs['OrganizationWhereUniqueInput'] | null; // OrganizationWhereUniqueInput
+    create?: NexusGenInputs['OrganizationCreateWithoutMenusInput'] | null; // OrganizationCreateWithoutMenusInput
+  }
+  OrganizationCreateWithoutMenusInput: { // input type
+    id?: string | null; // ID
+    name: string; // String!
+    owner: NexusGenInputs['UserCreateOneInput']; // UserCreateOneInput!
+    users?: NexusGenInputs['UserCreateManyInput'] | null; // UserCreateManyInput
+  }
+  OrganizationScalarWhereInput: { // input type
+    AND?: NexusGenInputs['OrganizationScalarWhereInput'][] | null; // [OrganizationScalarWhereInput!]
+    id?: string | null; // ID
+    id_contains?: string | null; // ID
+    id_ends_with?: string | null; // ID
+    id_gt?: string | null; // ID
+    id_gte?: string | null; // ID
+    id_in?: string[] | null; // [ID!]
+    id_lt?: string | null; // ID
+    id_lte?: string | null; // ID
+    id_not?: string | null; // ID
+    id_not_contains?: string | null; // ID
+    id_not_ends_with?: string | null; // ID
+    id_not_in?: string[] | null; // [ID!]
+    id_not_starts_with?: string | null; // ID
+    id_starts_with?: string | null; // ID
+    name?: string | null; // String
+    name_contains?: string | null; // String
+    name_ends_with?: string | null; // String
+    name_gt?: string | null; // String
+    name_gte?: string | null; // String
+    name_in?: string[] | null; // [String!]
+    name_lt?: string | null; // String
+    name_lte?: string | null; // String
+    name_not?: string | null; // String
+    name_not_contains?: string | null; // String
+    name_not_ends_with?: string | null; // String
+    name_not_in?: string[] | null; // [String!]
+    name_not_starts_with?: string | null; // String
+    name_starts_with?: string | null; // String
+    NOT?: NexusGenInputs['OrganizationScalarWhereInput'][] | null; // [OrganizationScalarWhereInput!]
+    OR?: NexusGenInputs['OrganizationScalarWhereInput'][] | null; // [OrganizationScalarWhereInput!]
+  }
+  OrganizationUpdateDataInput: { // input type
+    menus?: NexusGenInputs['MenuUpdateManyWithoutOrganizationInput'] | null; // MenuUpdateManyWithoutOrganizationInput
+    name?: string | null; // String
+    owner?: NexusGenInputs['UserUpdateOneRequiredInput'] | null; // UserUpdateOneRequiredInput
+    users?: NexusGenInputs['UserUpdateManyInput'] | null; // UserUpdateManyInput
+  }
+  OrganizationUpdateInput: { // input type
+    menus?: NexusGenInputs['MenuUpdateManyWithoutOrganizationInput'] | null; // MenuUpdateManyWithoutOrganizationInput
+    name?: string | null; // String
+    owner?: NexusGenInputs['UserUpdateOneRequiredInput'] | null; // UserUpdateOneRequiredInput
+    users?: NexusGenInputs['UserUpdateManyInput'] | null; // UserUpdateManyInput
+  }
+  OrganizationUpdateManyDataInput: { // input type
+    name?: string | null; // String
+  }
+  OrganizationUpdateManyInput: { // input type
+    connect?: NexusGenInputs['OrganizationWhereUniqueInput'][] | null; // [OrganizationWhereUniqueInput!]
+    create?: NexusGenInputs['OrganizationCreateInput'][] | null; // [OrganizationCreateInput!]
+    delete?: NexusGenInputs['OrganizationWhereUniqueInput'][] | null; // [OrganizationWhereUniqueInput!]
+    deleteMany?: NexusGenInputs['OrganizationScalarWhereInput'][] | null; // [OrganizationScalarWhereInput!]
+    disconnect?: NexusGenInputs['OrganizationWhereUniqueInput'][] | null; // [OrganizationWhereUniqueInput!]
+    set?: NexusGenInputs['OrganizationWhereUniqueInput'][] | null; // [OrganizationWhereUniqueInput!]
+    update?: NexusGenInputs['OrganizationUpdateWithWhereUniqueNestedInput'][] | null; // [OrganizationUpdateWithWhereUniqueNestedInput!]
+    updateMany?: NexusGenInputs['OrganizationUpdateManyWithWhereNestedInput'][] | null; // [OrganizationUpdateManyWithWhereNestedInput!]
+    upsert?: NexusGenInputs['OrganizationUpsertWithWhereUniqueNestedInput'][] | null; // [OrganizationUpsertWithWhereUniqueNestedInput!]
+  }
+  OrganizationUpdateManyMutationInput: { // input type
+    name?: string | null; // String
+  }
+  OrganizationUpdateManyWithWhereNestedInput: { // input type
+    data: NexusGenInputs['OrganizationUpdateManyDataInput']; // OrganizationUpdateManyDataInput!
+    where: NexusGenInputs['OrganizationScalarWhereInput']; // OrganizationScalarWhereInput!
+  }
+  OrganizationUpdateOneRequiredWithoutMenusInput: { // input type
+    connect?: NexusGenInputs['OrganizationWhereUniqueInput'] | null; // OrganizationWhereUniqueInput
+    create?: NexusGenInputs['OrganizationCreateWithoutMenusInput'] | null; // OrganizationCreateWithoutMenusInput
+    update?: NexusGenInputs['OrganizationUpdateWithoutMenusDataInput'] | null; // OrganizationUpdateWithoutMenusDataInput
+    upsert?: NexusGenInputs['OrganizationUpsertWithoutMenusInput'] | null; // OrganizationUpsertWithoutMenusInput
+  }
+  OrganizationUpdateWithWhereUniqueNestedInput: { // input type
+    data: NexusGenInputs['OrganizationUpdateDataInput']; // OrganizationUpdateDataInput!
+    where: NexusGenInputs['OrganizationWhereUniqueInput']; // OrganizationWhereUniqueInput!
+  }
+  OrganizationUpdateWithoutMenusDataInput: { // input type
+    name?: string | null; // String
+    owner?: NexusGenInputs['UserUpdateOneRequiredInput'] | null; // UserUpdateOneRequiredInput
+    users?: NexusGenInputs['UserUpdateManyInput'] | null; // UserUpdateManyInput
+  }
+  OrganizationUpsertWithWhereUniqueNestedInput: { // input type
+    create: NexusGenInputs['OrganizationCreateInput']; // OrganizationCreateInput!
+    update: NexusGenInputs['OrganizationUpdateDataInput']; // OrganizationUpdateDataInput!
+    where: NexusGenInputs['OrganizationWhereUniqueInput']; // OrganizationWhereUniqueInput!
+  }
+  OrganizationUpsertWithoutMenusInput: { // input type
+    create: NexusGenInputs['OrganizationCreateWithoutMenusInput']; // OrganizationCreateWithoutMenusInput!
+    update: NexusGenInputs['OrganizationUpdateWithoutMenusDataInput']; // OrganizationUpdateWithoutMenusDataInput!
+  }
+  OrganizationWhereInput: { // input type
+    AND?: NexusGenInputs['OrganizationWhereInput'][] | null; // [OrganizationWhereInput!]
+    id?: string | null; // ID
+    id_contains?: string | null; // ID
+    id_ends_with?: string | null; // ID
+    id_gt?: string | null; // ID
+    id_gte?: string | null; // ID
+    id_in?: string[] | null; // [ID!]
+    id_lt?: string | null; // ID
+    id_lte?: string | null; // ID
+    id_not?: string | null; // ID
+    id_not_contains?: string | null; // ID
+    id_not_ends_with?: string | null; // ID
+    id_not_in?: string[] | null; // [ID!]
+    id_not_starts_with?: string | null; // ID
+    id_starts_with?: string | null; // ID
+    menus_every?: NexusGenInputs['MenuWhereInput'] | null; // MenuWhereInput
+    menus_none?: NexusGenInputs['MenuWhereInput'] | null; // MenuWhereInput
+    menus_some?: NexusGenInputs['MenuWhereInput'] | null; // MenuWhereInput
+    name?: string | null; // String
+    name_contains?: string | null; // String
+    name_ends_with?: string | null; // String
+    name_gt?: string | null; // String
+    name_gte?: string | null; // String
+    name_in?: string[] | null; // [String!]
+    name_lt?: string | null; // String
+    name_lte?: string | null; // String
+    name_not?: string | null; // String
+    name_not_contains?: string | null; // String
+    name_not_ends_with?: string | null; // String
+    name_not_in?: string[] | null; // [String!]
+    name_not_starts_with?: string | null; // String
+    name_starts_with?: string | null; // String
+    NOT?: NexusGenInputs['OrganizationWhereInput'][] | null; // [OrganizationWhereInput!]
+    OR?: NexusGenInputs['OrganizationWhereInput'][] | null; // [OrganizationWhereInput!]
+    owner?: NexusGenInputs['UserWhereInput'] | null; // UserWhereInput
+    users_every?: NexusGenInputs['UserWhereInput'] | null; // UserWhereInput
+    users_none?: NexusGenInputs['UserWhereInput'] | null; // UserWhereInput
+    users_some?: NexusGenInputs['UserWhereInput'] | null; // UserWhereInput
+  }
+  OrganizationWhereUniqueInput: { // input type
+    id?: string | null; // ID
+  }
   TableCreateInput: { // input type
     carts?: NexusGenInputs['CartCreateManyWithoutTableInput'] | null; // CartCreateManyWithoutTableInput
     customers?: NexusGenInputs['UserCreateManyWithoutTableInput'] | null; // UserCreateManyWithoutTableInput
@@ -1583,14 +1737,18 @@ export interface NexusGenInputs {
     cart?: NexusGenInputs['CartCreateOneWithoutCustomerInput'] | null; // CartCreateOneWithoutCustomerInput
     email: string; // String!
     id?: string | null; // ID
-    menus?: NexusGenInputs['MenuCreateManyWithoutAuthorInput'] | null; // MenuCreateManyWithoutAuthorInput
     name?: string | null; // String
     orders?: NexusGenInputs['OrderCreateManyWithoutCustomerInput'] | null; // OrderCreateManyWithoutCustomerInput
+    organizations?: NexusGenInputs['OrganizationCreateManyInput'] | null; // OrganizationCreateManyInput
     password: string; // String!
     permissions?: NexusGenEnums['Permission'] | null; // Permission
     resetToken?: string | null; // String
     resetTokenExpiry?: number | null; // Float
     table?: NexusGenInputs['TableCreateOneWithoutCustomersInput'] | null; // TableCreateOneWithoutCustomersInput
+  }
+  UserCreateManyInput: { // input type
+    connect?: NexusGenInputs['UserWhereUniqueInput'][] | null; // [UserWhereUniqueInput!]
+    create?: NexusGenInputs['UserCreateInput'][] | null; // [UserCreateInput!]
   }
   UserCreateManyWithoutTableInput: { // input type
     connect?: NexusGenInputs['UserWhereUniqueInput'][] | null; // [UserWhereUniqueInput!]
@@ -1604,10 +1762,6 @@ export interface NexusGenInputs {
     connect?: NexusGenInputs['UserWhereUniqueInput'] | null; // UserWhereUniqueInput
     create?: NexusGenInputs['UserCreateWithoutCartInput'] | null; // UserCreateWithoutCartInput
   }
-  UserCreateOneWithoutMenusInput: { // input type
-    connect?: NexusGenInputs['UserWhereUniqueInput'] | null; // UserWhereUniqueInput
-    create?: NexusGenInputs['UserCreateWithoutMenusInput'] | null; // UserCreateWithoutMenusInput
-  }
   UserCreateOneWithoutOrdersInput: { // input type
     connect?: NexusGenInputs['UserWhereUniqueInput'] | null; // UserWhereUniqueInput
     create?: NexusGenInputs['UserCreateWithoutOrdersInput'] | null; // UserCreateWithoutOrdersInput
@@ -1615,21 +1769,9 @@ export interface NexusGenInputs {
   UserCreateWithoutCartInput: { // input type
     email: string; // String!
     id?: string | null; // ID
-    menus?: NexusGenInputs['MenuCreateManyWithoutAuthorInput'] | null; // MenuCreateManyWithoutAuthorInput
     name?: string | null; // String
     orders?: NexusGenInputs['OrderCreateManyWithoutCustomerInput'] | null; // OrderCreateManyWithoutCustomerInput
-    password: string; // String!
-    permissions?: NexusGenEnums['Permission'] | null; // Permission
-    resetToken?: string | null; // String
-    resetTokenExpiry?: number | null; // Float
-    table?: NexusGenInputs['TableCreateOneWithoutCustomersInput'] | null; // TableCreateOneWithoutCustomersInput
-  }
-  UserCreateWithoutMenusInput: { // input type
-    cart?: NexusGenInputs['CartCreateOneWithoutCustomerInput'] | null; // CartCreateOneWithoutCustomerInput
-    email: string; // String!
-    id?: string | null; // ID
-    name?: string | null; // String
-    orders?: NexusGenInputs['OrderCreateManyWithoutCustomerInput'] | null; // OrderCreateManyWithoutCustomerInput
+    organizations?: NexusGenInputs['OrganizationCreateManyInput'] | null; // OrganizationCreateManyInput
     password: string; // String!
     permissions?: NexusGenEnums['Permission'] | null; // Permission
     resetToken?: string | null; // String
@@ -1640,8 +1782,8 @@ export interface NexusGenInputs {
     cart?: NexusGenInputs['CartCreateOneWithoutCustomerInput'] | null; // CartCreateOneWithoutCustomerInput
     email: string; // String!
     id?: string | null; // ID
-    menus?: NexusGenInputs['MenuCreateManyWithoutAuthorInput'] | null; // MenuCreateManyWithoutAuthorInput
     name?: string | null; // String
+    organizations?: NexusGenInputs['OrganizationCreateManyInput'] | null; // OrganizationCreateManyInput
     password: string; // String!
     permissions?: NexusGenEnums['Permission'] | null; // Permission
     resetToken?: string | null; // String
@@ -1652,9 +1794,9 @@ export interface NexusGenInputs {
     cart?: NexusGenInputs['CartCreateOneWithoutCustomerInput'] | null; // CartCreateOneWithoutCustomerInput
     email: string; // String!
     id?: string | null; // ID
-    menus?: NexusGenInputs['MenuCreateManyWithoutAuthorInput'] | null; // MenuCreateManyWithoutAuthorInput
     name?: string | null; // String
     orders?: NexusGenInputs['OrderCreateManyWithoutCustomerInput'] | null; // OrderCreateManyWithoutCustomerInput
+    organizations?: NexusGenInputs['OrganizationCreateManyInput'] | null; // OrganizationCreateManyInput
     password: string; // String!
     permissions?: NexusGenEnums['Permission'] | null; // Permission
     resetToken?: string | null; // String
@@ -1750,9 +1892,9 @@ export interface NexusGenInputs {
   UserUpdateDataInput: { // input type
     cart?: NexusGenInputs['CartUpdateOneWithoutCustomerInput'] | null; // CartUpdateOneWithoutCustomerInput
     email?: string | null; // String
-    menus?: NexusGenInputs['MenuUpdateManyWithoutAuthorInput'] | null; // MenuUpdateManyWithoutAuthorInput
     name?: string | null; // String
     orders?: NexusGenInputs['OrderUpdateManyWithoutCustomerInput'] | null; // OrderUpdateManyWithoutCustomerInput
+    organizations?: NexusGenInputs['OrganizationUpdateManyInput'] | null; // OrganizationUpdateManyInput
     password?: string | null; // String
     permissions?: NexusGenEnums['Permission'] | null; // Permission
     resetToken?: string | null; // String
@@ -1762,9 +1904,9 @@ export interface NexusGenInputs {
   UserUpdateInput: { // input type
     cart?: NexusGenInputs['CartUpdateOneWithoutCustomerInput'] | null; // CartUpdateOneWithoutCustomerInput
     email?: string | null; // String
-    menus?: NexusGenInputs['MenuUpdateManyWithoutAuthorInput'] | null; // MenuUpdateManyWithoutAuthorInput
     name?: string | null; // String
     orders?: NexusGenInputs['OrderUpdateManyWithoutCustomerInput'] | null; // OrderUpdateManyWithoutCustomerInput
+    organizations?: NexusGenInputs['OrganizationUpdateManyInput'] | null; // OrganizationUpdateManyInput
     password?: string | null; // String
     permissions?: NexusGenEnums['Permission'] | null; // Permission
     resetToken?: string | null; // String
@@ -1778,6 +1920,17 @@ export interface NexusGenInputs {
     permissions?: NexusGenEnums['Permission'] | null; // Permission
     resetToken?: string | null; // String
     resetTokenExpiry?: number | null; // Float
+  }
+  UserUpdateManyInput: { // input type
+    connect?: NexusGenInputs['UserWhereUniqueInput'][] | null; // [UserWhereUniqueInput!]
+    create?: NexusGenInputs['UserCreateInput'][] | null; // [UserCreateInput!]
+    delete?: NexusGenInputs['UserWhereUniqueInput'][] | null; // [UserWhereUniqueInput!]
+    deleteMany?: NexusGenInputs['UserScalarWhereInput'][] | null; // [UserScalarWhereInput!]
+    disconnect?: NexusGenInputs['UserWhereUniqueInput'][] | null; // [UserWhereUniqueInput!]
+    set?: NexusGenInputs['UserWhereUniqueInput'][] | null; // [UserWhereUniqueInput!]
+    update?: NexusGenInputs['UserUpdateWithWhereUniqueNestedInput'][] | null; // [UserUpdateWithWhereUniqueNestedInput!]
+    updateMany?: NexusGenInputs['UserUpdateManyWithWhereNestedInput'][] | null; // [UserUpdateManyWithWhereNestedInput!]
+    upsert?: NexusGenInputs['UserUpsertWithWhereUniqueNestedInput'][] | null; // [UserUpsertWithWhereUniqueNestedInput!]
   }
   UserUpdateManyMutationInput: { // input type
     email?: string | null; // String
@@ -1820,13 +1973,9 @@ export interface NexusGenInputs {
     update?: NexusGenInputs['UserUpdateWithoutOrdersDataInput'] | null; // UserUpdateWithoutOrdersDataInput
     upsert?: NexusGenInputs['UserUpsertWithoutOrdersInput'] | null; // UserUpsertWithoutOrdersInput
   }
-  UserUpdateOneWithoutMenusInput: { // input type
-    connect?: NexusGenInputs['UserWhereUniqueInput'] | null; // UserWhereUniqueInput
-    create?: NexusGenInputs['UserCreateWithoutMenusInput'] | null; // UserCreateWithoutMenusInput
-    delete?: boolean | null; // Boolean
-    disconnect?: boolean | null; // Boolean
-    update?: NexusGenInputs['UserUpdateWithoutMenusDataInput'] | null; // UserUpdateWithoutMenusDataInput
-    upsert?: NexusGenInputs['UserUpsertWithoutMenusInput'] | null; // UserUpsertWithoutMenusInput
+  UserUpdateWithWhereUniqueNestedInput: { // input type
+    data: NexusGenInputs['UserUpdateDataInput']; // UserUpdateDataInput!
+    where: NexusGenInputs['UserWhereUniqueInput']; // UserWhereUniqueInput!
   }
   UserUpdateWithWhereUniqueWithoutTableInput: { // input type
     data: NexusGenInputs['UserUpdateWithoutTableDataInput']; // UserUpdateWithoutTableDataInput!
@@ -1834,20 +1983,9 @@ export interface NexusGenInputs {
   }
   UserUpdateWithoutCartDataInput: { // input type
     email?: string | null; // String
-    menus?: NexusGenInputs['MenuUpdateManyWithoutAuthorInput'] | null; // MenuUpdateManyWithoutAuthorInput
     name?: string | null; // String
     orders?: NexusGenInputs['OrderUpdateManyWithoutCustomerInput'] | null; // OrderUpdateManyWithoutCustomerInput
-    password?: string | null; // String
-    permissions?: NexusGenEnums['Permission'] | null; // Permission
-    resetToken?: string | null; // String
-    resetTokenExpiry?: number | null; // Float
-    table?: NexusGenInputs['TableUpdateOneWithoutCustomersInput'] | null; // TableUpdateOneWithoutCustomersInput
-  }
-  UserUpdateWithoutMenusDataInput: { // input type
-    cart?: NexusGenInputs['CartUpdateOneWithoutCustomerInput'] | null; // CartUpdateOneWithoutCustomerInput
-    email?: string | null; // String
-    name?: string | null; // String
-    orders?: NexusGenInputs['OrderUpdateManyWithoutCustomerInput'] | null; // OrderUpdateManyWithoutCustomerInput
+    organizations?: NexusGenInputs['OrganizationUpdateManyInput'] | null; // OrganizationUpdateManyInput
     password?: string | null; // String
     permissions?: NexusGenEnums['Permission'] | null; // Permission
     resetToken?: string | null; // String
@@ -1857,8 +1995,8 @@ export interface NexusGenInputs {
   UserUpdateWithoutOrdersDataInput: { // input type
     cart?: NexusGenInputs['CartUpdateOneWithoutCustomerInput'] | null; // CartUpdateOneWithoutCustomerInput
     email?: string | null; // String
-    menus?: NexusGenInputs['MenuUpdateManyWithoutAuthorInput'] | null; // MenuUpdateManyWithoutAuthorInput
     name?: string | null; // String
+    organizations?: NexusGenInputs['OrganizationUpdateManyInput'] | null; // OrganizationUpdateManyInput
     password?: string | null; // String
     permissions?: NexusGenEnums['Permission'] | null; // Permission
     resetToken?: string | null; // String
@@ -1868,9 +2006,9 @@ export interface NexusGenInputs {
   UserUpdateWithoutTableDataInput: { // input type
     cart?: NexusGenInputs['CartUpdateOneWithoutCustomerInput'] | null; // CartUpdateOneWithoutCustomerInput
     email?: string | null; // String
-    menus?: NexusGenInputs['MenuUpdateManyWithoutAuthorInput'] | null; // MenuUpdateManyWithoutAuthorInput
     name?: string | null; // String
     orders?: NexusGenInputs['OrderUpdateManyWithoutCustomerInput'] | null; // OrderUpdateManyWithoutCustomerInput
+    organizations?: NexusGenInputs['OrganizationUpdateManyInput'] | null; // OrganizationUpdateManyInput
     password?: string | null; // String
     permissions?: NexusGenEnums['Permission'] | null; // Permission
     resetToken?: string | null; // String
@@ -1880,6 +2018,11 @@ export interface NexusGenInputs {
     create: NexusGenInputs['UserCreateInput']; // UserCreateInput!
     update: NexusGenInputs['UserUpdateDataInput']; // UserUpdateDataInput!
   }
+  UserUpsertWithWhereUniqueNestedInput: { // input type
+    create: NexusGenInputs['UserCreateInput']; // UserCreateInput!
+    update: NexusGenInputs['UserUpdateDataInput']; // UserUpdateDataInput!
+    where: NexusGenInputs['UserWhereUniqueInput']; // UserWhereUniqueInput!
+  }
   UserUpsertWithWhereUniqueWithoutTableInput: { // input type
     create: NexusGenInputs['UserCreateWithoutTableInput']; // UserCreateWithoutTableInput!
     update: NexusGenInputs['UserUpdateWithoutTableDataInput']; // UserUpdateWithoutTableDataInput!
@@ -1888,10 +2031,6 @@ export interface NexusGenInputs {
   UserUpsertWithoutCartInput: { // input type
     create: NexusGenInputs['UserCreateWithoutCartInput']; // UserCreateWithoutCartInput!
     update: NexusGenInputs['UserUpdateWithoutCartDataInput']; // UserUpdateWithoutCartDataInput!
-  }
-  UserUpsertWithoutMenusInput: { // input type
-    create: NexusGenInputs['UserCreateWithoutMenusInput']; // UserCreateWithoutMenusInput!
-    update: NexusGenInputs['UserUpdateWithoutMenusDataInput']; // UserUpdateWithoutMenusDataInput!
   }
   UserUpsertWithoutOrdersInput: { // input type
     create: NexusGenInputs['UserCreateWithoutOrdersInput']; // UserCreateWithoutOrdersInput!
@@ -1928,9 +2067,6 @@ export interface NexusGenInputs {
     id_not_in?: string[] | null; // [ID!]
     id_not_starts_with?: string | null; // ID
     id_starts_with?: string | null; // ID
-    menus_every?: NexusGenInputs['MenuWhereInput'] | null; // MenuWhereInput
-    menus_none?: NexusGenInputs['MenuWhereInput'] | null; // MenuWhereInput
-    menus_some?: NexusGenInputs['MenuWhereInput'] | null; // MenuWhereInput
     name?: string | null; // String
     name_contains?: string | null; // String
     name_ends_with?: string | null; // String
@@ -1950,6 +2086,9 @@ export interface NexusGenInputs {
     orders_every?: NexusGenInputs['OrderWhereInput'] | null; // OrderWhereInput
     orders_none?: NexusGenInputs['OrderWhereInput'] | null; // OrderWhereInput
     orders_some?: NexusGenInputs['OrderWhereInput'] | null; // OrderWhereInput
+    organizations_every?: NexusGenInputs['OrganizationWhereInput'] | null; // OrganizationWhereInput
+    organizations_none?: NexusGenInputs['OrganizationWhereInput'] | null; // OrganizationWhereInput
+    organizations_some?: NexusGenInputs['OrganizationWhereInput'] | null; // OrganizationWhereInput
     password?: string | null; // String
     password_contains?: string | null; // String
     password_ends_with?: string | null; // String
@@ -2007,7 +2146,8 @@ export interface NexusGenEnums {
   MenuSelectionOrderByInput: "createdAt_ASC" | "createdAt_DESC" | "id_ASC" | "id_DESC" | "name_ASC" | "name_DESC" | "selected_ASC" | "selected_DESC" | "updatedAt_ASC" | "updatedAt_DESC" | "valueAdd_ASC" | "valueAdd_DESC"
   OrderItemOrderByInput: "createdAt_ASC" | "createdAt_DESC" | "id_ASC" | "id_DESC" | "price_ASC" | "price_DESC" | "quantity_ASC" | "quantity_DESC" | "title_ASC" | "title_DESC" | "updatedAt_ASC" | "updatedAt_DESC"
   OrderOrderByInput: "charge_ASC" | "charge_DESC" | "createdAt_ASC" | "createdAt_DESC" | "id_ASC" | "id_DESC" | "total_ASC" | "total_DESC" | "updatedAt_ASC" | "updatedAt_DESC"
-  Permission: "ADMIN" | "CUSTOMER"
+  OrganizationOrderByInput: "createdAt_ASC" | "createdAt_DESC" | "id_ASC" | "id_DESC" | "name_ASC" | "name_DESC" | "updatedAt_ASC" | "updatedAt_DESC"
+  Permission: "ADMIN" | "CUSTOMER" | "OWNER"
   TableOrderByInput: "createdAt_ASC" | "createdAt_DESC" | "id_ASC" | "id_DESC" | "updatedAt_ASC" | "updatedAt_DESC"
   UserOrderByInput: "createdAt_ASC" | "createdAt_DESC" | "email_ASC" | "email_DESC" | "id_ASC" | "id_DESC" | "name_ASC" | "name_DESC" | "password_ASC" | "password_DESC" | "permissions_ASC" | "permissions_DESC" | "resetToken_ASC" | "resetToken_DESC" | "resetTokenExpiry_ASC" | "resetTokenExpiry_DESC" | "updatedAt_ASC" | "updatedAt_DESC"
 }
@@ -2035,6 +2175,9 @@ export interface NexusGenRootTypes {
     count: number; // Int!
   }
   AggregateOrderItem: { // root type
+    count: number; // Int!
+  }
+  AggregateOrganization: { // root type
     count: number; // Int!
   }
   AggregateTable: { // root type
@@ -2163,6 +2306,18 @@ export interface NexusGenRootTypes {
     cursor: string; // String!
     node: NexusGenRootTypes['OrderItem']; // OrderItem!
   }
+  Organization: { // root type
+    id: string; // ID!
+    name: string; // String!
+  }
+  OrganizationConnection: { // root type
+    edges: NexusGenRootTypes['OrganizationEdge'][]; // [OrganizationEdge!]!
+    pageInfo: NexusGenRootTypes['PageInfo']; // PageInfo!
+  }
+  OrganizationEdge: { // root type
+    cursor: string; // String!
+    node: NexusGenRootTypes['Organization']; // Organization!
+  }
   PageInfo: { // root type
     endCursor?: string | null; // String
     hasNextPage: boolean; // Boolean!
@@ -2246,11 +2401,11 @@ export interface NexusGenAllTypes extends NexusGenRootTypes {
   MenuChoiceWhereInput: NexusGenInputs['MenuChoiceWhereInput'];
   MenuChoiceWhereUniqueInput: NexusGenInputs['MenuChoiceWhereUniqueInput'];
   MenuCreateInput: NexusGenInputs['MenuCreateInput'];
-  MenuCreateManyWithoutAuthorInput: NexusGenInputs['MenuCreateManyWithoutAuthorInput'];
+  MenuCreateManyWithoutOrganizationInput: NexusGenInputs['MenuCreateManyWithoutOrganizationInput'];
   MenuCreateOneInput: NexusGenInputs['MenuCreateOneInput'];
   MenuCreateOneWithoutMenuItemsInput: NexusGenInputs['MenuCreateOneWithoutMenuItemsInput'];
-  MenuCreateWithoutAuthorInput: NexusGenInputs['MenuCreateWithoutAuthorInput'];
   MenuCreateWithoutMenuItemsInput: NexusGenInputs['MenuCreateWithoutMenuItemsInput'];
+  MenuCreateWithoutOrganizationInput: NexusGenInputs['MenuCreateWithoutOrganizationInput'];
   MenuHeaderCreateInput: NexusGenInputs['MenuHeaderCreateInput'];
   MenuHeaderCreateOneWithoutMenuItemsInput: NexusGenInputs['MenuHeaderCreateOneWithoutMenuItemsInput'];
   MenuHeaderCreateWithoutMenuItemsInput: NexusGenInputs['MenuHeaderCreateWithoutMenuItemsInput'];
@@ -2301,14 +2456,14 @@ export interface NexusGenAllTypes extends NexusGenRootTypes {
   MenuUpdateManyDataInput: NexusGenInputs['MenuUpdateManyDataInput'];
   MenuUpdateManyMutationInput: NexusGenInputs['MenuUpdateManyMutationInput'];
   MenuUpdateManyWithWhereNestedInput: NexusGenInputs['MenuUpdateManyWithWhereNestedInput'];
-  MenuUpdateManyWithoutAuthorInput: NexusGenInputs['MenuUpdateManyWithoutAuthorInput'];
+  MenuUpdateManyWithoutOrganizationInput: NexusGenInputs['MenuUpdateManyWithoutOrganizationInput'];
   MenuUpdateOneInput: NexusGenInputs['MenuUpdateOneInput'];
   MenuUpdateOneWithoutMenuItemsInput: NexusGenInputs['MenuUpdateOneWithoutMenuItemsInput'];
-  MenuUpdateWithWhereUniqueWithoutAuthorInput: NexusGenInputs['MenuUpdateWithWhereUniqueWithoutAuthorInput'];
-  MenuUpdateWithoutAuthorDataInput: NexusGenInputs['MenuUpdateWithoutAuthorDataInput'];
+  MenuUpdateWithWhereUniqueWithoutOrganizationInput: NexusGenInputs['MenuUpdateWithWhereUniqueWithoutOrganizationInput'];
   MenuUpdateWithoutMenuItemsDataInput: NexusGenInputs['MenuUpdateWithoutMenuItemsDataInput'];
+  MenuUpdateWithoutOrganizationDataInput: NexusGenInputs['MenuUpdateWithoutOrganizationDataInput'];
   MenuUpsertNestedInput: NexusGenInputs['MenuUpsertNestedInput'];
-  MenuUpsertWithWhereUniqueWithoutAuthorInput: NexusGenInputs['MenuUpsertWithWhereUniqueWithoutAuthorInput'];
+  MenuUpsertWithWhereUniqueWithoutOrganizationInput: NexusGenInputs['MenuUpsertWithWhereUniqueWithoutOrganizationInput'];
   MenuUpsertWithoutMenuItemsInput: NexusGenInputs['MenuUpsertWithoutMenuItemsInput'];
   MenuWhereInput: NexusGenInputs['MenuWhereInput'];
   MenuWhereUniqueInput: NexusGenInputs['MenuWhereUniqueInput'];
@@ -2344,6 +2499,24 @@ export interface NexusGenAllTypes extends NexusGenRootTypes {
   OrderUpsertWithWhereUniqueWithoutCustomerInput: NexusGenInputs['OrderUpsertWithWhereUniqueWithoutCustomerInput'];
   OrderWhereInput: NexusGenInputs['OrderWhereInput'];
   OrderWhereUniqueInput: NexusGenInputs['OrderWhereUniqueInput'];
+  OrganizationCreateInput: NexusGenInputs['OrganizationCreateInput'];
+  OrganizationCreateManyInput: NexusGenInputs['OrganizationCreateManyInput'];
+  OrganizationCreateOneWithoutMenusInput: NexusGenInputs['OrganizationCreateOneWithoutMenusInput'];
+  OrganizationCreateWithoutMenusInput: NexusGenInputs['OrganizationCreateWithoutMenusInput'];
+  OrganizationScalarWhereInput: NexusGenInputs['OrganizationScalarWhereInput'];
+  OrganizationUpdateDataInput: NexusGenInputs['OrganizationUpdateDataInput'];
+  OrganizationUpdateInput: NexusGenInputs['OrganizationUpdateInput'];
+  OrganizationUpdateManyDataInput: NexusGenInputs['OrganizationUpdateManyDataInput'];
+  OrganizationUpdateManyInput: NexusGenInputs['OrganizationUpdateManyInput'];
+  OrganizationUpdateManyMutationInput: NexusGenInputs['OrganizationUpdateManyMutationInput'];
+  OrganizationUpdateManyWithWhereNestedInput: NexusGenInputs['OrganizationUpdateManyWithWhereNestedInput'];
+  OrganizationUpdateOneRequiredWithoutMenusInput: NexusGenInputs['OrganizationUpdateOneRequiredWithoutMenusInput'];
+  OrganizationUpdateWithWhereUniqueNestedInput: NexusGenInputs['OrganizationUpdateWithWhereUniqueNestedInput'];
+  OrganizationUpdateWithoutMenusDataInput: NexusGenInputs['OrganizationUpdateWithoutMenusDataInput'];
+  OrganizationUpsertWithWhereUniqueNestedInput: NexusGenInputs['OrganizationUpsertWithWhereUniqueNestedInput'];
+  OrganizationUpsertWithoutMenusInput: NexusGenInputs['OrganizationUpsertWithoutMenusInput'];
+  OrganizationWhereInput: NexusGenInputs['OrganizationWhereInput'];
+  OrganizationWhereUniqueInput: NexusGenInputs['OrganizationWhereUniqueInput'];
   TableCreateInput: NexusGenInputs['TableCreateInput'];
   TableCreateOneWithoutCartsInput: NexusGenInputs['TableCreateOneWithoutCartsInput'];
   TableCreateOneWithoutCustomersInput: NexusGenInputs['TableCreateOneWithoutCustomersInput'];
@@ -2359,35 +2532,34 @@ export interface NexusGenAllTypes extends NexusGenRootTypes {
   TableWhereInput: NexusGenInputs['TableWhereInput'];
   TableWhereUniqueInput: NexusGenInputs['TableWhereUniqueInput'];
   UserCreateInput: NexusGenInputs['UserCreateInput'];
+  UserCreateManyInput: NexusGenInputs['UserCreateManyInput'];
   UserCreateManyWithoutTableInput: NexusGenInputs['UserCreateManyWithoutTableInput'];
   UserCreateOneInput: NexusGenInputs['UserCreateOneInput'];
   UserCreateOneWithoutCartInput: NexusGenInputs['UserCreateOneWithoutCartInput'];
-  UserCreateOneWithoutMenusInput: NexusGenInputs['UserCreateOneWithoutMenusInput'];
   UserCreateOneWithoutOrdersInput: NexusGenInputs['UserCreateOneWithoutOrdersInput'];
   UserCreateWithoutCartInput: NexusGenInputs['UserCreateWithoutCartInput'];
-  UserCreateWithoutMenusInput: NexusGenInputs['UserCreateWithoutMenusInput'];
   UserCreateWithoutOrdersInput: NexusGenInputs['UserCreateWithoutOrdersInput'];
   UserCreateWithoutTableInput: NexusGenInputs['UserCreateWithoutTableInput'];
   UserScalarWhereInput: NexusGenInputs['UserScalarWhereInput'];
   UserUpdateDataInput: NexusGenInputs['UserUpdateDataInput'];
   UserUpdateInput: NexusGenInputs['UserUpdateInput'];
   UserUpdateManyDataInput: NexusGenInputs['UserUpdateManyDataInput'];
+  UserUpdateManyInput: NexusGenInputs['UserUpdateManyInput'];
   UserUpdateManyMutationInput: NexusGenInputs['UserUpdateManyMutationInput'];
   UserUpdateManyWithWhereNestedInput: NexusGenInputs['UserUpdateManyWithWhereNestedInput'];
   UserUpdateManyWithoutTableInput: NexusGenInputs['UserUpdateManyWithoutTableInput'];
   UserUpdateOneRequiredInput: NexusGenInputs['UserUpdateOneRequiredInput'];
   UserUpdateOneRequiredWithoutCartInput: NexusGenInputs['UserUpdateOneRequiredWithoutCartInput'];
   UserUpdateOneRequiredWithoutOrdersInput: NexusGenInputs['UserUpdateOneRequiredWithoutOrdersInput'];
-  UserUpdateOneWithoutMenusInput: NexusGenInputs['UserUpdateOneWithoutMenusInput'];
+  UserUpdateWithWhereUniqueNestedInput: NexusGenInputs['UserUpdateWithWhereUniqueNestedInput'];
   UserUpdateWithWhereUniqueWithoutTableInput: NexusGenInputs['UserUpdateWithWhereUniqueWithoutTableInput'];
   UserUpdateWithoutCartDataInput: NexusGenInputs['UserUpdateWithoutCartDataInput'];
-  UserUpdateWithoutMenusDataInput: NexusGenInputs['UserUpdateWithoutMenusDataInput'];
   UserUpdateWithoutOrdersDataInput: NexusGenInputs['UserUpdateWithoutOrdersDataInput'];
   UserUpdateWithoutTableDataInput: NexusGenInputs['UserUpdateWithoutTableDataInput'];
   UserUpsertNestedInput: NexusGenInputs['UserUpsertNestedInput'];
+  UserUpsertWithWhereUniqueNestedInput: NexusGenInputs['UserUpsertWithWhereUniqueNestedInput'];
   UserUpsertWithWhereUniqueWithoutTableInput: NexusGenInputs['UserUpsertWithWhereUniqueWithoutTableInput'];
   UserUpsertWithoutCartInput: NexusGenInputs['UserUpsertWithoutCartInput'];
-  UserUpsertWithoutMenusInput: NexusGenInputs['UserUpsertWithoutMenusInput'];
   UserUpsertWithoutOrdersInput: NexusGenInputs['UserUpsertWithoutOrdersInput'];
   UserWhereInput: NexusGenInputs['UserWhereInput'];
   UserWhereUniqueInput: NexusGenInputs['UserWhereUniqueInput'];
@@ -2399,6 +2571,7 @@ export interface NexusGenAllTypes extends NexusGenRootTypes {
   MenuSelectionOrderByInput: NexusGenEnums['MenuSelectionOrderByInput'];
   OrderItemOrderByInput: NexusGenEnums['OrderItemOrderByInput'];
   OrderOrderByInput: NexusGenEnums['OrderOrderByInput'];
+  OrganizationOrderByInput: NexusGenEnums['OrganizationOrderByInput'];
   Permission: NexusGenEnums['Permission'];
   TableOrderByInput: NexusGenEnums['TableOrderByInput'];
   UserOrderByInput: NexusGenEnums['UserOrderByInput'];
@@ -2427,6 +2600,9 @@ export interface NexusGenFieldTypes {
     count: number; // Int!
   }
   AggregateOrderItem: { // field return type
+    count: number; // Int!
+  }
+  AggregateOrganization: { // field return type
     count: number; // Int!
   }
   AggregateTable: { // field return type
@@ -2459,10 +2635,10 @@ export interface NexusGenFieldTypes {
     node: NexusGenRootTypes['Cart']; // Cart!
   }
   Menu: { // field return type
-    author: NexusGenRootTypes['User'] | null; // User
     createdAt: any; // DateTime!
     id: string; // ID!
     menuItems: NexusGenRootTypes['MenuItem'][] | null; // [MenuItem!]
+    organization: NexusGenRootTypes['Organization']; // Organization!
     published: boolean; // Boolean!
     title: string; // String!
     updatedAt: any; // DateTime!
@@ -2552,6 +2728,7 @@ export interface NexusGenFieldTypes {
     createMenuSelection: NexusGenRootTypes['MenuSelection']; // MenuSelection!
     createOrder: NexusGenRootTypes['Order']; // Order!
     createOrderItem: NexusGenRootTypes['OrderItem']; // OrderItem!
+    createOrganization: NexusGenRootTypes['Organization']; // Organization!
     createTable: NexusGenRootTypes['Table']; // Table!
     createUser: NexusGenRootTypes['User']; // User!
     deleteCart: NexusGenRootTypes['Cart'] | null; // Cart
@@ -2563,6 +2740,7 @@ export interface NexusGenFieldTypes {
     deleteManyMenuSelections: NexusGenRootTypes['BatchPayload']; // BatchPayload!
     deleteManyOrderItems: NexusGenRootTypes['BatchPayload']; // BatchPayload!
     deleteManyOrders: NexusGenRootTypes['BatchPayload']; // BatchPayload!
+    deleteManyOrganizations: NexusGenRootTypes['BatchPayload']; // BatchPayload!
     deleteManyTables: NexusGenRootTypes['BatchPayload']; // BatchPayload!
     deleteManyUsers: NexusGenRootTypes['BatchPayload']; // BatchPayload!
     deleteMenu: NexusGenRootTypes['Menu'] | null; // Menu
@@ -2572,6 +2750,7 @@ export interface NexusGenFieldTypes {
     deleteMenuSelection: NexusGenRootTypes['MenuSelection'] | null; // MenuSelection
     deleteOrder: NexusGenRootTypes['Order'] | null; // Order
     deleteOrderItem: NexusGenRootTypes['OrderItem'] | null; // OrderItem
+    deleteOrganization: NexusGenRootTypes['Organization'] | null; // Organization
     deleteTable: NexusGenRootTypes['Table'] | null; // Table
     deleteUser: NexusGenRootTypes['User'] | null; // User
     loginUser: NexusGenRootTypes['AuthPayload'] | null; // AuthPayload
@@ -2585,6 +2764,7 @@ export interface NexusGenFieldTypes {
     updateManyMenuSelections: NexusGenRootTypes['BatchPayload']; // BatchPayload!
     updateManyOrderItems: NexusGenRootTypes['BatchPayload']; // BatchPayload!
     updateManyOrders: NexusGenRootTypes['BatchPayload']; // BatchPayload!
+    updateManyOrganizations: NexusGenRootTypes['BatchPayload']; // BatchPayload!
     updateManyUsers: NexusGenRootTypes['BatchPayload']; // BatchPayload!
     updateMenu: NexusGenRootTypes['Menu'] | null; // Menu
     updateMenuChoice: NexusGenRootTypes['MenuChoice'] | null; // MenuChoice
@@ -2593,6 +2773,7 @@ export interface NexusGenFieldTypes {
     updateMenuSelection: NexusGenRootTypes['MenuSelection'] | null; // MenuSelection
     updateOrder: NexusGenRootTypes['Order'] | null; // Order
     updateOrderItem: NexusGenRootTypes['OrderItem'] | null; // OrderItem
+    updateOrganization: NexusGenRootTypes['Organization'] | null; // Organization
     updateTable: NexusGenRootTypes['Table'] | null; // Table
     updateUser: NexusGenRootTypes['User'] | null; // User
     upsertCart: NexusGenRootTypes['Cart']; // Cart!
@@ -2603,6 +2784,7 @@ export interface NexusGenFieldTypes {
     upsertMenuSelection: NexusGenRootTypes['MenuSelection']; // MenuSelection!
     upsertOrder: NexusGenRootTypes['Order']; // Order!
     upsertOrderItem: NexusGenRootTypes['OrderItem']; // OrderItem!
+    upsertOrganization: NexusGenRootTypes['Organization']; // Organization!
     upsertTable: NexusGenRootTypes['Table']; // Table!
     upsertUser: NexusGenRootTypes['User']; // User!
   }
@@ -2640,6 +2822,22 @@ export interface NexusGenFieldTypes {
     cursor: string; // String!
     node: NexusGenRootTypes['OrderItem']; // OrderItem!
   }
+  Organization: { // field return type
+    id: string; // ID!
+    menus: NexusGenRootTypes['Menu'][] | null; // [Menu!]
+    name: string; // String!
+    owner: NexusGenRootTypes['User']; // User!
+    users: NexusGenRootTypes['User'][] | null; // [User!]
+  }
+  OrganizationConnection: { // field return type
+    aggregate: NexusGenRootTypes['AggregateOrganization']; // AggregateOrganization!
+    edges: NexusGenRootTypes['OrganizationEdge'][]; // [OrganizationEdge!]!
+    pageInfo: NexusGenRootTypes['PageInfo']; // PageInfo!
+  }
+  OrganizationEdge: { // field return type
+    cursor: string; // String!
+    node: NexusGenRootTypes['Organization']; // Organization!
+  }
   PageInfo: { // field return type
     endCursor: string | null; // String
     hasNextPage: boolean; // Boolean!
@@ -2672,6 +2870,9 @@ export interface NexusGenFieldTypes {
     orderItemsConnection: NexusGenRootTypes['OrderItemConnection']; // OrderItemConnection!
     orders: NexusGenRootTypes['Order'][]; // [Order!]!
     ordersConnection: NexusGenRootTypes['OrderConnection']; // OrderConnection!
+    organization: NexusGenRootTypes['Organization'] | null; // Organization
+    organizations: NexusGenRootTypes['Organization'][]; // [Organization!]!
+    organizationsConnection: NexusGenRootTypes['OrganizationConnection']; // OrganizationConnection!
     table: NexusGenRootTypes['Table'] | null; // Table
     tables: NexusGenRootTypes['Table'][]; // [Table!]!
     tablesConnection: NexusGenRootTypes['TableConnection']; // TableConnection!
@@ -2697,9 +2898,9 @@ export interface NexusGenFieldTypes {
     cart: NexusGenRootTypes['Cart'] | null; // Cart
     email: string; // String!
     id: string; // ID!
-    menus: NexusGenRootTypes['Menu'][] | null; // [Menu!]
     name: string | null; // String
     orders: NexusGenRootTypes['Order'][] | null; // [Order!]
+    organizations: NexusGenRootTypes['Organization'][] | null; // [Organization!]
     password: string; // String!
     permissions: NexusGenEnums['Permission'] | null; // Permission
     resetToken: string | null; // String
@@ -2798,6 +2999,9 @@ export interface NexusGenArgTypes {
     createOrderItem: { // args
       data: NexusGenInputs['OrderItemCreateInput']; // OrderItemCreateInput!
     }
+    createOrganization: { // args
+      data: NexusGenInputs['OrganizationCreateInput']; // OrganizationCreateInput!
+    }
     createTable: { // args
       data: NexusGenInputs['TableCreateInput']; // TableCreateInput!
     }
@@ -2831,6 +3035,9 @@ export interface NexusGenArgTypes {
     deleteManyOrders: { // args
       where?: NexusGenInputs['OrderWhereInput'] | null; // OrderWhereInput
     }
+    deleteManyOrganizations: { // args
+      where?: NexusGenInputs['OrganizationWhereInput'] | null; // OrganizationWhereInput
+    }
     deleteManyTables: { // args
       where?: NexusGenInputs['TableWhereInput'] | null; // TableWhereInput
     }
@@ -2857,6 +3064,9 @@ export interface NexusGenArgTypes {
     }
     deleteOrderItem: { // args
       where: NexusGenInputs['OrderItemWhereUniqueInput']; // OrderItemWhereUniqueInput!
+    }
+    deleteOrganization: { // args
+      where: NexusGenInputs['OrganizationWhereUniqueInput']; // OrganizationWhereUniqueInput!
     }
     deleteTable: { // args
       where: NexusGenInputs['TableWhereUniqueInput']; // TableWhereUniqueInput!
@@ -2909,6 +3119,10 @@ export interface NexusGenArgTypes {
       data: NexusGenInputs['OrderUpdateManyMutationInput']; // OrderUpdateManyMutationInput!
       where?: NexusGenInputs['OrderWhereInput'] | null; // OrderWhereInput
     }
+    updateManyOrganizations: { // args
+      data: NexusGenInputs['OrganizationUpdateManyMutationInput']; // OrganizationUpdateManyMutationInput!
+      where?: NexusGenInputs['OrganizationWhereInput'] | null; // OrganizationWhereInput
+    }
     updateManyUsers: { // args
       data: NexusGenInputs['UserUpdateManyMutationInput']; // UserUpdateManyMutationInput!
       where?: NexusGenInputs['UserWhereInput'] | null; // UserWhereInput
@@ -2940,6 +3154,10 @@ export interface NexusGenArgTypes {
     updateOrderItem: { // args
       data: NexusGenInputs['OrderItemUpdateInput']; // OrderItemUpdateInput!
       where: NexusGenInputs['OrderItemWhereUniqueInput']; // OrderItemWhereUniqueInput!
+    }
+    updateOrganization: { // args
+      data: NexusGenInputs['OrganizationUpdateInput']; // OrganizationUpdateInput!
+      where: NexusGenInputs['OrganizationWhereUniqueInput']; // OrganizationWhereUniqueInput!
     }
     updateTable: { // args
       data: NexusGenInputs['TableUpdateInput']; // TableUpdateInput!
@@ -2989,6 +3207,11 @@ export interface NexusGenArgTypes {
       update: NexusGenInputs['OrderItemUpdateInput']; // OrderItemUpdateInput!
       where: NexusGenInputs['OrderItemWhereUniqueInput']; // OrderItemWhereUniqueInput!
     }
+    upsertOrganization: { // args
+      create: NexusGenInputs['OrganizationCreateInput']; // OrganizationCreateInput!
+      update: NexusGenInputs['OrganizationUpdateInput']; // OrganizationUpdateInput!
+      where: NexusGenInputs['OrganizationWhereUniqueInput']; // OrganizationWhereUniqueInput!
+    }
     upsertTable: { // args
       create: NexusGenInputs['TableCreateInput']; // TableCreateInput!
       update: NexusGenInputs['TableUpdateInput']; // TableUpdateInput!
@@ -3009,6 +3232,26 @@ export interface NexusGenArgTypes {
       orderBy?: NexusGenEnums['OrderItemOrderByInput'] | null; // OrderItemOrderByInput
       skip?: number | null; // Int
       where?: NexusGenInputs['OrderItemWhereInput'] | null; // OrderItemWhereInput
+    }
+  }
+  Organization: {
+    menus: { // args
+      after?: string | null; // String
+      before?: string | null; // String
+      first?: number | null; // Int
+      last?: number | null; // Int
+      orderBy?: NexusGenEnums['MenuOrderByInput'] | null; // MenuOrderByInput
+      skip?: number | null; // Int
+      where?: NexusGenInputs['MenuWhereInput'] | null; // MenuWhereInput
+    }
+    users: { // args
+      after?: string | null; // String
+      before?: string | null; // String
+      first?: number | null; // Int
+      last?: number | null; // Int
+      orderBy?: NexusGenEnums['UserOrderByInput'] | null; // UserOrderByInput
+      skip?: number | null; // Int
+      where?: NexusGenInputs['UserWhereInput'] | null; // UserWhereInput
     }
   }
   Query: {
@@ -3180,6 +3423,27 @@ export interface NexusGenArgTypes {
       skip?: number | null; // Int
       where?: NexusGenInputs['OrderWhereInput'] | null; // OrderWhereInput
     }
+    organization: { // args
+      where: NexusGenInputs['OrganizationWhereUniqueInput']; // OrganizationWhereUniqueInput!
+    }
+    organizations: { // args
+      after?: string | null; // String
+      before?: string | null; // String
+      first?: number | null; // Int
+      last?: number | null; // Int
+      orderBy?: NexusGenEnums['OrganizationOrderByInput'] | null; // OrganizationOrderByInput
+      skip?: number | null; // Int
+      where?: NexusGenInputs['OrganizationWhereInput'] | null; // OrganizationWhereInput
+    }
+    organizationsConnection: { // args
+      after?: string | null; // String
+      before?: string | null; // String
+      first?: number | null; // Int
+      last?: number | null; // Int
+      orderBy?: NexusGenEnums['OrganizationOrderByInput'] | null; // OrganizationOrderByInput
+      skip?: number | null; // Int
+      where?: NexusGenInputs['OrganizationWhereInput'] | null; // OrganizationWhereInput
+    }
     table: { // args
       where: NexusGenInputs['TableWhereUniqueInput']; // TableWhereUniqueInput!
     }
@@ -3244,15 +3508,6 @@ export interface NexusGenArgTypes {
     }
   }
   User: {
-    menus: { // args
-      after?: string | null; // String
-      before?: string | null; // String
-      first?: number | null; // Int
-      last?: number | null; // Int
-      orderBy?: NexusGenEnums['MenuOrderByInput'] | null; // MenuOrderByInput
-      skip?: number | null; // Int
-      where?: NexusGenInputs['MenuWhereInput'] | null; // MenuWhereInput
-    }
     orders: { // args
       after?: string | null; // String
       before?: string | null; // String
@@ -3262,6 +3517,15 @@ export interface NexusGenArgTypes {
       skip?: number | null; // Int
       where?: NexusGenInputs['OrderWhereInput'] | null; // OrderWhereInput
     }
+    organizations: { // args
+      after?: string | null; // String
+      before?: string | null; // String
+      first?: number | null; // Int
+      last?: number | null; // Int
+      orderBy?: NexusGenEnums['OrganizationOrderByInput'] | null; // OrganizationOrderByInput
+      skip?: number | null; // Int
+      where?: NexusGenInputs['OrganizationWhereInput'] | null; // OrganizationWhereInput
+    }
   }
 }
 
@@ -3270,11 +3534,11 @@ export interface NexusGenAbstractResolveReturnTypes {
 
 export interface NexusGenInheritedFields {}
 
-export type NexusGenObjectNames = "AggregateCart" | "AggregateMenu" | "AggregateMenuChoice" | "AggregateMenuHeader" | "AggregateMenuItem" | "AggregateMenuSelection" | "AggregateOrder" | "AggregateOrderItem" | "AggregateTable" | "AggregateUser" | "AuthPayload" | "BatchPayload" | "Cart" | "CartConnection" | "CartEdge" | "Menu" | "MenuChoice" | "MenuChoiceConnection" | "MenuChoiceEdge" | "MenuConnection" | "MenuEdge" | "MenuHeader" | "MenuHeaderConnection" | "MenuHeaderEdge" | "MenuItem" | "MenuItemConnection" | "MenuItemEdge" | "MenuSelection" | "MenuSelectionConnection" | "MenuSelectionEdge" | "Mutation" | "Order" | "OrderConnection" | "OrderEdge" | "OrderItem" | "OrderItemConnection" | "OrderItemEdge" | "PageInfo" | "Query" | "Table" | "TableConnection" | "TableEdge" | "User" | "UserConnection" | "UserEdge";
+export type NexusGenObjectNames = "AggregateCart" | "AggregateMenu" | "AggregateMenuChoice" | "AggregateMenuHeader" | "AggregateMenuItem" | "AggregateMenuSelection" | "AggregateOrder" | "AggregateOrderItem" | "AggregateOrganization" | "AggregateTable" | "AggregateUser" | "AuthPayload" | "BatchPayload" | "Cart" | "CartConnection" | "CartEdge" | "Menu" | "MenuChoice" | "MenuChoiceConnection" | "MenuChoiceEdge" | "MenuConnection" | "MenuEdge" | "MenuHeader" | "MenuHeaderConnection" | "MenuHeaderEdge" | "MenuItem" | "MenuItemConnection" | "MenuItemEdge" | "MenuSelection" | "MenuSelectionConnection" | "MenuSelectionEdge" | "Mutation" | "Order" | "OrderConnection" | "OrderEdge" | "OrderItem" | "OrderItemConnection" | "OrderItemEdge" | "Organization" | "OrganizationConnection" | "OrganizationEdge" | "PageInfo" | "Query" | "Table" | "TableConnection" | "TableEdge" | "User" | "UserConnection" | "UserEdge";
 
-export type NexusGenInputNames = "CartCreateInput" | "CartCreateManyWithoutTableInput" | "CartCreateOneWithoutCustomerInput" | "CartCreateWithoutCustomerInput" | "CartCreateWithoutTableInput" | "CartScalarWhereInput" | "CartUpdateInput" | "CartUpdateManyDataInput" | "CartUpdateManyMutationInput" | "CartUpdateManyWithWhereNestedInput" | "CartUpdateManyWithoutTableInput" | "CartUpdateOneWithoutCustomerInput" | "CartUpdateWithWhereUniqueWithoutTableInput" | "CartUpdateWithoutCustomerDataInput" | "CartUpdateWithoutTableDataInput" | "CartUpsertWithWhereUniqueWithoutTableInput" | "CartUpsertWithoutCustomerInput" | "CartWhereInput" | "CartWhereUniqueInput" | "MenuChoiceCreateInput" | "MenuChoiceCreateManyInput" | "MenuChoiceCreateOneWithoutSelectionsInput" | "MenuChoiceCreateWithoutSelectionsInput" | "MenuChoiceScalarWhereInput" | "MenuChoiceUpdateDataInput" | "MenuChoiceUpdateInput" | "MenuChoiceUpdateManyDataInput" | "MenuChoiceUpdateManyInput" | "MenuChoiceUpdateManyMutationInput" | "MenuChoiceUpdateManyWithWhereNestedInput" | "MenuChoiceUpdateOneWithoutSelectionsInput" | "MenuChoiceUpdateWithWhereUniqueNestedInput" | "MenuChoiceUpdateWithoutSelectionsDataInput" | "MenuChoiceUpsertWithWhereUniqueNestedInput" | "MenuChoiceUpsertWithoutSelectionsInput" | "MenuChoiceWhereInput" | "MenuChoiceWhereUniqueInput" | "MenuCreateInput" | "MenuCreateManyWithoutAuthorInput" | "MenuCreateOneInput" | "MenuCreateOneWithoutMenuItemsInput" | "MenuCreateWithoutAuthorInput" | "MenuCreateWithoutMenuItemsInput" | "MenuHeaderCreateInput" | "MenuHeaderCreateOneWithoutMenuItemsInput" | "MenuHeaderCreateWithoutMenuItemsInput" | "MenuHeaderUpdateInput" | "MenuHeaderUpdateManyMutationInput" | "MenuHeaderUpdateOneWithoutMenuItemsInput" | "MenuHeaderUpdateWithoutMenuItemsDataInput" | "MenuHeaderUpsertWithoutMenuItemsInput" | "MenuHeaderWhereInput" | "MenuHeaderWhereUniqueInput" | "MenuItemCreateInput" | "MenuItemCreateManyWithoutMenuHeaderInput" | "MenuItemCreateManyWithoutMenuInput" | "MenuItemCreateWithoutMenuHeaderInput" | "MenuItemCreateWithoutMenuInput" | "MenuItemScalarWhereInput" | "MenuItemUpdateInput" | "MenuItemUpdateManyDataInput" | "MenuItemUpdateManyMutationInput" | "MenuItemUpdateManyWithWhereNestedInput" | "MenuItemUpdateManyWithoutMenuHeaderInput" | "MenuItemUpdateManyWithoutMenuInput" | "MenuItemUpdateWithWhereUniqueWithoutMenuHeaderInput" | "MenuItemUpdateWithWhereUniqueWithoutMenuInput" | "MenuItemUpdateWithoutMenuDataInput" | "MenuItemUpdateWithoutMenuHeaderDataInput" | "MenuItemUpsertWithWhereUniqueWithoutMenuHeaderInput" | "MenuItemUpsertWithWhereUniqueWithoutMenuInput" | "MenuItemWhereInput" | "MenuItemWhereUniqueInput" | "MenuScalarWhereInput" | "MenuSelectionCreateInput" | "MenuSelectionCreateManyWithoutMenuChoiceInput" | "MenuSelectionCreateWithoutMenuChoiceInput" | "MenuSelectionScalarWhereInput" | "MenuSelectionUpdateInput" | "MenuSelectionUpdateManyDataInput" | "MenuSelectionUpdateManyMutationInput" | "MenuSelectionUpdateManyWithWhereNestedInput" | "MenuSelectionUpdateManyWithoutMenuChoiceInput" | "MenuSelectionUpdateWithWhereUniqueWithoutMenuChoiceInput" | "MenuSelectionUpdateWithoutMenuChoiceDataInput" | "MenuSelectionUpsertWithWhereUniqueWithoutMenuChoiceInput" | "MenuSelectionWhereInput" | "MenuSelectionWhereUniqueInput" | "MenuUpdateDataInput" | "MenuUpdateInput" | "MenuUpdateManyDataInput" | "MenuUpdateManyMutationInput" | "MenuUpdateManyWithWhereNestedInput" | "MenuUpdateManyWithoutAuthorInput" | "MenuUpdateOneInput" | "MenuUpdateOneWithoutMenuItemsInput" | "MenuUpdateWithWhereUniqueWithoutAuthorInput" | "MenuUpdateWithoutAuthorDataInput" | "MenuUpdateWithoutMenuItemsDataInput" | "MenuUpsertNestedInput" | "MenuUpsertWithWhereUniqueWithoutAuthorInput" | "MenuUpsertWithoutMenuItemsInput" | "MenuWhereInput" | "MenuWhereUniqueInput" | "OrderCreateInput" | "OrderCreateManyInput" | "OrderCreateManyWithoutCustomerInput" | "OrderCreateWithoutCustomerInput" | "OrderItemCreateInput" | "OrderItemCreateManyInput" | "OrderItemScalarWhereInput" | "OrderItemUpdateDataInput" | "OrderItemUpdateInput" | "OrderItemUpdateManyDataInput" | "OrderItemUpdateManyInput" | "OrderItemUpdateManyMutationInput" | "OrderItemUpdateManyWithWhereNestedInput" | "OrderItemUpdateWithWhereUniqueNestedInput" | "OrderItemUpsertWithWhereUniqueNestedInput" | "OrderItemWhereInput" | "OrderItemWhereUniqueInput" | "OrderScalarWhereInput" | "OrderUpdateDataInput" | "OrderUpdateInput" | "OrderUpdateManyDataInput" | "OrderUpdateManyInput" | "OrderUpdateManyMutationInput" | "OrderUpdateManyWithWhereNestedInput" | "OrderUpdateManyWithoutCustomerInput" | "OrderUpdateWithWhereUniqueNestedInput" | "OrderUpdateWithWhereUniqueWithoutCustomerInput" | "OrderUpdateWithoutCustomerDataInput" | "OrderUpsertWithWhereUniqueNestedInput" | "OrderUpsertWithWhereUniqueWithoutCustomerInput" | "OrderWhereInput" | "OrderWhereUniqueInput" | "TableCreateInput" | "TableCreateOneWithoutCartsInput" | "TableCreateOneWithoutCustomersInput" | "TableCreateWithoutCartsInput" | "TableCreateWithoutCustomersInput" | "TableUpdateInput" | "TableUpdateOneWithoutCartsInput" | "TableUpdateOneWithoutCustomersInput" | "TableUpdateWithoutCartsDataInput" | "TableUpdateWithoutCustomersDataInput" | "TableUpsertWithoutCartsInput" | "TableUpsertWithoutCustomersInput" | "TableWhereInput" | "TableWhereUniqueInput" | "UserCreateInput" | "UserCreateManyWithoutTableInput" | "UserCreateOneInput" | "UserCreateOneWithoutCartInput" | "UserCreateOneWithoutMenusInput" | "UserCreateOneWithoutOrdersInput" | "UserCreateWithoutCartInput" | "UserCreateWithoutMenusInput" | "UserCreateWithoutOrdersInput" | "UserCreateWithoutTableInput" | "UserScalarWhereInput" | "UserUpdateDataInput" | "UserUpdateInput" | "UserUpdateManyDataInput" | "UserUpdateManyMutationInput" | "UserUpdateManyWithWhereNestedInput" | "UserUpdateManyWithoutTableInput" | "UserUpdateOneRequiredInput" | "UserUpdateOneRequiredWithoutCartInput" | "UserUpdateOneRequiredWithoutOrdersInput" | "UserUpdateOneWithoutMenusInput" | "UserUpdateWithWhereUniqueWithoutTableInput" | "UserUpdateWithoutCartDataInput" | "UserUpdateWithoutMenusDataInput" | "UserUpdateWithoutOrdersDataInput" | "UserUpdateWithoutTableDataInput" | "UserUpsertNestedInput" | "UserUpsertWithWhereUniqueWithoutTableInput" | "UserUpsertWithoutCartInput" | "UserUpsertWithoutMenusInput" | "UserUpsertWithoutOrdersInput" | "UserWhereInput" | "UserWhereUniqueInput";
+export type NexusGenInputNames = "CartCreateInput" | "CartCreateManyWithoutTableInput" | "CartCreateOneWithoutCustomerInput" | "CartCreateWithoutCustomerInput" | "CartCreateWithoutTableInput" | "CartScalarWhereInput" | "CartUpdateInput" | "CartUpdateManyDataInput" | "CartUpdateManyMutationInput" | "CartUpdateManyWithWhereNestedInput" | "CartUpdateManyWithoutTableInput" | "CartUpdateOneWithoutCustomerInput" | "CartUpdateWithWhereUniqueWithoutTableInput" | "CartUpdateWithoutCustomerDataInput" | "CartUpdateWithoutTableDataInput" | "CartUpsertWithWhereUniqueWithoutTableInput" | "CartUpsertWithoutCustomerInput" | "CartWhereInput" | "CartWhereUniqueInput" | "MenuChoiceCreateInput" | "MenuChoiceCreateManyInput" | "MenuChoiceCreateOneWithoutSelectionsInput" | "MenuChoiceCreateWithoutSelectionsInput" | "MenuChoiceScalarWhereInput" | "MenuChoiceUpdateDataInput" | "MenuChoiceUpdateInput" | "MenuChoiceUpdateManyDataInput" | "MenuChoiceUpdateManyInput" | "MenuChoiceUpdateManyMutationInput" | "MenuChoiceUpdateManyWithWhereNestedInput" | "MenuChoiceUpdateOneWithoutSelectionsInput" | "MenuChoiceUpdateWithWhereUniqueNestedInput" | "MenuChoiceUpdateWithoutSelectionsDataInput" | "MenuChoiceUpsertWithWhereUniqueNestedInput" | "MenuChoiceUpsertWithoutSelectionsInput" | "MenuChoiceWhereInput" | "MenuChoiceWhereUniqueInput" | "MenuCreateInput" | "MenuCreateManyWithoutOrganizationInput" | "MenuCreateOneInput" | "MenuCreateOneWithoutMenuItemsInput" | "MenuCreateWithoutMenuItemsInput" | "MenuCreateWithoutOrganizationInput" | "MenuHeaderCreateInput" | "MenuHeaderCreateOneWithoutMenuItemsInput" | "MenuHeaderCreateWithoutMenuItemsInput" | "MenuHeaderUpdateInput" | "MenuHeaderUpdateManyMutationInput" | "MenuHeaderUpdateOneWithoutMenuItemsInput" | "MenuHeaderUpdateWithoutMenuItemsDataInput" | "MenuHeaderUpsertWithoutMenuItemsInput" | "MenuHeaderWhereInput" | "MenuHeaderWhereUniqueInput" | "MenuItemCreateInput" | "MenuItemCreateManyWithoutMenuHeaderInput" | "MenuItemCreateManyWithoutMenuInput" | "MenuItemCreateWithoutMenuHeaderInput" | "MenuItemCreateWithoutMenuInput" | "MenuItemScalarWhereInput" | "MenuItemUpdateInput" | "MenuItemUpdateManyDataInput" | "MenuItemUpdateManyMutationInput" | "MenuItemUpdateManyWithWhereNestedInput" | "MenuItemUpdateManyWithoutMenuHeaderInput" | "MenuItemUpdateManyWithoutMenuInput" | "MenuItemUpdateWithWhereUniqueWithoutMenuHeaderInput" | "MenuItemUpdateWithWhereUniqueWithoutMenuInput" | "MenuItemUpdateWithoutMenuDataInput" | "MenuItemUpdateWithoutMenuHeaderDataInput" | "MenuItemUpsertWithWhereUniqueWithoutMenuHeaderInput" | "MenuItemUpsertWithWhereUniqueWithoutMenuInput" | "MenuItemWhereInput" | "MenuItemWhereUniqueInput" | "MenuScalarWhereInput" | "MenuSelectionCreateInput" | "MenuSelectionCreateManyWithoutMenuChoiceInput" | "MenuSelectionCreateWithoutMenuChoiceInput" | "MenuSelectionScalarWhereInput" | "MenuSelectionUpdateInput" | "MenuSelectionUpdateManyDataInput" | "MenuSelectionUpdateManyMutationInput" | "MenuSelectionUpdateManyWithWhereNestedInput" | "MenuSelectionUpdateManyWithoutMenuChoiceInput" | "MenuSelectionUpdateWithWhereUniqueWithoutMenuChoiceInput" | "MenuSelectionUpdateWithoutMenuChoiceDataInput" | "MenuSelectionUpsertWithWhereUniqueWithoutMenuChoiceInput" | "MenuSelectionWhereInput" | "MenuSelectionWhereUniqueInput" | "MenuUpdateDataInput" | "MenuUpdateInput" | "MenuUpdateManyDataInput" | "MenuUpdateManyMutationInput" | "MenuUpdateManyWithWhereNestedInput" | "MenuUpdateManyWithoutOrganizationInput" | "MenuUpdateOneInput" | "MenuUpdateOneWithoutMenuItemsInput" | "MenuUpdateWithWhereUniqueWithoutOrganizationInput" | "MenuUpdateWithoutMenuItemsDataInput" | "MenuUpdateWithoutOrganizationDataInput" | "MenuUpsertNestedInput" | "MenuUpsertWithWhereUniqueWithoutOrganizationInput" | "MenuUpsertWithoutMenuItemsInput" | "MenuWhereInput" | "MenuWhereUniqueInput" | "OrderCreateInput" | "OrderCreateManyInput" | "OrderCreateManyWithoutCustomerInput" | "OrderCreateWithoutCustomerInput" | "OrderItemCreateInput" | "OrderItemCreateManyInput" | "OrderItemScalarWhereInput" | "OrderItemUpdateDataInput" | "OrderItemUpdateInput" | "OrderItemUpdateManyDataInput" | "OrderItemUpdateManyInput" | "OrderItemUpdateManyMutationInput" | "OrderItemUpdateManyWithWhereNestedInput" | "OrderItemUpdateWithWhereUniqueNestedInput" | "OrderItemUpsertWithWhereUniqueNestedInput" | "OrderItemWhereInput" | "OrderItemWhereUniqueInput" | "OrderScalarWhereInput" | "OrderUpdateDataInput" | "OrderUpdateInput" | "OrderUpdateManyDataInput" | "OrderUpdateManyInput" | "OrderUpdateManyMutationInput" | "OrderUpdateManyWithWhereNestedInput" | "OrderUpdateManyWithoutCustomerInput" | "OrderUpdateWithWhereUniqueNestedInput" | "OrderUpdateWithWhereUniqueWithoutCustomerInput" | "OrderUpdateWithoutCustomerDataInput" | "OrderUpsertWithWhereUniqueNestedInput" | "OrderUpsertWithWhereUniqueWithoutCustomerInput" | "OrderWhereInput" | "OrderWhereUniqueInput" | "OrganizationCreateInput" | "OrganizationCreateManyInput" | "OrganizationCreateOneWithoutMenusInput" | "OrganizationCreateWithoutMenusInput" | "OrganizationScalarWhereInput" | "OrganizationUpdateDataInput" | "OrganizationUpdateInput" | "OrganizationUpdateManyDataInput" | "OrganizationUpdateManyInput" | "OrganizationUpdateManyMutationInput" | "OrganizationUpdateManyWithWhereNestedInput" | "OrganizationUpdateOneRequiredWithoutMenusInput" | "OrganizationUpdateWithWhereUniqueNestedInput" | "OrganizationUpdateWithoutMenusDataInput" | "OrganizationUpsertWithWhereUniqueNestedInput" | "OrganizationUpsertWithoutMenusInput" | "OrganizationWhereInput" | "OrganizationWhereUniqueInput" | "TableCreateInput" | "TableCreateOneWithoutCartsInput" | "TableCreateOneWithoutCustomersInput" | "TableCreateWithoutCartsInput" | "TableCreateWithoutCustomersInput" | "TableUpdateInput" | "TableUpdateOneWithoutCartsInput" | "TableUpdateOneWithoutCustomersInput" | "TableUpdateWithoutCartsDataInput" | "TableUpdateWithoutCustomersDataInput" | "TableUpsertWithoutCartsInput" | "TableUpsertWithoutCustomersInput" | "TableWhereInput" | "TableWhereUniqueInput" | "UserCreateInput" | "UserCreateManyInput" | "UserCreateManyWithoutTableInput" | "UserCreateOneInput" | "UserCreateOneWithoutCartInput" | "UserCreateOneWithoutOrdersInput" | "UserCreateWithoutCartInput" | "UserCreateWithoutOrdersInput" | "UserCreateWithoutTableInput" | "UserScalarWhereInput" | "UserUpdateDataInput" | "UserUpdateInput" | "UserUpdateManyDataInput" | "UserUpdateManyInput" | "UserUpdateManyMutationInput" | "UserUpdateManyWithWhereNestedInput" | "UserUpdateManyWithoutTableInput" | "UserUpdateOneRequiredInput" | "UserUpdateOneRequiredWithoutCartInput" | "UserUpdateOneRequiredWithoutOrdersInput" | "UserUpdateWithWhereUniqueNestedInput" | "UserUpdateWithWhereUniqueWithoutTableInput" | "UserUpdateWithoutCartDataInput" | "UserUpdateWithoutOrdersDataInput" | "UserUpdateWithoutTableDataInput" | "UserUpsertNestedInput" | "UserUpsertWithWhereUniqueNestedInput" | "UserUpsertWithWhereUniqueWithoutTableInput" | "UserUpsertWithoutCartInput" | "UserUpsertWithoutOrdersInput" | "UserWhereInput" | "UserWhereUniqueInput";
 
-export type NexusGenEnumNames = "CartOrderByInput" | "MenuChoiceOrderByInput" | "MenuHeaderOrderByInput" | "MenuItemOrderByInput" | "MenuOrderByInput" | "MenuSelectionOrderByInput" | "OrderItemOrderByInput" | "OrderOrderByInput" | "Permission" | "TableOrderByInput" | "UserOrderByInput";
+export type NexusGenEnumNames = "CartOrderByInput" | "MenuChoiceOrderByInput" | "MenuHeaderOrderByInput" | "MenuItemOrderByInput" | "MenuOrderByInput" | "MenuSelectionOrderByInput" | "OrderItemOrderByInput" | "OrderOrderByInput" | "OrganizationOrderByInput" | "Permission" | "TableOrderByInput" | "UserOrderByInput";
 
 export type NexusGenInterfaceNames = never;
 

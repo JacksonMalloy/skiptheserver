@@ -1,5 +1,5 @@
 import { prismaObjectType } from "nexus-prisma";
-import { stringArg, idArg, queryType } from "nexus";
+import { queryType } from "nexus";
 import { getUserId } from "../utils";
 
 export const Query = prismaObjectType({

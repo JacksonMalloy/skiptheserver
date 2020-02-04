@@ -12,6 +12,7 @@ import {
 import { Order, OrderItem, Table, Cart } from "./types/Order";
 import { User } from "./types/User";
 import { Query } from "./types/Query";
+import { Organization } from "./types/Organization";
 import {
   Mutation,
   AuthPayload,
@@ -22,6 +23,7 @@ import {
 export const schema = makePrismaSchema({
   types: {
     Menu,
+    Organization,
     MenuChoice,
     MenuHeader,
     MenuItem,

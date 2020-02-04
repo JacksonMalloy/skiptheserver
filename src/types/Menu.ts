@@ -2,9 +2,9 @@ import { prismaObjectType } from "nexus-prisma";
 
 export const Menu = prismaObjectType({
   name: "Menu",
-  description: "Menu that the admin has created",
+  description: "Menu that the admin has created within an organization",
   definition(t) {
-    t.prismaFields(["*", { name: "author", args: [] }]);
+    t.prismaFields(["*", { name: "organization", args: [] }]);
   }
 });
 

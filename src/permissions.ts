@@ -2,6 +2,10 @@ import { rule, shield } from "graphql-shield";
 import { getUserId } from "./utils";
 
 const rules = {
+  // isDeveloper: rule()((parent, args, context) => {
+  //   const userId = getUserId(context);
+  //   return Boolean(userId);
+  // }),
   isAuthenticatedUser: rule()((parent, args, context) => {
     const userId = getUserId(context);
     return Boolean(userId);
@@ -16,6 +20,8 @@ const rules = {
 export const permissions = shield({
   Query: {
     me: rules.isAuthenticatedUser
+    // organization: rules.isAuthenticatedUser,
+    // organizations: rules.isDeveloper
   },
   Mutation: {
     createMenu: rules.isAuthenticatedUser
