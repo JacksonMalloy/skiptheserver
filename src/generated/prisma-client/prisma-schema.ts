@@ -67,7 +67,7 @@ type CartConnection {
 input CartCreateInput {
   id: ID
   orders: OrderCreateManyInput
-  customer: UserCreateOneWithoutCartInput!
+  customer: UserCreateOneInput!
   table: TableCreateOneWithoutCartsInput
   total: Int!
 }
@@ -77,22 +77,10 @@ input CartCreateManyWithoutTableInput {
   connect: [CartWhereUniqueInput!]
 }
 
-input CartCreateOneWithoutCustomerInput {
-  create: CartCreateWithoutCustomerInput
-  connect: CartWhereUniqueInput
-}
-
-input CartCreateWithoutCustomerInput {
-  id: ID
-  orders: OrderCreateManyInput
-  table: TableCreateOneWithoutCartsInput
-  total: Int!
-}
-
 input CartCreateWithoutTableInput {
   id: ID
   orders: OrderCreateManyInput
-  customer: UserCreateOneWithoutCartInput!
+  customer: UserCreateOneInput!
   total: Int!
 }
 
@@ -161,7 +149,7 @@ input CartSubscriptionWhereInput {
 
 input CartUpdateInput {
   orders: OrderUpdateManyInput
-  customer: UserUpdateOneRequiredWithoutCartInput
+  customer: UserUpdateOneRequiredInput
   table: TableUpdateOneWithoutCartsInput
   total: Int
 }
@@ -191,35 +179,15 @@ input CartUpdateManyWithWhereNestedInput {
   data: CartUpdateManyDataInput!
 }
 
-input CartUpdateOneWithoutCustomerInput {
-  create: CartCreateWithoutCustomerInput
-  update: CartUpdateWithoutCustomerDataInput
-  upsert: CartUpsertWithoutCustomerInput
-  delete: Boolean
-  disconnect: Boolean
-  connect: CartWhereUniqueInput
-}
-
-input CartUpdateWithoutCustomerDataInput {
-  orders: OrderUpdateManyInput
-  table: TableUpdateOneWithoutCartsInput
-  total: Int
-}
-
 input CartUpdateWithoutTableDataInput {
   orders: OrderUpdateManyInput
-  customer: UserUpdateOneRequiredWithoutCartInput
+  customer: UserUpdateOneRequiredInput
   total: Int
 }
 
 input CartUpdateWithWhereUniqueWithoutTableInput {
   where: CartWhereUniqueInput!
   data: CartUpdateWithoutTableDataInput!
-}
-
-input CartUpsertWithoutCustomerInput {
-  update: CartUpdateWithoutCustomerDataInput!
-  create: CartCreateWithoutCustomerInput!
 }
 
 input CartUpsertWithWhereUniqueWithoutTableInput {
@@ -537,6 +505,11 @@ input MenuCreateInput {
   title: String!
   menuItems: MenuItemCreateManyWithoutMenuInput
   organization: OrganizationCreateOneWithoutMenusInput!
+}
+
+input MenuCreateManyInput {
+  create: [MenuCreateInput!]
+  connect: [MenuWhereUniqueInput!]
 }
 
 input MenuCreateManyWithoutOrganizationInput {
@@ -1472,6 +1445,18 @@ input MenuUpdateManyDataInput {
   title: String
 }
 
+input MenuUpdateManyInput {
+  create: [MenuCreateInput!]
+  update: [MenuUpdateWithWhereUniqueNestedInput!]
+  upsert: [MenuUpsertWithWhereUniqueNestedInput!]
+  delete: [MenuWhereUniqueInput!]
+  connect: [MenuWhereUniqueInput!]
+  set: [MenuWhereUniqueInput!]
+  disconnect: [MenuWhereUniqueInput!]
+  deleteMany: [MenuScalarWhereInput!]
+  updateMany: [MenuUpdateManyWithWhereNestedInput!]
+}
+
 input MenuUpdateManyMutationInput {
   published: Boolean
   title: String
@@ -1524,6 +1509,11 @@ input MenuUpdateWithoutOrganizationDataInput {
   menuItems: MenuItemUpdateManyWithoutMenuInput
 }
 
+input MenuUpdateWithWhereUniqueNestedInput {
+  where: MenuWhereUniqueInput!
+  data: MenuUpdateDataInput!
+}
+
 input MenuUpdateWithWhereUniqueWithoutOrganizationInput {
   where: MenuWhereUniqueInput!
   data: MenuUpdateWithoutOrganizationDataInput!
@@ -1537,6 +1527,12 @@ input MenuUpsertNestedInput {
 input MenuUpsertWithoutMenuItemsInput {
   update: MenuUpdateWithoutMenuItemsDataInput!
   create: MenuCreateWithoutMenuItemsInput!
+}
+
+input MenuUpsertWithWhereUniqueNestedInput {
+  where: MenuWhereUniqueInput!
+  update: MenuUpdateDataInput!
+  create: MenuCreateInput!
 }
 
 input MenuUpsertWithWhereUniqueWithoutOrganizationInput {
@@ -1703,25 +1699,13 @@ input OrderCreateInput {
   id: ID
   items: OrderItemCreateManyInput
   total: Int!
-  customer: UserCreateOneWithoutOrdersInput!
+  customer: UserCreateOneInput!
   charge: String!
 }
 
 input OrderCreateManyInput {
   create: [OrderCreateInput!]
   connect: [OrderWhereUniqueInput!]
-}
-
-input OrderCreateManyWithoutCustomerInput {
-  create: [OrderCreateWithoutCustomerInput!]
-  connect: [OrderWhereUniqueInput!]
-}
-
-input OrderCreateWithoutCustomerInput {
-  id: ID
-  items: OrderItemCreateManyInput
-  total: Int!
-  charge: String!
 }
 
 type OrderEdge {
@@ -2056,14 +2040,14 @@ input OrderSubscriptionWhereInput {
 input OrderUpdateDataInput {
   items: OrderItemUpdateManyInput
   total: Int
-  customer: UserUpdateOneRequiredWithoutOrdersInput
+  customer: UserUpdateOneRequiredInput
   charge: String
 }
 
 input OrderUpdateInput {
   items: OrderItemUpdateManyInput
   total: Int
-  customer: UserUpdateOneRequiredWithoutOrdersInput
+  customer: UserUpdateOneRequiredInput
   charge: String
 }
 
@@ -2089,27 +2073,9 @@ input OrderUpdateManyMutationInput {
   charge: String
 }
 
-input OrderUpdateManyWithoutCustomerInput {
-  create: [OrderCreateWithoutCustomerInput!]
-  delete: [OrderWhereUniqueInput!]
-  connect: [OrderWhereUniqueInput!]
-  set: [OrderWhereUniqueInput!]
-  disconnect: [OrderWhereUniqueInput!]
-  update: [OrderUpdateWithWhereUniqueWithoutCustomerInput!]
-  upsert: [OrderUpsertWithWhereUniqueWithoutCustomerInput!]
-  deleteMany: [OrderScalarWhereInput!]
-  updateMany: [OrderUpdateManyWithWhereNestedInput!]
-}
-
 input OrderUpdateManyWithWhereNestedInput {
   where: OrderScalarWhereInput!
   data: OrderUpdateManyDataInput!
-}
-
-input OrderUpdateWithoutCustomerDataInput {
-  items: OrderItemUpdateManyInput
-  total: Int
-  charge: String
 }
 
 input OrderUpdateWithWhereUniqueNestedInput {
@@ -2117,21 +2083,10 @@ input OrderUpdateWithWhereUniqueNestedInput {
   data: OrderUpdateDataInput!
 }
 
-input OrderUpdateWithWhereUniqueWithoutCustomerInput {
-  where: OrderWhereUniqueInput!
-  data: OrderUpdateWithoutCustomerDataInput!
-}
-
 input OrderUpsertWithWhereUniqueNestedInput {
   where: OrderWhereUniqueInput!
   update: OrderUpdateDataInput!
   create: OrderCreateInput!
-}
-
-input OrderUpsertWithWhereUniqueWithoutCustomerInput {
-  where: OrderWhereUniqueInput!
-  update: OrderUpdateWithoutCustomerDataInput!
-  create: OrderCreateWithoutCustomerInput!
 }
 
 input OrderWhereInput {
@@ -2203,9 +2158,9 @@ input OrderWhereUniqueInput {
 type Organization {
   id: ID!
   name: String!
-  users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
   menus(where: MenuWhereInput, orderBy: MenuOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Menu!]
   owner: User!
+  permissions: Permission
 }
 
 type OrganizationConnection {
@@ -2217,13 +2172,13 @@ type OrganizationConnection {
 input OrganizationCreateInput {
   id: ID
   name: String!
-  users: UserCreateManyInput
   menus: MenuCreateManyWithoutOrganizationInput
-  owner: UserCreateOneInput!
+  owner: UserCreateOneWithoutOrganizationsInput!
+  permissions: Permission
 }
 
-input OrganizationCreateManyInput {
-  create: [OrganizationCreateInput!]
+input OrganizationCreateManyWithoutOwnerInput {
+  create: [OrganizationCreateWithoutOwnerInput!]
   connect: [OrganizationWhereUniqueInput!]
 }
 
@@ -2235,8 +2190,15 @@ input OrganizationCreateOneWithoutMenusInput {
 input OrganizationCreateWithoutMenusInput {
   id: ID
   name: String!
-  users: UserCreateManyInput
-  owner: UserCreateOneInput!
+  owner: UserCreateOneWithoutOrganizationsInput!
+  permissions: Permission
+}
+
+input OrganizationCreateWithoutOwnerInput {
+  id: ID
+  name: String!
+  menus: MenuCreateManyWithoutOrganizationInput
+  permissions: Permission
 }
 
 type OrganizationEdge {
@@ -2249,11 +2211,14 @@ enum OrganizationOrderByInput {
   id_DESC
   name_ASC
   name_DESC
+  permissions_ASC
+  permissions_DESC
 }
 
 type OrganizationPreviousValues {
   id: ID!
   name: String!
+  permissions: Permission
 }
 
 input OrganizationScalarWhereInput {
@@ -2285,6 +2250,10 @@ input OrganizationScalarWhereInput {
   name_not_starts_with: String
   name_ends_with: String
   name_not_ends_with: String
+  permissions: Permission
+  permissions_not: Permission
+  permissions_in: [Permission!]
+  permissions_not_in: [Permission!]
   AND: [OrganizationScalarWhereInput!]
   OR: [OrganizationScalarWhereInput!]
   NOT: [OrganizationScalarWhereInput!]
@@ -2308,38 +2277,33 @@ input OrganizationSubscriptionWhereInput {
   NOT: [OrganizationSubscriptionWhereInput!]
 }
 
-input OrganizationUpdateDataInput {
-  name: String
-  users: UserUpdateManyInput
-  menus: MenuUpdateManyWithoutOrganizationInput
-  owner: UserUpdateOneRequiredInput
-}
-
 input OrganizationUpdateInput {
   name: String
-  users: UserUpdateManyInput
   menus: MenuUpdateManyWithoutOrganizationInput
-  owner: UserUpdateOneRequiredInput
+  owner: UserUpdateOneRequiredWithoutOrganizationsInput
+  permissions: Permission
 }
 
 input OrganizationUpdateManyDataInput {
   name: String
-}
-
-input OrganizationUpdateManyInput {
-  create: [OrganizationCreateInput!]
-  update: [OrganizationUpdateWithWhereUniqueNestedInput!]
-  upsert: [OrganizationUpsertWithWhereUniqueNestedInput!]
-  delete: [OrganizationWhereUniqueInput!]
-  connect: [OrganizationWhereUniqueInput!]
-  set: [OrganizationWhereUniqueInput!]
-  disconnect: [OrganizationWhereUniqueInput!]
-  deleteMany: [OrganizationScalarWhereInput!]
-  updateMany: [OrganizationUpdateManyWithWhereNestedInput!]
+  permissions: Permission
 }
 
 input OrganizationUpdateManyMutationInput {
   name: String
+  permissions: Permission
+}
+
+input OrganizationUpdateManyWithoutOwnerInput {
+  create: [OrganizationCreateWithoutOwnerInput!]
+  delete: [OrganizationWhereUniqueInput!]
+  connect: [OrganizationWhereUniqueInput!]
+  set: [OrganizationWhereUniqueInput!]
+  disconnect: [OrganizationWhereUniqueInput!]
+  update: [OrganizationUpdateWithWhereUniqueWithoutOwnerInput!]
+  upsert: [OrganizationUpsertWithWhereUniqueWithoutOwnerInput!]
+  deleteMany: [OrganizationScalarWhereInput!]
+  updateMany: [OrganizationUpdateManyWithWhereNestedInput!]
 }
 
 input OrganizationUpdateManyWithWhereNestedInput {
@@ -2356,13 +2320,19 @@ input OrganizationUpdateOneRequiredWithoutMenusInput {
 
 input OrganizationUpdateWithoutMenusDataInput {
   name: String
-  users: UserUpdateManyInput
-  owner: UserUpdateOneRequiredInput
+  owner: UserUpdateOneRequiredWithoutOrganizationsInput
+  permissions: Permission
 }
 
-input OrganizationUpdateWithWhereUniqueNestedInput {
+input OrganizationUpdateWithoutOwnerDataInput {
+  name: String
+  menus: MenuUpdateManyWithoutOrganizationInput
+  permissions: Permission
+}
+
+input OrganizationUpdateWithWhereUniqueWithoutOwnerInput {
   where: OrganizationWhereUniqueInput!
-  data: OrganizationUpdateDataInput!
+  data: OrganizationUpdateWithoutOwnerDataInput!
 }
 
 input OrganizationUpsertWithoutMenusInput {
@@ -2370,10 +2340,10 @@ input OrganizationUpsertWithoutMenusInput {
   create: OrganizationCreateWithoutMenusInput!
 }
 
-input OrganizationUpsertWithWhereUniqueNestedInput {
+input OrganizationUpsertWithWhereUniqueWithoutOwnerInput {
   where: OrganizationWhereUniqueInput!
-  update: OrganizationUpdateDataInput!
-  create: OrganizationCreateInput!
+  update: OrganizationUpdateWithoutOwnerDataInput!
+  create: OrganizationCreateWithoutOwnerInput!
 }
 
 input OrganizationWhereInput {
@@ -2405,13 +2375,14 @@ input OrganizationWhereInput {
   name_not_starts_with: String
   name_ends_with: String
   name_not_ends_with: String
-  users_every: UserWhereInput
-  users_some: UserWhereInput
-  users_none: UserWhereInput
   menus_every: MenuWhereInput
   menus_some: MenuWhereInput
   menus_none: MenuWhereInput
   owner: UserWhereInput
+  permissions: Permission
+  permissions_not: Permission
+  permissions_in: [Permission!]
+  permissions_not_in: [Permission!]
   AND: [OrganizationWhereInput!]
   OR: [OrganizationWhereInput!]
   NOT: [OrganizationWhereInput!]
@@ -2429,6 +2400,7 @@ type PageInfo {
 }
 
 enum Permission {
+  DEVELOPER
   OWNER
   ADMIN
   CUSTOMER
@@ -2499,7 +2471,7 @@ type TableConnection {
 
 input TableCreateInput {
   id: ID
-  customers: UserCreateManyWithoutTableInput
+  customers: UserCreateManyInput
   carts: CartCreateManyWithoutTableInput
 }
 
@@ -2508,19 +2480,9 @@ input TableCreateOneWithoutCartsInput {
   connect: TableWhereUniqueInput
 }
 
-input TableCreateOneWithoutCustomersInput {
-  create: TableCreateWithoutCustomersInput
-  connect: TableWhereUniqueInput
-}
-
 input TableCreateWithoutCartsInput {
   id: ID
-  customers: UserCreateManyWithoutTableInput
-}
-
-input TableCreateWithoutCustomersInput {
-  id: ID
-  carts: CartCreateManyWithoutTableInput
+  customers: UserCreateManyInput
 }
 
 type TableEdge {
@@ -2556,7 +2518,7 @@ input TableSubscriptionWhereInput {
 }
 
 input TableUpdateInput {
-  customers: UserUpdateManyWithoutTableInput
+  customers: UserUpdateManyInput
   carts: CartUpdateManyWithoutTableInput
 }
 
@@ -2569,31 +2531,13 @@ input TableUpdateOneWithoutCartsInput {
   connect: TableWhereUniqueInput
 }
 
-input TableUpdateOneWithoutCustomersInput {
-  create: TableCreateWithoutCustomersInput
-  update: TableUpdateWithoutCustomersDataInput
-  upsert: TableUpsertWithoutCustomersInput
-  delete: Boolean
-  disconnect: Boolean
-  connect: TableWhereUniqueInput
-}
-
 input TableUpdateWithoutCartsDataInput {
-  customers: UserUpdateManyWithoutTableInput
-}
-
-input TableUpdateWithoutCustomersDataInput {
-  carts: CartUpdateManyWithoutTableInput
+  customers: UserUpdateManyInput
 }
 
 input TableUpsertWithoutCartsInput {
   update: TableUpdateWithoutCartsDataInput!
   create: TableCreateWithoutCartsInput!
-}
-
-input TableUpsertWithoutCustomersInput {
-  update: TableUpdateWithoutCustomersDataInput!
-  create: TableCreateWithoutCustomersInput!
 }
 
 input TableWhereInput {
@@ -2630,14 +2574,11 @@ type User {
   id: ID!
   email: String!
   name: String
-  permissions: Permission
   password: String!
   organizations(where: OrganizationWhereInput, orderBy: OrganizationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Organization!]
+  menus(where: MenuWhereInput, orderBy: MenuOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Menu!]
   resetToken: String
   resetTokenExpiry: Float
-  table: Table
-  cart: Cart
-  orders(where: OrderWhereInput, orderBy: OrderOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Order!]
 }
 
 type UserConnection {
@@ -2650,23 +2591,15 @@ input UserCreateInput {
   id: ID
   email: String!
   name: String
-  permissions: Permission
   password: String!
-  organizations: OrganizationCreateManyInput
+  organizations: OrganizationCreateManyWithoutOwnerInput
+  menus: MenuCreateManyInput
   resetToken: String
   resetTokenExpiry: Float
-  table: TableCreateOneWithoutCustomersInput
-  cart: CartCreateOneWithoutCustomerInput
-  orders: OrderCreateManyWithoutCustomerInput
 }
 
 input UserCreateManyInput {
   create: [UserCreateInput!]
-  connect: [UserWhereUniqueInput!]
-}
-
-input UserCreateManyWithoutTableInput {
-  create: [UserCreateWithoutTableInput!]
   connect: [UserWhereUniqueInput!]
 }
 
@@ -2675,53 +2608,19 @@ input UserCreateOneInput {
   connect: UserWhereUniqueInput
 }
 
-input UserCreateOneWithoutCartInput {
-  create: UserCreateWithoutCartInput
+input UserCreateOneWithoutOrganizationsInput {
+  create: UserCreateWithoutOrganizationsInput
   connect: UserWhereUniqueInput
 }
 
-input UserCreateOneWithoutOrdersInput {
-  create: UserCreateWithoutOrdersInput
-  connect: UserWhereUniqueInput
-}
-
-input UserCreateWithoutCartInput {
+input UserCreateWithoutOrganizationsInput {
   id: ID
   email: String!
   name: String
-  permissions: Permission
   password: String!
-  organizations: OrganizationCreateManyInput
+  menus: MenuCreateManyInput
   resetToken: String
   resetTokenExpiry: Float
-  table: TableCreateOneWithoutCustomersInput
-  orders: OrderCreateManyWithoutCustomerInput
-}
-
-input UserCreateWithoutOrdersInput {
-  id: ID
-  email: String!
-  name: String
-  permissions: Permission
-  password: String!
-  organizations: OrganizationCreateManyInput
-  resetToken: String
-  resetTokenExpiry: Float
-  table: TableCreateOneWithoutCustomersInput
-  cart: CartCreateOneWithoutCustomerInput
-}
-
-input UserCreateWithoutTableInput {
-  id: ID
-  email: String!
-  name: String
-  permissions: Permission
-  password: String!
-  organizations: OrganizationCreateManyInput
-  resetToken: String
-  resetTokenExpiry: Float
-  cart: CartCreateOneWithoutCustomerInput
-  orders: OrderCreateManyWithoutCustomerInput
 }
 
 type UserEdge {
@@ -2736,8 +2635,6 @@ enum UserOrderByInput {
   email_DESC
   name_ASC
   name_DESC
-  permissions_ASC
-  permissions_DESC
   password_ASC
   password_DESC
   resetToken_ASC
@@ -2750,7 +2647,6 @@ type UserPreviousValues {
   id: ID!
   email: String!
   name: String
-  permissions: Permission
   password: String!
   resetToken: String
   resetTokenExpiry: Float
@@ -2799,10 +2695,6 @@ input UserScalarWhereInput {
   name_not_starts_with: String
   name_ends_with: String
   name_not_ends_with: String
-  permissions: Permission
-  permissions_not: Permission
-  permissions_in: [Permission!]
-  permissions_not_in: [Permission!]
   password: String
   password_not: String
   password_in: [String!]
@@ -2865,33 +2757,26 @@ input UserSubscriptionWhereInput {
 input UserUpdateDataInput {
   email: String
   name: String
-  permissions: Permission
   password: String
-  organizations: OrganizationUpdateManyInput
+  organizations: OrganizationUpdateManyWithoutOwnerInput
+  menus: MenuUpdateManyInput
   resetToken: String
   resetTokenExpiry: Float
-  table: TableUpdateOneWithoutCustomersInput
-  cart: CartUpdateOneWithoutCustomerInput
-  orders: OrderUpdateManyWithoutCustomerInput
 }
 
 input UserUpdateInput {
   email: String
   name: String
-  permissions: Permission
   password: String
-  organizations: OrganizationUpdateManyInput
+  organizations: OrganizationUpdateManyWithoutOwnerInput
+  menus: MenuUpdateManyInput
   resetToken: String
   resetTokenExpiry: Float
-  table: TableUpdateOneWithoutCustomersInput
-  cart: CartUpdateOneWithoutCustomerInput
-  orders: OrderUpdateManyWithoutCustomerInput
 }
 
 input UserUpdateManyDataInput {
   email: String
   name: String
-  permissions: Permission
   password: String
   resetToken: String
   resetTokenExpiry: Float
@@ -2912,22 +2797,9 @@ input UserUpdateManyInput {
 input UserUpdateManyMutationInput {
   email: String
   name: String
-  permissions: Permission
   password: String
   resetToken: String
   resetTokenExpiry: Float
-}
-
-input UserUpdateManyWithoutTableInput {
-  create: [UserCreateWithoutTableInput!]
-  delete: [UserWhereUniqueInput!]
-  connect: [UserWhereUniqueInput!]
-  set: [UserWhereUniqueInput!]
-  disconnect: [UserWhereUniqueInput!]
-  update: [UserUpdateWithWhereUniqueWithoutTableInput!]
-  upsert: [UserUpsertWithWhereUniqueWithoutTableInput!]
-  deleteMany: [UserScalarWhereInput!]
-  updateMany: [UserUpdateManyWithWhereNestedInput!]
 }
 
 input UserUpdateManyWithWhereNestedInput {
@@ -2942,54 +2814,20 @@ input UserUpdateOneRequiredInput {
   connect: UserWhereUniqueInput
 }
 
-input UserUpdateOneRequiredWithoutCartInput {
-  create: UserCreateWithoutCartInput
-  update: UserUpdateWithoutCartDataInput
-  upsert: UserUpsertWithoutCartInput
+input UserUpdateOneRequiredWithoutOrganizationsInput {
+  create: UserCreateWithoutOrganizationsInput
+  update: UserUpdateWithoutOrganizationsDataInput
+  upsert: UserUpsertWithoutOrganizationsInput
   connect: UserWhereUniqueInput
 }
 
-input UserUpdateOneRequiredWithoutOrdersInput {
-  create: UserCreateWithoutOrdersInput
-  update: UserUpdateWithoutOrdersDataInput
-  upsert: UserUpsertWithoutOrdersInput
-  connect: UserWhereUniqueInput
-}
-
-input UserUpdateWithoutCartDataInput {
+input UserUpdateWithoutOrganizationsDataInput {
   email: String
   name: String
-  permissions: Permission
   password: String
-  organizations: OrganizationUpdateManyInput
+  menus: MenuUpdateManyInput
   resetToken: String
   resetTokenExpiry: Float
-  table: TableUpdateOneWithoutCustomersInput
-  orders: OrderUpdateManyWithoutCustomerInput
-}
-
-input UserUpdateWithoutOrdersDataInput {
-  email: String
-  name: String
-  permissions: Permission
-  password: String
-  organizations: OrganizationUpdateManyInput
-  resetToken: String
-  resetTokenExpiry: Float
-  table: TableUpdateOneWithoutCustomersInput
-  cart: CartUpdateOneWithoutCustomerInput
-}
-
-input UserUpdateWithoutTableDataInput {
-  email: String
-  name: String
-  permissions: Permission
-  password: String
-  organizations: OrganizationUpdateManyInput
-  resetToken: String
-  resetTokenExpiry: Float
-  cart: CartUpdateOneWithoutCustomerInput
-  orders: OrderUpdateManyWithoutCustomerInput
 }
 
 input UserUpdateWithWhereUniqueNestedInput {
@@ -2997,36 +2835,20 @@ input UserUpdateWithWhereUniqueNestedInput {
   data: UserUpdateDataInput!
 }
 
-input UserUpdateWithWhereUniqueWithoutTableInput {
-  where: UserWhereUniqueInput!
-  data: UserUpdateWithoutTableDataInput!
-}
-
 input UserUpsertNestedInput {
   update: UserUpdateDataInput!
   create: UserCreateInput!
 }
 
-input UserUpsertWithoutCartInput {
-  update: UserUpdateWithoutCartDataInput!
-  create: UserCreateWithoutCartInput!
-}
-
-input UserUpsertWithoutOrdersInput {
-  update: UserUpdateWithoutOrdersDataInput!
-  create: UserCreateWithoutOrdersInput!
+input UserUpsertWithoutOrganizationsInput {
+  update: UserUpdateWithoutOrganizationsDataInput!
+  create: UserCreateWithoutOrganizationsInput!
 }
 
 input UserUpsertWithWhereUniqueNestedInput {
   where: UserWhereUniqueInput!
   update: UserUpdateDataInput!
   create: UserCreateInput!
-}
-
-input UserUpsertWithWhereUniqueWithoutTableInput {
-  where: UserWhereUniqueInput!
-  update: UserUpdateWithoutTableDataInput!
-  create: UserCreateWithoutTableInput!
 }
 
 input UserWhereInput {
@@ -3072,10 +2894,6 @@ input UserWhereInput {
   name_not_starts_with: String
   name_ends_with: String
   name_not_ends_with: String
-  permissions: Permission
-  permissions_not: Permission
-  permissions_in: [Permission!]
-  permissions_not_in: [Permission!]
   password: String
   password_not: String
   password_in: [String!]
@@ -3093,6 +2911,9 @@ input UserWhereInput {
   organizations_every: OrganizationWhereInput
   organizations_some: OrganizationWhereInput
   organizations_none: OrganizationWhereInput
+  menus_every: MenuWhereInput
+  menus_some: MenuWhereInput
+  menus_none: MenuWhereInput
   resetToken: String
   resetToken_not: String
   resetToken_in: [String!]
@@ -3115,11 +2936,6 @@ input UserWhereInput {
   resetTokenExpiry_lte: Float
   resetTokenExpiry_gt: Float
   resetTokenExpiry_gte: Float
-  table: TableWhereInput
-  cart: CartWhereInput
-  orders_every: OrderWhereInput
-  orders_some: OrderWhereInput
-  orders_none: OrderWhereInput
   AND: [UserWhereInput!]
   OR: [UserWhereInput!]
   NOT: [UserWhereInput!]

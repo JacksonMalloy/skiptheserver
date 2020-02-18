@@ -3,7 +3,7 @@ import * as path from "path";
 import datamodelInfo from "./generated/nexus-prisma";
 import { prisma } from "./generated/prisma-client";
 import {
-  Menu,
+  // Menu,
   MenuChoice,
   MenuHeader,
   MenuItem,
@@ -22,16 +22,16 @@ import {
 
 export const schema = makePrismaSchema({
   types: {
-    Menu,
-    Organization,
-    MenuChoice,
-    MenuHeader,
-    MenuItem,
-    MenuSelection,
-    Order,
-    OrderItem,
-    Table,
-    Cart,
+    // Menu,
+    // Organization,
+    // MenuChoice,
+    // MenuHeader,
+    // MenuItem,
+    // MenuSelection,
+    // Order,
+    // OrderItem,
+    // Table,
+    // Cart,
     User,
     Query,
     Mutation,

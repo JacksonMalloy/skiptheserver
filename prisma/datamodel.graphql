@@ -1,4 +1,5 @@
 enum Permission {
+  DEVELOPER
   OWNER
   ADMIN
   CUSTOMER
@@ -8,27 +9,23 @@ type User {
   id: ID! @id
   email: String! @unique
   name: String
-  permissions: Permission @default(value: CUSTOMER)
   password: String!
-  organizations: [Organization]
-    @relation(link: TABLE, name: "AssociatedOrganizations")
-
-  # Refresh Token
+  organizations: [Organization!]! @relation(name: "OrganizationsByOwner")
+  menus: [Menu!]!
   resetToken: String
   resetTokenExpiry: Float
-
-  # Menu Ordering
-  table: Table
-  cart: Cart
-  orders: [Order]
+  # table: Table
+  # cart: Cart
+  # orders: [Order]
 }
 
 type Organization {
   id: ID! @id
   name: String!
-  users: [User] @relation(link: TABLE, name: "UsersConnected")
-  menus: [Menu] @relation(link: TABLE, name: "MenusConnected")
-  owner: User! @relation(link: TABLE, name: "OrganizationOwner")
+  # users: [User!] @relation(name: "OrganizationsByUser")
+  menus: [Menu] @relation(name: "MenuByOrganization")
+  owner: User! @relation(name: "OrganizationsByOwner", link: INLINE)
+  permissions: Permission @default(value: CUSTOMER)
 }
 
 type Menu {
@@ -38,7 +35,7 @@ type Menu {
   published: Boolean! @default(value: false)
   title: String!
   menuItems: [MenuItem]
-  organization: Organization! @relation(link: INLINE, name: "OrganizationMenu")
+  organization: Organization! @relation(name: "MenuByOrganization")
 }
 
 type MenuItem {
@@ -79,14 +76,14 @@ type MenuHeader {
 # User Cart
 type Table {
   id: ID! @id
-  customers: [User] @relation(link: TABLE)
+  customers: [User]
   carts: [Cart]
 }
 
 type Cart {
   id: ID! @id
   orders: [Order]
-  customer: User! @relation(link: TABLE)
+  customer: User!
   table: Table
   total: Int!
 }
@@ -95,7 +92,7 @@ type Order {
   id: ID! @id
   items: [OrderItem!]!
   total: Int!
-  customer: User! @relation(link: INLINE)
+  customer: User!
   charge: String!
   createdAt: DateTime! @createdAt
   updatedAt: DateTime! @updatedAt
@@ -106,5 +103,5 @@ type OrderItem {
   title: String!
   price: Int!
   quantity: Int! @default(value: 1)
-  customer: User! @relation(link: INLINE)
+  customer: User!
 }

@@ -19,8 +19,16 @@ mutation registerUser($email: String!, $name: String!, $password: String!) {
 ```
 {
   "email": "jacksmalloy@gmail.com",
-  "name": "jackson malloy"
+  "name": "jackson malloy",
   "password": "123456"
+}
+```
+
+## HTTP Headers
+
+```
+{
+  "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJjazZoYzNnZ20wMDBkMDg0NHpiZmNzY2ZoIiwiaWF0IjoxNTgxMzkyMjE3fQ.4qCVYbKiz0CJlFAqkdMSdbk01ppTxo0jQcTzyDv5EnM"
 }
 ```
 
@@ -29,7 +37,7 @@ mutation registerUser($email: String!, $name: String!, $password: String!) {
 ### Query
 
 ```
- mutation loginUser($email: String!, $password: String!) {
+mutation loginUser($email: String!, $password: String!) {
   loginUser(email: $email, password: $password) {
     user {
       id
