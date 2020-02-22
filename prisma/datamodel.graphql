@@ -11,69 +11,70 @@ type User {
   name: String
   password: String!
   organizations: [Organization!]! @relation(name: "OrganizationsByOwner")
-  menus: [Menu!]!
-  resetToken: String
-  resetTokenExpiry: Float
-  # table: Table
-  # cart: Cart
-  # orders: [Order]
+
+  # TODO @@@@@@@@@@@@@@@@@@@@@@@@@@@@ TODO
+  table: Table
+  cart: Cart @relation(link: TABLE)
+  orders: [Order]
+  permissions: Permission! @default(value: CUSTOMER)
 }
 
 type Organization {
   id: ID! @id
   name: String!
-  # users: [User!] @relation(name: "OrganizationsByUser")
+  users: [User!]! @relation(name: "OrganizationsByUser")
   menus: [Menu] @relation(name: "MenuByOrganization")
-  owner: User! @relation(name: "OrganizationsByOwner", link: INLINE)
-  permissions: Permission @default(value: CUSTOMER)
+  createdBy: User!
+    @relation(name: "OrganizationsByOwner", link: INLINE)
+    @db(name: "created_by")
 }
 
 type Menu {
   id: ID! @id
-  createdAt: DateTime! @createdAt
-  updatedAt: DateTime! @updatedAt
+  createdAt: DateTime! @createdAt @db(name: "created_at")
+  updatedAt: DateTime! @updatedAt @db(name: "updated_at")
   published: Boolean! @default(value: false)
   title: String!
-  menuItems: [MenuItem]
+  menu_items: [MenuItem]
   organization: Organization! @relation(name: "MenuByOrganization")
 }
 
 type MenuItem {
   id: ID! @id
-  basePrice: String!
+  basePrice: String! @db(name: "base_price")
   description: String
   menu: Menu
   options: [MenuChoice]
   name: String!
   image: String
-  largeImage: String
-  menuHeader: MenuHeader
+  largeImage: String @db(name: "large_image")
+  menuHeader: MenuHeader @db(name: "menu_header")
 }
 
 type MenuChoice {
   id: ID! @id
   header: String!
-  subHeader: String
+  subHeader: String @db(name: "sub_header")
   selections: [MenuSelection]
+  menu_items: [MenuItem]
 }
 
 type MenuSelection {
   id: ID! @id
   name: String!
   selected: Boolean @default(value: false)
-  valueAdd: String
-  menuChoice: MenuChoice
+  valueAdd: String @db(name: "value_add")
+  option: MenuChoice
 }
 
 type MenuHeader {
   id: ID! @id
   name: String!
-  subHeader: String
-  menuItems: [MenuItem]
-  menu: Menu
+  subHeader: String @db(name: "sub_header")
+  menu_items: [MenuItem]
 }
 
-# User Cart
+# User Cart @@@@@@@@@@@@@@@@@@@@@@@@@@@@ TODO
 type Table {
   id: ID! @id
   customers: [User]
@@ -94,8 +95,8 @@ type Order {
   total: Int!
   customer: User!
   charge: String!
-  createdAt: DateTime! @createdAt
-  updatedAt: DateTime! @updatedAt
+  createdAt: DateTime! @createdAt @db(name: "created_at")
+  updatedAt: DateTime! @updatedAt @db(name: "updated_at")
 }
 
 type OrderItem {

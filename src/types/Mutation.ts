@@ -5,23 +5,26 @@ import {
   mutationField,
   objectType,
   mutationType,
-  idArg
+  intArg
 } from "nexus/dist";
 import { APP_SECRET, getUserId } from "../utils";
-import { Organization } from "./Organization";
 
 export const Mutation = mutationType({
   definition(t) {
     t.field("createOrganization", {
       type: "Organization",
       args: {
-        name: stringArg({ required: true })
+        name: stringArg({ required: true }),
+        id: stringArg({ required: true })
       },
-      resolve: (parent, { name }, context) => {
-        const userId = getUserId(context);
+      resolve: (parent, { name, id }, context) => {
         return context.prisma.createOrganization({
           name,
-          owner: { connect: { id: userId } }
+          createdBy: {
+            connect: {
+              id
+            }
+          }
         });
       }
     });
@@ -29,17 +32,97 @@ export const Mutation = mutationType({
       type: "Menu",
       args: {
         title: stringArg({ required: true }),
-        id: idArg()
+        id: stringArg({ required: true })
       },
       resolve: async (parent, args, context) => {
         const { title, id } = args;
         const { prisma } = context;
 
-        const organizationId = await prisma.organization({ id });
-        console.log("hello");
         return prisma.createMenu({
           title,
           organization: {
+            connect: {
+              id
+            }
+          }
+        });
+      }
+    });
+    t.field("createMenuItem", {
+      type: "MenuItem",
+      args: {
+        name: stringArg({ required: true }),
+        id: stringArg({ required: true }),
+        basePrice: stringArg({ required: true })
+      },
+      resolve: async (parent, args, context) => {
+        const { name, id, basePrice } = args;
+        const { prisma } = context;
+
+        return prisma.createMenuItem({
+          name,
+          basePrice,
+          menu: {
+            connect: {
+              id
+            }
+          }
+        });
+      }
+    });
+    t.field("createMenuChoice", {
+      type: "MenuChoice",
+      args: {
+        header: stringArg({ required: true }),
+        id: stringArg({ required: true })
+      },
+      resolve: async (parent, args, context) => {
+        const { header, id } = args;
+        const { prisma } = context;
+
+        return prisma.createMenuChoice({
+          header,
+          menu_items: {
+            connect: {
+              id
+            }
+          }
+        });
+      }
+    });
+    t.field("createMenuHeader", {
+      type: "MenuHeader",
+      args: {
+        name: stringArg({ required: true }),
+        id: stringArg({ required: true })
+      },
+      resolve: async (parent, args, context) => {
+        const { name, id } = args;
+        const { prisma } = context;
+
+        return prisma.createMenuHeader({
+          name,
+          menu_items: {
+            connect: {
+              id
+            }
+          }
+        });
+      }
+    });
+    t.field("createMenuSelection", {
+      type: "MenuSelection",
+      args: {
+        name: stringArg({ required: true }),
+        id: stringArg({ required: true })
+      },
+      resolve: async (parent, args, context) => {
+        const { name, id } = args;
+        const { prisma } = context;
+
+        return prisma.createMenuSelection({
+          name,
+          option: {
             connect: {
               id
             }

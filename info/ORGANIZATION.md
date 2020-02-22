@@ -3,13 +3,10 @@
 ### Query
 
 ```
-mutation createOrganization($data: OrganizationCreateInput!) {
-  createOrganization(data: $data) {
-    id
+mutation createOrganization($name: String!, $id: String!) {
+  createOrganization(name: $name, id: $id) {
     name
-    owner {
-      name
-    }
+    id
   }
 }
 ```
@@ -18,36 +15,8 @@ mutation createOrganization($data: OrganizationCreateInput!) {
 
 ```
 {
-  "data": {
-    "name": "boston pizza",
-    "owner": {
-      "connect": {
-        "id": "ck68eo3mi000w0747dk6qnebb"
-      }
-    }
-  }
-}
-```
-
-# Delete Organization
-
-### Query
-
-```
-mutation deleteOrganization($data: OrganizationWhereUniqueInput!) {
-  deleteOrganization(where: $data) {
-    id
-    name
-  }
-}
-```
-
-### Variables
-
-```
-{
-  "data": {
-    "id": "ck68ec1d900f008548c8xl3u4"
-  }
+    "name": "testing query10",
+    <!-- user ID -->
+  	"id": "ck6y1knw0008w0740stwugzd9"
 }
 ```

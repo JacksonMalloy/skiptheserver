@@ -7,21 +7,77 @@ type AuthPayload {
   user: User
 }
 
+"""Cart that the customer has created"""
+type Cart {
+  customer: User!
+  id: ID!
+  orders(after: String, before: String, first: Int, last: Int, orderBy: OrderOrderByInput, skip: Int, where: OrderWhereInput): [Order!]
+  table: Table
+  total: Int!
+}
+
+enum CartOrderByInput {
+  createdAt_ASC
+  createdAt_DESC
+  id_ASC
+  id_DESC
+  total_ASC
+  total_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+}
+
+input CartWhereInput {
+  AND: [CartWhereInput!]
+  customer: UserWhereInput
+  id: ID
+  id_contains: ID
+  id_ends_with: ID
+  id_gt: ID
+  id_gte: ID
+  id_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_not: ID
+  id_not_contains: ID
+  id_not_ends_with: ID
+  id_not_in: [ID!]
+  id_not_starts_with: ID
+  id_starts_with: ID
+  NOT: [CartWhereInput!]
+  OR: [CartWhereInput!]
+  orders_every: OrderWhereInput
+  orders_none: OrderWhereInput
+  orders_some: OrderWhereInput
+  table: TableWhereInput
+  total: Int
+  total_gt: Int
+  total_gte: Int
+  total_in: [Int!]
+  total_lt: Int
+  total_lte: Int
+  total_not: Int
+  total_not_in: [Int!]
+}
+
 scalar DateTime
 
+"""Menu that the admin has created within an organization"""
 type Menu {
   createdAt: DateTime!
   id: ID!
-  menuItems(after: String, before: String, first: Int, last: Int, orderBy: MenuItemOrderByInput, skip: Int, where: MenuItemWhereInput): [MenuItem!]
+  menu_items(after: String, before: String, first: Int, last: Int, orderBy: MenuItemOrderByInput, skip: Int, where: MenuItemWhereInput): [MenuItem!]
   organization: Organization!
   published: Boolean!
   title: String!
   updatedAt: DateTime!
 }
 
+"""MenuChoice that the admin has created"""
 type MenuChoice {
   header: String!
   id: ID!
+  menu_items(after: String, before: String, first: Int, last: Int, orderBy: MenuItemOrderByInput, skip: Int, where: MenuItemWhereInput): [MenuItem!]
   selections(after: String, before: String, first: Int, last: Int, orderBy: MenuSelectionOrderByInput, skip: Int, where: MenuSelectionWhereInput): [MenuSelection!]
   subHeader: String
 }
@@ -69,6 +125,9 @@ input MenuChoiceWhereInput {
   id_not_in: [ID!]
   id_not_starts_with: ID
   id_starts_with: ID
+  menu_items_every: MenuItemWhereInput
+  menu_items_none: MenuItemWhereInput
+  menu_items_some: MenuItemWhereInput
   NOT: [MenuChoiceWhereInput!]
   OR: [MenuChoiceWhereInput!]
   selections_every: MenuSelectionWhereInput
@@ -90,10 +149,11 @@ input MenuChoiceWhereInput {
   subHeader_starts_with: String
 }
 
+"""MenuHeader that the admin has created"""
 type MenuHeader {
   id: ID!
   menu: Menu
-  menuItems(after: String, before: String, first: Int, last: Int, orderBy: MenuItemOrderByInput, skip: Int, where: MenuItemWhereInput): [MenuItem!]
+  menu_items(after: String, before: String, first: Int, last: Int, orderBy: MenuItemOrderByInput, skip: Int, where: MenuItemWhereInput): [MenuItem!]
   name: String!
   subHeader: String
 }
@@ -115,9 +175,9 @@ input MenuHeaderWhereInput {
   id_not_starts_with: ID
   id_starts_with: ID
   menu: MenuWhereInput
-  menuItems_every: MenuItemWhereInput
-  menuItems_none: MenuItemWhereInput
-  menuItems_some: MenuItemWhereInput
+  menu_items_every: MenuItemWhereInput
+  menu_items_none: MenuItemWhereInput
+  menu_items_some: MenuItemWhereInput
   name: String
   name_contains: String
   name_ends_with: String
@@ -150,6 +210,7 @@ input MenuHeaderWhereInput {
   subHeader_starts_with: String
 }
 
+"""MenuItem that the admin has created"""
 type MenuItem {
   basePrice: String!
   description: String
@@ -289,10 +350,11 @@ enum MenuOrderByInput {
   updatedAt_DESC
 }
 
+"""MenuSelection that the admin has created"""
 type MenuSelection {
   id: ID!
-  menuChoice: MenuChoice
   name: String!
+  option: MenuChoice
   selected: Boolean
   valueAdd: String
 }
@@ -328,7 +390,6 @@ input MenuSelectionWhereInput {
   id_not_in: [ID!]
   id_not_starts_with: ID
   id_starts_with: ID
-  menuChoice: MenuChoiceWhereInput
   name: String
   name_contains: String
   name_ends_with: String
@@ -344,6 +405,7 @@ input MenuSelectionWhereInput {
   name_not_starts_with: String
   name_starts_with: String
   NOT: [MenuSelectionWhereInput!]
+  option: MenuChoiceWhereInput
   OR: [MenuSelectionWhereInput!]
   selected: Boolean
   selected_not: Boolean
@@ -387,9 +449,9 @@ input MenuWhereInput {
   id_not_in: [ID!]
   id_not_starts_with: ID
   id_starts_with: ID
-  menuItems_every: MenuItemWhereInput
-  menuItems_none: MenuItemWhereInput
-  menuItems_some: MenuItemWhereInput
+  menu_items_every: MenuItemWhereInput
+  menu_items_none: MenuItemWhereInput
+  menu_items_some: MenuItemWhereInput
   NOT: [MenuWhereInput!]
   OR: [MenuWhereInput!]
   organization: OrganizationWhereInput
@@ -420,22 +482,189 @@ input MenuWhereInput {
 }
 
 type Mutation {
-  createMenu(id: ID, title: String!): Menu
-  createOrganization(name: String!): Organization
+  createMenu(id: String!, title: String!): Menu
+  createMenuChoice(header: String!, id: String!): MenuChoice
+  createMenuHeader(id: String!, name: String!): MenuHeader
+  createMenuItem(basePrice: String!, id: String!, name: String!): MenuItem
+  createMenuSelection(id: String!, name: String!): MenuSelection
+  createOrganization(id: String!, name: String!): Organization
   loginUser(email: String!, password: String!): AuthPayload
   registerUser(email: String!, name: String, password: String!): AuthPayload
 }
 
+"""Order that the customer has created"""
+type Order {
+  charge: String!
+  createdAt: DateTime!
+  customer: User!
+  id: ID!
+  items(after: String, before: String, first: Int, last: Int, orderBy: OrderItemOrderByInput, skip: Int, where: OrderItemWhereInput): [OrderItem!]
+  total: Int!
+  updatedAt: DateTime!
+}
+
+"""OrderItem that the customer has created"""
+type OrderItem {
+  customer: User!
+  id: ID!
+  price: Int!
+  quantity: Int!
+  title: String!
+}
+
+enum OrderItemOrderByInput {
+  createdAt_ASC
+  createdAt_DESC
+  id_ASC
+  id_DESC
+  price_ASC
+  price_DESC
+  quantity_ASC
+  quantity_DESC
+  title_ASC
+  title_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+}
+
+input OrderItemWhereInput {
+  AND: [OrderItemWhereInput!]
+  customer: UserWhereInput
+  id: ID
+  id_contains: ID
+  id_ends_with: ID
+  id_gt: ID
+  id_gte: ID
+  id_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_not: ID
+  id_not_contains: ID
+  id_not_ends_with: ID
+  id_not_in: [ID!]
+  id_not_starts_with: ID
+  id_starts_with: ID
+  NOT: [OrderItemWhereInput!]
+  OR: [OrderItemWhereInput!]
+  price: Int
+  price_gt: Int
+  price_gte: Int
+  price_in: [Int!]
+  price_lt: Int
+  price_lte: Int
+  price_not: Int
+  price_not_in: [Int!]
+  quantity: Int
+  quantity_gt: Int
+  quantity_gte: Int
+  quantity_in: [Int!]
+  quantity_lt: Int
+  quantity_lte: Int
+  quantity_not: Int
+  quantity_not_in: [Int!]
+  title: String
+  title_contains: String
+  title_ends_with: String
+  title_gt: String
+  title_gte: String
+  title_in: [String!]
+  title_lt: String
+  title_lte: String
+  title_not: String
+  title_not_contains: String
+  title_not_ends_with: String
+  title_not_in: [String!]
+  title_not_starts_with: String
+  title_starts_with: String
+}
+
+enum OrderOrderByInput {
+  charge_ASC
+  charge_DESC
+  createdAt_ASC
+  createdAt_DESC
+  id_ASC
+  id_DESC
+  total_ASC
+  total_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+}
+
+input OrderWhereInput {
+  AND: [OrderWhereInput!]
+  charge: String
+  charge_contains: String
+  charge_ends_with: String
+  charge_gt: String
+  charge_gte: String
+  charge_in: [String!]
+  charge_lt: String
+  charge_lte: String
+  charge_not: String
+  charge_not_contains: String
+  charge_not_ends_with: String
+  charge_not_in: [String!]
+  charge_not_starts_with: String
+  charge_starts_with: String
+  createdAt: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_not: DateTime
+  createdAt_not_in: [DateTime!]
+  customer: UserWhereInput
+  id: ID
+  id_contains: ID
+  id_ends_with: ID
+  id_gt: ID
+  id_gte: ID
+  id_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_not: ID
+  id_not_contains: ID
+  id_not_ends_with: ID
+  id_not_in: [ID!]
+  id_not_starts_with: ID
+  id_starts_with: ID
+  items_every: OrderItemWhereInput
+  items_none: OrderItemWhereInput
+  items_some: OrderItemWhereInput
+  NOT: [OrderWhereInput!]
+  OR: [OrderWhereInput!]
+  total: Int
+  total_gt: Int
+  total_gte: Int
+  total_in: [Int!]
+  total_lt: Int
+  total_lte: Int
+  total_not: Int
+  total_not_in: [Int!]
+  updatedAt: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_not: DateTime
+  updatedAt_not_in: [DateTime!]
+}
+
+"""Organization that the owner has created"""
 type Organization {
+  createdBy: User!
   id: ID!
   menus(after: String, before: String, first: Int, last: Int, orderBy: MenuOrderByInput, skip: Int, where: MenuWhereInput): [Menu!]
   name: String!
-  owner: User!
-  permissions: Permission
+  users(after: String, before: String, first: Int, last: Int, orderBy: UserOrderByInput, skip: Int, where: UserWhereInput): [User!]
 }
 
 input OrganizationWhereInput {
   AND: [OrganizationWhereInput!]
+  createdBy: UserWhereInput
   id: ID
   id_contains: ID
   id_ends_with: ID
@@ -469,11 +698,9 @@ input OrganizationWhereInput {
   name_starts_with: String
   NOT: [OrganizationWhereInput!]
   OR: [OrganizationWhereInput!]
-  owner: UserWhereInput
-  permissions: Permission
-  permissions_in: [Permission!]
-  permissions_not: Permission
-  permissions_not_in: [Permission!]
+  users_every: UserWhereInput
+  users_none: UserWhereInput
+  users_some: UserWhereInput
 }
 
 enum Permission {
@@ -487,6 +714,39 @@ type Query {
   me: User
 }
 
+"""Table that the customer has created"""
+type Table {
+  carts(after: String, before: String, first: Int, last: Int, orderBy: CartOrderByInput, skip: Int, where: CartWhereInput): [Cart!]
+  customers(after: String, before: String, first: Int, last: Int, orderBy: UserOrderByInput, skip: Int, where: UserWhereInput): [User!]
+  id: ID!
+}
+
+input TableWhereInput {
+  AND: [TableWhereInput!]
+  carts_every: CartWhereInput
+  carts_none: CartWhereInput
+  carts_some: CartWhereInput
+  customers_every: UserWhereInput
+  customers_none: UserWhereInput
+  customers_some: UserWhereInput
+  id: ID
+  id_contains: ID
+  id_ends_with: ID
+  id_gt: ID
+  id_gte: ID
+  id_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_not: ID
+  id_not_contains: ID
+  id_not_ends_with: ID
+  id_not_in: [ID!]
+  id_not_starts_with: ID
+  id_starts_with: ID
+  NOT: [TableWhereInput!]
+  OR: [TableWhereInput!]
+}
+
 """The user of the application"""
 type User {
   email: String!
@@ -495,8 +755,26 @@ type User {
   organizations: [Organization!]
 }
 
+enum UserOrderByInput {
+  createdAt_ASC
+  createdAt_DESC
+  email_ASC
+  email_DESC
+  id_ASC
+  id_DESC
+  name_ASC
+  name_DESC
+  password_ASC
+  password_DESC
+  permissions_ASC
+  permissions_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+}
+
 input UserWhereInput {
   AND: [UserWhereInput!]
+  cart: CartWhereInput
   email: String
   email_contains: String
   email_ends_with: String
@@ -525,9 +803,6 @@ input UserWhereInput {
   id_not_in: [ID!]
   id_not_starts_with: ID
   id_starts_with: ID
-  menus_every: MenuWhereInput
-  menus_none: MenuWhereInput
-  menus_some: MenuWhereInput
   name: String
   name_contains: String
   name_ends_with: String
@@ -544,6 +819,9 @@ input UserWhereInput {
   name_starts_with: String
   NOT: [UserWhereInput!]
   OR: [UserWhereInput!]
+  orders_every: OrderWhereInput
+  orders_none: OrderWhereInput
+  orders_some: OrderWhereInput
   organizations_every: OrganizationWhereInput
   organizations_none: OrganizationWhereInput
   organizations_some: OrganizationWhereInput
@@ -561,26 +839,9 @@ input UserWhereInput {
   password_not_in: [String!]
   password_not_starts_with: String
   password_starts_with: String
-  resetToken: String
-  resetToken_contains: String
-  resetToken_ends_with: String
-  resetToken_gt: String
-  resetToken_gte: String
-  resetToken_in: [String!]
-  resetToken_lt: String
-  resetToken_lte: String
-  resetToken_not: String
-  resetToken_not_contains: String
-  resetToken_not_ends_with: String
-  resetToken_not_in: [String!]
-  resetToken_not_starts_with: String
-  resetToken_starts_with: String
-  resetTokenExpiry: Float
-  resetTokenExpiry_gt: Float
-  resetTokenExpiry_gte: Float
-  resetTokenExpiry_in: [Float!]
-  resetTokenExpiry_lt: Float
-  resetTokenExpiry_lte: Float
-  resetTokenExpiry_not: Float
-  resetTokenExpiry_not_in: [Float!]
+  permissions: Permission
+  permissions_in: [Permission!]
+  permissions_not: Permission
+  permissions_not_in: [Permission!]
+  table: TableWhereInput
 }
