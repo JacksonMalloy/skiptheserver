@@ -11,8 +11,15 @@ type User {
   name: String
   password: String!
   organizations: [Organization!]! @relation(name: "OrganizationsByOwner")
+  permissions: Permission! @default(value: ADMIN)
+}
 
-  # TODO @@@@@@@@@@@@@@@@@@@@@@@@@@@@ TODO
+type Customer {
+  id: ID! @id
+  email: String! @unique
+  name: String
+  password: String!
+  organizations: [Organization!]! @relation(name: "OrganizationsByCustomer")
   table: Table
   cart: Cart @relation(link: TABLE)
   orders: [Order]
@@ -22,8 +29,7 @@ type User {
 type Organization {
   id: ID! @id
   name: String!
-  users: [User!]! @relation(name: "OrganizationsByUser")
-  menus: [Menu] @relation(name: "MenuByOrganization")
+  menus: [Menu!]! @relation(name: "MenuByOrganization")
   createdBy: User!
     @relation(name: "OrganizationsByOwner", link: INLINE)
     @db(name: "created_by")

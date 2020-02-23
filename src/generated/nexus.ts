@@ -112,7 +112,6 @@ export interface NexusGenInputs {
     id_not_in?: string[] | null; // [ID!]
     id_not_starts_with?: string | null; // ID
     id_starts_with?: string | null; // ID
-    menu?: NexusGenInputs['MenuWhereInput'] | null; // MenuWhereInput
     menu_items_every?: NexusGenInputs['MenuItemWhereInput'] | null; // MenuItemWhereInput
     menu_items_none?: NexusGenInputs['MenuItemWhereInput'] | null; // MenuItemWhereInput
     menu_items_some?: NexusGenInputs['MenuItemWhereInput'] | null; // MenuItemWhereInput
@@ -493,9 +492,6 @@ export interface NexusGenInputs {
     name_starts_with?: string | null; // String
     NOT?: NexusGenInputs['OrganizationWhereInput'][] | null; // [OrganizationWhereInput!]
     OR?: NexusGenInputs['OrganizationWhereInput'][] | null; // [OrganizationWhereInput!]
-    users_every?: NexusGenInputs['UserWhereInput'] | null; // UserWhereInput
-    users_none?: NexusGenInputs['UserWhereInput'] | null; // UserWhereInput
-    users_some?: NexusGenInputs['UserWhereInput'] | null; // UserWhereInput
   }
   TableWhereInput: { // input type
     AND?: NexusGenInputs['TableWhereInput'][] | null; // [TableWhereInput!]
@@ -524,7 +520,6 @@ export interface NexusGenInputs {
   }
   UserWhereInput: { // input type
     AND?: NexusGenInputs['UserWhereInput'][] | null; // [UserWhereInput!]
-    cart?: NexusGenInputs['CartWhereInput'] | null; // CartWhereInput
     email?: string | null; // String
     email_contains?: string | null; // String
     email_ends_with?: string | null; // String
@@ -569,9 +564,6 @@ export interface NexusGenInputs {
     name_starts_with?: string | null; // String
     NOT?: NexusGenInputs['UserWhereInput'][] | null; // [UserWhereInput!]
     OR?: NexusGenInputs['UserWhereInput'][] | null; // [UserWhereInput!]
-    orders_every?: NexusGenInputs['OrderWhereInput'] | null; // OrderWhereInput
-    orders_none?: NexusGenInputs['OrderWhereInput'] | null; // OrderWhereInput
-    orders_some?: NexusGenInputs['OrderWhereInput'] | null; // OrderWhereInput
     organizations_every?: NexusGenInputs['OrganizationWhereInput'] | null; // OrganizationWhereInput
     organizations_none?: NexusGenInputs['OrganizationWhereInput'] | null; // OrganizationWhereInput
     organizations_some?: NexusGenInputs['OrganizationWhereInput'] | null; // OrganizationWhereInput
@@ -593,7 +585,6 @@ export interface NexusGenInputs {
     permissions_in?: NexusGenEnums['Permission'][] | null; // [Permission!]
     permissions_not?: NexusGenEnums['Permission'] | null; // Permission
     permissions_not_in?: NexusGenEnums['Permission'][] | null; // [Permission!]
-    table?: NexusGenInputs['TableWhereInput'] | null; // TableWhereInput
   }
 }
 
@@ -605,6 +596,7 @@ export interface NexusGenEnums {
   MenuSelectionOrderByInput: "createdAt_ASC" | "createdAt_DESC" | "id_ASC" | "id_DESC" | "name_ASC" | "name_DESC" | "selected_ASC" | "selected_DESC" | "updatedAt_ASC" | "updatedAt_DESC" | "valueAdd_ASC" | "valueAdd_DESC"
   OrderItemOrderByInput: "createdAt_ASC" | "createdAt_DESC" | "id_ASC" | "id_DESC" | "price_ASC" | "price_DESC" | "quantity_ASC" | "quantity_DESC" | "title_ASC" | "title_DESC" | "updatedAt_ASC" | "updatedAt_DESC"
   OrderOrderByInput: "charge_ASC" | "charge_DESC" | "createdAt_ASC" | "createdAt_DESC" | "id_ASC" | "id_DESC" | "total_ASC" | "total_DESC" | "updatedAt_ASC" | "updatedAt_DESC"
+  OrganizationOrderByInput: "createdAt_ASC" | "createdAt_DESC" | "id_ASC" | "id_DESC" | "name_ASC" | "name_DESC" | "updatedAt_ASC" | "updatedAt_DESC"
   Permission: "ADMIN" | "CUSTOMER" | "DEVELOPER" | "OWNER"
   UserOrderByInput: "createdAt_ASC" | "createdAt_DESC" | "email_ASC" | "email_DESC" | "id_ASC" | "id_DESC" | "name_ASC" | "name_DESC" | "password_ASC" | "password_DESC" | "permissions_ASC" | "permissions_DESC" | "updatedAt_ASC" | "updatedAt_DESC"
 }
@@ -617,6 +609,17 @@ export interface NexusGenRootTypes {
   Cart: { // root type
     id: string; // ID!
     total: number; // Int!
+  }
+  Customer: { // root type
+    email: string; // String!
+    id: string; // ID!
+    name?: string | null; // String
+    password: string; // String!
+    permissions: NexusGenEnums['Permission']; // Permission!
+  }
+  CustomerAuthPayload: { // root type
+    customer?: NexusGenRootTypes['Customer'] | null; // Customer
+    token?: string | null; // String
   }
   Menu: { // root type
     createdAt: any; // DateTime!
@@ -675,6 +678,7 @@ export interface NexusGenRootTypes {
     email: string; // String!
     id: string; // ID!
     name?: string | null; // String
+    permissions: NexusGenEnums['Permission']; // Permission!
   }
   String: string;
   Int: number;
@@ -703,6 +707,7 @@ export interface NexusGenAllTypes extends NexusGenRootTypes {
   MenuSelectionOrderByInput: NexusGenEnums['MenuSelectionOrderByInput'];
   OrderItemOrderByInput: NexusGenEnums['OrderItemOrderByInput'];
   OrderOrderByInput: NexusGenEnums['OrderOrderByInput'];
+  OrganizationOrderByInput: NexusGenEnums['OrganizationOrderByInput'];
   Permission: NexusGenEnums['Permission'];
   UserOrderByInput: NexusGenEnums['UserOrderByInput'];
 }
@@ -718,6 +723,21 @@ export interface NexusGenFieldTypes {
     orders: NexusGenRootTypes['Order'][] | null; // [Order!]
     table: NexusGenRootTypes['Table'] | null; // Table
     total: number; // Int!
+  }
+  Customer: { // field return type
+    cart: NexusGenRootTypes['Cart'] | null; // Cart
+    email: string; // String!
+    id: string; // ID!
+    name: string | null; // String
+    orders: NexusGenRootTypes['Order'][] | null; // [Order!]
+    organizations: NexusGenRootTypes['Organization'][] | null; // [Organization!]
+    password: string; // String!
+    permissions: NexusGenEnums['Permission']; // Permission!
+    table: NexusGenRootTypes['Table'] | null; // Table
+  }
+  CustomerAuthPayload: { // field return type
+    customer: NexusGenRootTypes['Customer'] | null; // Customer
+    token: string | null; // String
   }
   Menu: { // field return type
     createdAt: any; // DateTime!
@@ -737,7 +757,6 @@ export interface NexusGenFieldTypes {
   }
   MenuHeader: { // field return type
     id: string; // ID!
-    menu: NexusGenRootTypes['Menu'] | null; // Menu
     menu_items: NexusGenRootTypes['MenuItem'][] | null; // [MenuItem!]
     name: string; // String!
     subHeader: string | null; // String
@@ -767,7 +786,9 @@ export interface NexusGenFieldTypes {
     createMenuItem: NexusGenRootTypes['MenuItem'] | null; // MenuItem
     createMenuSelection: NexusGenRootTypes['MenuSelection'] | null; // MenuSelection
     createOrganization: NexusGenRootTypes['Organization'] | null; // Organization
+    loginCustomer: NexusGenRootTypes['CustomerAuthPayload'] | null; // CustomerAuthPayload
     loginUser: NexusGenRootTypes['AuthPayload'] | null; // AuthPayload
+    registerCustomer: NexusGenRootTypes['CustomerAuthPayload'] | null; // CustomerAuthPayload
     registerUser: NexusGenRootTypes['AuthPayload'] | null; // AuthPayload
   }
   Order: { // field return type
@@ -791,10 +812,17 @@ export interface NexusGenFieldTypes {
     id: string; // ID!
     menus: NexusGenRootTypes['Menu'][] | null; // [Menu!]
     name: string; // String!
-    users: NexusGenRootTypes['User'][] | null; // [User!]
   }
   Query: { // field return type
+    customer: NexusGenRootTypes['Customer'] | null; // Customer
+    customerById: NexusGenRootTypes['Customer'] | null; // Customer
+    customers: NexusGenRootTypes['Customer'][] | null; // [Customer!]
+    customersByOrganization: NexusGenRootTypes['Customer'][] | null; // [Customer!]
     me: NexusGenRootTypes['User'] | null; // User
+    menuById: NexusGenRootTypes['Menu'] | null; // Menu
+    menusByOrganization: NexusGenRootTypes['Menu'][] | null; // [Menu!]
+    userById: NexusGenRootTypes['User'][] | null; // [User!]
+    users: NexusGenRootTypes['User'][] | null; // [User!]
   }
   Table: { // field return type
     carts: NexusGenRootTypes['Cart'][] | null; // [Cart!]
@@ -806,6 +834,7 @@ export interface NexusGenFieldTypes {
     id: string; // ID!
     name: string | null; // String
     organizations: NexusGenRootTypes['Organization'][] | null; // [Organization!]
+    permissions: NexusGenEnums['Permission']; // Permission!
   }
 }
 
@@ -819,6 +848,26 @@ export interface NexusGenArgTypes {
       orderBy?: NexusGenEnums['OrderOrderByInput'] | null; // OrderOrderByInput
       skip?: number | null; // Int
       where?: NexusGenInputs['OrderWhereInput'] | null; // OrderWhereInput
+    }
+  }
+  Customer: {
+    orders: { // args
+      after?: string | null; // String
+      before?: string | null; // String
+      first?: number | null; // Int
+      last?: number | null; // Int
+      orderBy?: NexusGenEnums['OrderOrderByInput'] | null; // OrderOrderByInput
+      skip?: number | null; // Int
+      where?: NexusGenInputs['OrderWhereInput'] | null; // OrderWhereInput
+    }
+    organizations: { // args
+      after?: string | null; // String
+      before?: string | null; // String
+      first?: number | null; // Int
+      last?: number | null; // Int
+      orderBy?: NexusGenEnums['OrganizationOrderByInput'] | null; // OrganizationOrderByInput
+      skip?: number | null; // Int
+      where?: NexusGenInputs['OrganizationWhereInput'] | null; // OrganizationWhereInput
     }
   }
   Menu: {
@@ -900,8 +949,19 @@ export interface NexusGenArgTypes {
       id: string; // String!
       name: string; // String!
     }
+    loginCustomer: { // args
+      email: string; // String!
+      id: string; // String!
+      password: string; // String!
+    }
     loginUser: { // args
       email: string; // String!
+      password: string; // String!
+    }
+    registerCustomer: { // args
+      email: string; // String!
+      id: string; // String!
+      name?: string | null; // String
       password: string; // String!
     }
     registerUser: { // args
@@ -931,14 +991,22 @@ export interface NexusGenArgTypes {
       skip?: number | null; // Int
       where?: NexusGenInputs['MenuWhereInput'] | null; // MenuWhereInput
     }
-    users: { // args
-      after?: string | null; // String
-      before?: string | null; // String
-      first?: number | null; // Int
-      last?: number | null; // Int
-      orderBy?: NexusGenEnums['UserOrderByInput'] | null; // UserOrderByInput
-      skip?: number | null; // Int
-      where?: NexusGenInputs['UserWhereInput'] | null; // UserWhereInput
+  }
+  Query: {
+    customerById: { // args
+      id: string; // String!
+    }
+    customersByOrganization: { // args
+      id: string; // String!
+    }
+    menuById: { // args
+      id: string; // String!
+    }
+    menusByOrganization: { // args
+      id: string; // String!
+    }
+    userById: { // args
+      id: string; // String!
     }
   }
   Table: {
@@ -968,11 +1036,11 @@ export interface NexusGenAbstractResolveReturnTypes {
 
 export interface NexusGenInheritedFields {}
 
-export type NexusGenObjectNames = "AuthPayload" | "Cart" | "Menu" | "MenuChoice" | "MenuHeader" | "MenuItem" | "MenuSelection" | "Mutation" | "Order" | "OrderItem" | "Organization" | "Query" | "Table" | "User";
+export type NexusGenObjectNames = "AuthPayload" | "Cart" | "Customer" | "CustomerAuthPayload" | "Menu" | "MenuChoice" | "MenuHeader" | "MenuItem" | "MenuSelection" | "Mutation" | "Order" | "OrderItem" | "Organization" | "Query" | "Table" | "User";
 
 export type NexusGenInputNames = "CartWhereInput" | "MenuChoiceWhereInput" | "MenuHeaderWhereInput" | "MenuItemWhereInput" | "MenuSelectionWhereInput" | "MenuWhereInput" | "OrderItemWhereInput" | "OrderWhereInput" | "OrganizationWhereInput" | "TableWhereInput" | "UserWhereInput";
 
-export type NexusGenEnumNames = "CartOrderByInput" | "MenuChoiceOrderByInput" | "MenuItemOrderByInput" | "MenuOrderByInput" | "MenuSelectionOrderByInput" | "OrderItemOrderByInput" | "OrderOrderByInput" | "Permission" | "UserOrderByInput";
+export type NexusGenEnumNames = "CartOrderByInput" | "MenuChoiceOrderByInput" | "MenuItemOrderByInput" | "MenuOrderByInput" | "MenuSelectionOrderByInput" | "OrderItemOrderByInput" | "OrderOrderByInput" | "OrganizationOrderByInput" | "Permission" | "UserOrderByInput";
 
 export type NexusGenInterfaceNames = never;
 

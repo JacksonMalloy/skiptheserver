@@ -4,7 +4,13 @@ export const Menu = prismaObjectType({
   name: "Menu",
   description: "Menu that the admin has created within an organization",
   definition(t) {
-    t.prismaFields(["*"]);
+    t.prismaFields([
+      "*",
+      {
+        name: "menu_items",
+        args: []
+      }
+    ]);
   }
 });
 

@@ -18,7 +18,10 @@ import {
   Mutation,
   AuthPayload,
   registerUser,
-  loginUser
+  loginUser,
+  registerCustomer,
+  loginCustomer,
+  CustomerAuthPayload
 } from "./types/Mutation";
 
 export const schema = makePrismaSchema({
@@ -38,7 +41,10 @@ export const schema = makePrismaSchema({
     Mutation,
     AuthPayload,
     registerUser,
-    loginUser
+    loginUser,
+    registerCustomer,
+    loginCustomer,
+    CustomerAuthPayload
   },
 
   prisma: {

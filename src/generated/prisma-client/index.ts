@@ -17,6 +17,7 @@ export type Maybe<T> = T | undefined | null;
 
 export interface Exists {
   cart: (where?: CartWhereInput) => Promise<boolean>;
+  customer: (where?: CustomerWhereInput) => Promise<boolean>;
   menu: (where?: MenuWhereInput) => Promise<boolean>;
   menuChoice: (where?: MenuChoiceWhereInput) => Promise<boolean>;
   menuHeader: (where?: MenuHeaderWhereInput) => Promise<boolean>;
@@ -67,6 +68,25 @@ export interface Prisma {
     first?: Int;
     last?: Int;
   }) => CartConnectionPromise;
+  customer: (where: CustomerWhereUniqueInput) => CustomerNullablePromise;
+  customers: (args?: {
+    where?: CustomerWhereInput;
+    orderBy?: CustomerOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => FragmentableArray<Customer>;
+  customersConnection: (args?: {
+    where?: CustomerWhereInput;
+    orderBy?: CustomerOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => CustomerConnectionPromise;
   menu: (where: MenuWhereUniqueInput) => MenuNullablePromise;
   menus: (args?: {
     where?: MenuWhereInput;
@@ -283,6 +303,22 @@ export interface Prisma {
   }) => CartPromise;
   deleteCart: (where: CartWhereUniqueInput) => CartPromise;
   deleteManyCarts: (where?: CartWhereInput) => BatchPayloadPromise;
+  createCustomer: (data: CustomerCreateInput) => CustomerPromise;
+  updateCustomer: (args: {
+    data: CustomerUpdateInput;
+    where: CustomerWhereUniqueInput;
+  }) => CustomerPromise;
+  updateManyCustomers: (args: {
+    data: CustomerUpdateManyMutationInput;
+    where?: CustomerWhereInput;
+  }) => BatchPayloadPromise;
+  upsertCustomer: (args: {
+    where: CustomerWhereUniqueInput;
+    create: CustomerCreateInput;
+    update: CustomerUpdateInput;
+  }) => CustomerPromise;
+  deleteCustomer: (where: CustomerWhereUniqueInput) => CustomerPromise;
+  deleteManyCustomers: (where?: CustomerWhereInput) => BatchPayloadPromise;
   createMenu: (data: MenuCreateInput) => MenuPromise;
   updateMenu: (args: {
     data: MenuUpdateInput;
@@ -459,6 +495,9 @@ export interface Subscription {
   cart: (
     where?: CartSubscriptionWhereInput
   ) => CartSubscriptionPayloadSubscription;
+  customer: (
+    where?: CustomerSubscriptionWhereInput
+  ) => CustomerSubscriptionPayloadSubscription;
   menu: (
     where?: MenuSubscriptionWhereInput
   ) => MenuSubscriptionPayloadSubscription;
@@ -529,18 +568,6 @@ export type OrganizationOrderByInput =
   | "name_ASC"
   | "name_DESC";
 
-export type UserOrderByInput =
-  | "id_ASC"
-  | "id_DESC"
-  | "email_ASC"
-  | "email_DESC"
-  | "name_ASC"
-  | "name_DESC"
-  | "password_ASC"
-  | "password_DESC"
-  | "permissions_ASC"
-  | "permissions_DESC";
-
 export type MenuOrderByInput =
   | "id_ASC"
   | "id_DESC"
@@ -585,11 +612,35 @@ export type MenuSelectionOrderByInput =
   | "valueAdd_ASC"
   | "valueAdd_DESC";
 
+export type UserOrderByInput =
+  | "id_ASC"
+  | "id_DESC"
+  | "email_ASC"
+  | "email_DESC"
+  | "name_ASC"
+  | "name_DESC"
+  | "password_ASC"
+  | "password_DESC"
+  | "permissions_ASC"
+  | "permissions_DESC";
+
 export type CartOrderByInput =
   | "id_ASC"
   | "id_DESC"
   | "total_ASC"
   | "total_DESC";
+
+export type CustomerOrderByInput =
+  | "id_ASC"
+  | "id_DESC"
+  | "email_ASC"
+  | "email_DESC"
+  | "name_ASC"
+  | "name_DESC"
+  | "password_ASC"
+  | "password_DESC"
+  | "permissions_ASC"
+  | "permissions_DESC";
 
 export type MenuHeaderOrderByInput =
   | "id_ASC"
@@ -780,11 +831,6 @@ export interface UserWhereInput {
   organizations_every?: Maybe<OrganizationWhereInput>;
   organizations_some?: Maybe<OrganizationWhereInput>;
   organizations_none?: Maybe<OrganizationWhereInput>;
-  table?: Maybe<TableWhereInput>;
-  cart?: Maybe<CartWhereInput>;
-  orders_every?: Maybe<OrderWhereInput>;
-  orders_some?: Maybe<OrderWhereInput>;
-  orders_none?: Maybe<OrderWhereInput>;
   permissions?: Maybe<Permission>;
   permissions_not?: Maybe<Permission>;
   permissions_in?: Maybe<Permission[] | Permission>;
@@ -823,9 +869,6 @@ export interface OrganizationWhereInput {
   name_not_starts_with?: Maybe<String>;
   name_ends_with?: Maybe<String>;
   name_not_ends_with?: Maybe<String>;
-  users_every?: Maybe<UserWhereInput>;
-  users_some?: Maybe<UserWhereInput>;
-  users_none?: Maybe<UserWhereInput>;
   menus_every?: Maybe<MenuWhereInput>;
   menus_some?: Maybe<MenuWhereInput>;
   menus_none?: Maybe<MenuWhereInput>;
@@ -1137,36 +1180,9 @@ export interface MenuHeaderWhereInput {
   menu_items_every?: Maybe<MenuItemWhereInput>;
   menu_items_some?: Maybe<MenuItemWhereInput>;
   menu_items_none?: Maybe<MenuItemWhereInput>;
-  menu?: Maybe<MenuWhereInput>;
   AND?: Maybe<MenuHeaderWhereInput[] | MenuHeaderWhereInput>;
   OR?: Maybe<MenuHeaderWhereInput[] | MenuHeaderWhereInput>;
   NOT?: Maybe<MenuHeaderWhereInput[] | MenuHeaderWhereInput>;
-}
-
-export interface TableWhereInput {
-  id?: Maybe<ID_Input>;
-  id_not?: Maybe<ID_Input>;
-  id_in?: Maybe<ID_Input[] | ID_Input>;
-  id_not_in?: Maybe<ID_Input[] | ID_Input>;
-  id_lt?: Maybe<ID_Input>;
-  id_lte?: Maybe<ID_Input>;
-  id_gt?: Maybe<ID_Input>;
-  id_gte?: Maybe<ID_Input>;
-  id_contains?: Maybe<ID_Input>;
-  id_not_contains?: Maybe<ID_Input>;
-  id_starts_with?: Maybe<ID_Input>;
-  id_not_starts_with?: Maybe<ID_Input>;
-  id_ends_with?: Maybe<ID_Input>;
-  id_not_ends_with?: Maybe<ID_Input>;
-  customers_every?: Maybe<UserWhereInput>;
-  customers_some?: Maybe<UserWhereInput>;
-  customers_none?: Maybe<UserWhereInput>;
-  carts_every?: Maybe<CartWhereInput>;
-  carts_some?: Maybe<CartWhereInput>;
-  carts_none?: Maybe<CartWhereInput>;
-  AND?: Maybe<TableWhereInput[] | TableWhereInput>;
-  OR?: Maybe<TableWhereInput[] | TableWhereInput>;
-  NOT?: Maybe<TableWhereInput[] | TableWhereInput>;
 }
 
 export interface CartWhereInput {
@@ -1200,6 +1216,111 @@ export interface CartWhereInput {
   AND?: Maybe<CartWhereInput[] | CartWhereInput>;
   OR?: Maybe<CartWhereInput[] | CartWhereInput>;
   NOT?: Maybe<CartWhereInput[] | CartWhereInput>;
+}
+
+export interface TableWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  customers_every?: Maybe<UserWhereInput>;
+  customers_some?: Maybe<UserWhereInput>;
+  customers_none?: Maybe<UserWhereInput>;
+  carts_every?: Maybe<CartWhereInput>;
+  carts_some?: Maybe<CartWhereInput>;
+  carts_none?: Maybe<CartWhereInput>;
+  AND?: Maybe<TableWhereInput[] | TableWhereInput>;
+  OR?: Maybe<TableWhereInput[] | TableWhereInput>;
+  NOT?: Maybe<TableWhereInput[] | TableWhereInput>;
+}
+
+export type CustomerWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+  email?: Maybe<String>;
+}>;
+
+export interface CustomerWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  email?: Maybe<String>;
+  email_not?: Maybe<String>;
+  email_in?: Maybe<String[] | String>;
+  email_not_in?: Maybe<String[] | String>;
+  email_lt?: Maybe<String>;
+  email_lte?: Maybe<String>;
+  email_gt?: Maybe<String>;
+  email_gte?: Maybe<String>;
+  email_contains?: Maybe<String>;
+  email_not_contains?: Maybe<String>;
+  email_starts_with?: Maybe<String>;
+  email_not_starts_with?: Maybe<String>;
+  email_ends_with?: Maybe<String>;
+  email_not_ends_with?: Maybe<String>;
+  name?: Maybe<String>;
+  name_not?: Maybe<String>;
+  name_in?: Maybe<String[] | String>;
+  name_not_in?: Maybe<String[] | String>;
+  name_lt?: Maybe<String>;
+  name_lte?: Maybe<String>;
+  name_gt?: Maybe<String>;
+  name_gte?: Maybe<String>;
+  name_contains?: Maybe<String>;
+  name_not_contains?: Maybe<String>;
+  name_starts_with?: Maybe<String>;
+  name_not_starts_with?: Maybe<String>;
+  name_ends_with?: Maybe<String>;
+  name_not_ends_with?: Maybe<String>;
+  password?: Maybe<String>;
+  password_not?: Maybe<String>;
+  password_in?: Maybe<String[] | String>;
+  password_not_in?: Maybe<String[] | String>;
+  password_lt?: Maybe<String>;
+  password_lte?: Maybe<String>;
+  password_gt?: Maybe<String>;
+  password_gte?: Maybe<String>;
+  password_contains?: Maybe<String>;
+  password_not_contains?: Maybe<String>;
+  password_starts_with?: Maybe<String>;
+  password_not_starts_with?: Maybe<String>;
+  password_ends_with?: Maybe<String>;
+  password_not_ends_with?: Maybe<String>;
+  organizations_every?: Maybe<OrganizationWhereInput>;
+  organizations_some?: Maybe<OrganizationWhereInput>;
+  organizations_none?: Maybe<OrganizationWhereInput>;
+  table?: Maybe<TableWhereInput>;
+  cart?: Maybe<CartWhereInput>;
+  orders_every?: Maybe<OrderWhereInput>;
+  orders_some?: Maybe<OrderWhereInput>;
+  orders_none?: Maybe<OrderWhereInput>;
+  permissions?: Maybe<Permission>;
+  permissions_not?: Maybe<Permission>;
+  permissions_in?: Maybe<Permission[] | Permission>;
+  permissions_not_in?: Maybe<Permission[] | Permission>;
+  AND?: Maybe<CustomerWhereInput[] | CustomerWhereInput>;
+  OR?: Maybe<CustomerWhereInput[] | CustomerWhereInput>;
+  NOT?: Maybe<CustomerWhereInput[] | CustomerWhereInput>;
 }
 
 export type MenuWhereUniqueInput = AtLeastOne<{
@@ -1246,7 +1367,7 @@ export type UserWhereUniqueInput = AtLeastOne<{
 export interface CartCreateInput {
   id?: Maybe<ID_Input>;
   orders?: Maybe<OrderCreateManyInput>;
-  customer: UserCreateOneWithoutCartInput;
+  customer: UserCreateOneInput;
   table?: Maybe<TableCreateOneWithoutCartsInput>;
   total: Int;
 }
@@ -1260,7 +1381,7 @@ export interface OrderCreateInput {
   id?: Maybe<ID_Input>;
   items?: Maybe<OrderItemCreateManyInput>;
   total: Int;
-  customer: UserCreateOneWithoutOrdersInput;
+  customer: UserCreateOneInput;
   charge: String;
 }
 
@@ -1288,9 +1409,6 @@ export interface UserCreateInput {
   name?: Maybe<String>;
   password: String;
   organizations?: Maybe<OrganizationCreateManyWithoutCreatedByInput>;
-  table?: Maybe<TableCreateOneWithoutCustomersInput>;
-  cart?: Maybe<CartCreateOneWithoutCustomerInput>;
-  orders?: Maybe<OrderCreateManyWithoutCustomerInput>;
   permissions?: Maybe<Permission>;
 }
 
@@ -1307,13 +1425,7 @@ export interface OrganizationCreateManyWithoutCreatedByInput {
 export interface OrganizationCreateWithoutCreatedByInput {
   id?: Maybe<ID_Input>;
   name: String;
-  users?: Maybe<UserCreateManyInput>;
   menus?: Maybe<MenuCreateManyWithoutOrganizationInput>;
-}
-
-export interface UserCreateManyInput {
-  create?: Maybe<UserCreateInput[] | UserCreateInput>;
-  connect?: Maybe<UserWhereUniqueInput[] | UserWhereUniqueInput>;
 }
 
 export interface MenuCreateManyWithoutOrganizationInput {
@@ -1389,112 +1501,6 @@ export interface MenuHeaderCreateWithoutMenu_itemsInput {
   id?: Maybe<ID_Input>;
   name: String;
   subHeader?: Maybe<String>;
-  menu?: Maybe<MenuCreateOneInput>;
-}
-
-export interface MenuCreateOneInput {
-  create?: Maybe<MenuCreateInput>;
-  connect?: Maybe<MenuWhereUniqueInput>;
-}
-
-export interface MenuCreateInput {
-  id?: Maybe<ID_Input>;
-  published?: Maybe<Boolean>;
-  title: String;
-  menu_items?: Maybe<MenuItemCreateManyWithoutMenuInput>;
-  organization: OrganizationCreateOneWithoutMenusInput;
-}
-
-export interface OrganizationCreateOneWithoutMenusInput {
-  create?: Maybe<OrganizationCreateWithoutMenusInput>;
-  connect?: Maybe<OrganizationWhereUniqueInput>;
-}
-
-export interface OrganizationCreateWithoutMenusInput {
-  id?: Maybe<ID_Input>;
-  name: String;
-  users?: Maybe<UserCreateManyInput>;
-  createdBy: UserCreateOneWithoutOrganizationsInput;
-}
-
-export interface UserCreateOneWithoutOrganizationsInput {
-  create?: Maybe<UserCreateWithoutOrganizationsInput>;
-  connect?: Maybe<UserWhereUniqueInput>;
-}
-
-export interface UserCreateWithoutOrganizationsInput {
-  id?: Maybe<ID_Input>;
-  email: String;
-  name?: Maybe<String>;
-  password: String;
-  table?: Maybe<TableCreateOneWithoutCustomersInput>;
-  cart?: Maybe<CartCreateOneWithoutCustomerInput>;
-  orders?: Maybe<OrderCreateManyWithoutCustomerInput>;
-  permissions?: Maybe<Permission>;
-}
-
-export interface TableCreateOneWithoutCustomersInput {
-  create?: Maybe<TableCreateWithoutCustomersInput>;
-  connect?: Maybe<TableWhereUniqueInput>;
-}
-
-export interface TableCreateWithoutCustomersInput {
-  id?: Maybe<ID_Input>;
-  carts?: Maybe<CartCreateManyWithoutTableInput>;
-}
-
-export interface CartCreateManyWithoutTableInput {
-  create?: Maybe<CartCreateWithoutTableInput[] | CartCreateWithoutTableInput>;
-  connect?: Maybe<CartWhereUniqueInput[] | CartWhereUniqueInput>;
-}
-
-export interface CartCreateWithoutTableInput {
-  id?: Maybe<ID_Input>;
-  orders?: Maybe<OrderCreateManyInput>;
-  customer: UserCreateOneWithoutCartInput;
-  total: Int;
-}
-
-export interface UserCreateOneWithoutCartInput {
-  create?: Maybe<UserCreateWithoutCartInput>;
-  connect?: Maybe<UserWhereUniqueInput>;
-}
-
-export interface UserCreateWithoutCartInput {
-  id?: Maybe<ID_Input>;
-  email: String;
-  name?: Maybe<String>;
-  password: String;
-  organizations?: Maybe<OrganizationCreateManyWithoutCreatedByInput>;
-  table?: Maybe<TableCreateOneWithoutCustomersInput>;
-  orders?: Maybe<OrderCreateManyWithoutCustomerInput>;
-  permissions?: Maybe<Permission>;
-}
-
-export interface OrderCreateManyWithoutCustomerInput {
-  create?: Maybe<
-    OrderCreateWithoutCustomerInput[] | OrderCreateWithoutCustomerInput
-  >;
-  connect?: Maybe<OrderWhereUniqueInput[] | OrderWhereUniqueInput>;
-}
-
-export interface OrderCreateWithoutCustomerInput {
-  id?: Maybe<ID_Input>;
-  items?: Maybe<OrderItemCreateManyInput>;
-  total: Int;
-  charge: String;
-}
-
-export interface CartCreateOneWithoutCustomerInput {
-  create?: Maybe<CartCreateWithoutCustomerInput>;
-  connect?: Maybe<CartWhereUniqueInput>;
-}
-
-export interface CartCreateWithoutCustomerInput {
-  id?: Maybe<ID_Input>;
-  orders?: Maybe<OrderCreateManyInput>;
-  table?: Maybe<TableCreateOneWithoutCartsInput>;
-  total: Int;
 }
 
 export interface TableCreateOneWithoutCartsInput {
@@ -1504,44 +1510,17 @@ export interface TableCreateOneWithoutCartsInput {
 
 export interface TableCreateWithoutCartsInput {
   id?: Maybe<ID_Input>;
-  customers?: Maybe<UserCreateManyWithoutTableInput>;
+  customers?: Maybe<UserCreateManyInput>;
 }
 
-export interface UserCreateManyWithoutTableInput {
-  create?: Maybe<UserCreateWithoutTableInput[] | UserCreateWithoutTableInput>;
+export interface UserCreateManyInput {
+  create?: Maybe<UserCreateInput[] | UserCreateInput>;
   connect?: Maybe<UserWhereUniqueInput[] | UserWhereUniqueInput>;
-}
-
-export interface UserCreateWithoutTableInput {
-  id?: Maybe<ID_Input>;
-  email: String;
-  name?: Maybe<String>;
-  password: String;
-  organizations?: Maybe<OrganizationCreateManyWithoutCreatedByInput>;
-  cart?: Maybe<CartCreateOneWithoutCustomerInput>;
-  orders?: Maybe<OrderCreateManyWithoutCustomerInput>;
-  permissions?: Maybe<Permission>;
-}
-
-export interface UserCreateOneWithoutOrdersInput {
-  create?: Maybe<UserCreateWithoutOrdersInput>;
-  connect?: Maybe<UserWhereUniqueInput>;
-}
-
-export interface UserCreateWithoutOrdersInput {
-  id?: Maybe<ID_Input>;
-  email: String;
-  name?: Maybe<String>;
-  password: String;
-  organizations?: Maybe<OrganizationCreateManyWithoutCreatedByInput>;
-  table?: Maybe<TableCreateOneWithoutCustomersInput>;
-  cart?: Maybe<CartCreateOneWithoutCustomerInput>;
-  permissions?: Maybe<Permission>;
 }
 
 export interface CartUpdateInput {
   orders?: Maybe<OrderUpdateManyInput>;
-  customer?: Maybe<UserUpdateOneRequiredWithoutCartInput>;
+  customer?: Maybe<UserUpdateOneRequiredInput>;
   table?: Maybe<TableUpdateOneWithoutCartsInput>;
   total?: Maybe<Int>;
 }
@@ -1574,7 +1553,7 @@ export interface OrderUpdateWithWhereUniqueNestedInput {
 export interface OrderUpdateDataInput {
   items?: Maybe<OrderItemUpdateManyInput>;
   total?: Maybe<Int>;
-  customer?: Maybe<UserUpdateOneRequiredWithoutOrdersInput>;
+  customer?: Maybe<UserUpdateOneRequiredInput>;
   charge?: Maybe<String>;
 }
 
@@ -1623,9 +1602,6 @@ export interface UserUpdateDataInput {
   name?: Maybe<String>;
   password?: Maybe<String>;
   organizations?: Maybe<OrganizationUpdateManyWithoutCreatedByInput>;
-  table?: Maybe<TableUpdateOneWithoutCustomersInput>;
-  cart?: Maybe<CartUpdateOneWithoutCustomerInput>;
-  orders?: Maybe<OrderUpdateManyWithoutCustomerInput>;
   permissions?: Maybe<Permission>;
 }
 
@@ -1666,117 +1642,7 @@ export interface OrganizationUpdateWithWhereUniqueWithoutCreatedByInput {
 
 export interface OrganizationUpdateWithoutCreatedByDataInput {
   name?: Maybe<String>;
-  users?: Maybe<UserUpdateManyInput>;
   menus?: Maybe<MenuUpdateManyWithoutOrganizationInput>;
-}
-
-export interface UserUpdateManyInput {
-  create?: Maybe<UserCreateInput[] | UserCreateInput>;
-  update?: Maybe<
-    | UserUpdateWithWhereUniqueNestedInput[]
-    | UserUpdateWithWhereUniqueNestedInput
-  >;
-  upsert?: Maybe<
-    | UserUpsertWithWhereUniqueNestedInput[]
-    | UserUpsertWithWhereUniqueNestedInput
-  >;
-  delete?: Maybe<UserWhereUniqueInput[] | UserWhereUniqueInput>;
-  connect?: Maybe<UserWhereUniqueInput[] | UserWhereUniqueInput>;
-  set?: Maybe<UserWhereUniqueInput[] | UserWhereUniqueInput>;
-  disconnect?: Maybe<UserWhereUniqueInput[] | UserWhereUniqueInput>;
-  deleteMany?: Maybe<UserScalarWhereInput[] | UserScalarWhereInput>;
-  updateMany?: Maybe<
-    UserUpdateManyWithWhereNestedInput[] | UserUpdateManyWithWhereNestedInput
-  >;
-}
-
-export interface UserUpdateWithWhereUniqueNestedInput {
-  where: UserWhereUniqueInput;
-  data: UserUpdateDataInput;
-}
-
-export interface UserUpsertWithWhereUniqueNestedInput {
-  where: UserWhereUniqueInput;
-  update: UserUpdateDataInput;
-  create: UserCreateInput;
-}
-
-export interface UserScalarWhereInput {
-  id?: Maybe<ID_Input>;
-  id_not?: Maybe<ID_Input>;
-  id_in?: Maybe<ID_Input[] | ID_Input>;
-  id_not_in?: Maybe<ID_Input[] | ID_Input>;
-  id_lt?: Maybe<ID_Input>;
-  id_lte?: Maybe<ID_Input>;
-  id_gt?: Maybe<ID_Input>;
-  id_gte?: Maybe<ID_Input>;
-  id_contains?: Maybe<ID_Input>;
-  id_not_contains?: Maybe<ID_Input>;
-  id_starts_with?: Maybe<ID_Input>;
-  id_not_starts_with?: Maybe<ID_Input>;
-  id_ends_with?: Maybe<ID_Input>;
-  id_not_ends_with?: Maybe<ID_Input>;
-  email?: Maybe<String>;
-  email_not?: Maybe<String>;
-  email_in?: Maybe<String[] | String>;
-  email_not_in?: Maybe<String[] | String>;
-  email_lt?: Maybe<String>;
-  email_lte?: Maybe<String>;
-  email_gt?: Maybe<String>;
-  email_gte?: Maybe<String>;
-  email_contains?: Maybe<String>;
-  email_not_contains?: Maybe<String>;
-  email_starts_with?: Maybe<String>;
-  email_not_starts_with?: Maybe<String>;
-  email_ends_with?: Maybe<String>;
-  email_not_ends_with?: Maybe<String>;
-  name?: Maybe<String>;
-  name_not?: Maybe<String>;
-  name_in?: Maybe<String[] | String>;
-  name_not_in?: Maybe<String[] | String>;
-  name_lt?: Maybe<String>;
-  name_lte?: Maybe<String>;
-  name_gt?: Maybe<String>;
-  name_gte?: Maybe<String>;
-  name_contains?: Maybe<String>;
-  name_not_contains?: Maybe<String>;
-  name_starts_with?: Maybe<String>;
-  name_not_starts_with?: Maybe<String>;
-  name_ends_with?: Maybe<String>;
-  name_not_ends_with?: Maybe<String>;
-  password?: Maybe<String>;
-  password_not?: Maybe<String>;
-  password_in?: Maybe<String[] | String>;
-  password_not_in?: Maybe<String[] | String>;
-  password_lt?: Maybe<String>;
-  password_lte?: Maybe<String>;
-  password_gt?: Maybe<String>;
-  password_gte?: Maybe<String>;
-  password_contains?: Maybe<String>;
-  password_not_contains?: Maybe<String>;
-  password_starts_with?: Maybe<String>;
-  password_not_starts_with?: Maybe<String>;
-  password_ends_with?: Maybe<String>;
-  password_not_ends_with?: Maybe<String>;
-  permissions?: Maybe<Permission>;
-  permissions_not?: Maybe<Permission>;
-  permissions_in?: Maybe<Permission[] | Permission>;
-  permissions_not_in?: Maybe<Permission[] | Permission>;
-  AND?: Maybe<UserScalarWhereInput[] | UserScalarWhereInput>;
-  OR?: Maybe<UserScalarWhereInput[] | UserScalarWhereInput>;
-  NOT?: Maybe<UserScalarWhereInput[] | UserScalarWhereInput>;
-}
-
-export interface UserUpdateManyWithWhereNestedInput {
-  where: UserScalarWhereInput;
-  data: UserUpdateManyDataInput;
-}
-
-export interface UserUpdateManyDataInput {
-  email?: Maybe<String>;
-  name?: Maybe<String>;
-  password?: Maybe<String>;
-  permissions?: Maybe<Permission>;
 }
 
 export interface MenuUpdateManyWithoutOrganizationInput {
@@ -2071,368 +1937,6 @@ export interface MenuHeaderUpdateOneWithoutMenu_itemsInput {
 export interface MenuHeaderUpdateWithoutMenu_itemsDataInput {
   name?: Maybe<String>;
   subHeader?: Maybe<String>;
-  menu?: Maybe<MenuUpdateOneInput>;
-}
-
-export interface MenuUpdateOneInput {
-  create?: Maybe<MenuCreateInput>;
-  update?: Maybe<MenuUpdateDataInput>;
-  upsert?: Maybe<MenuUpsertNestedInput>;
-  delete?: Maybe<Boolean>;
-  disconnect?: Maybe<Boolean>;
-  connect?: Maybe<MenuWhereUniqueInput>;
-}
-
-export interface MenuUpdateDataInput {
-  published?: Maybe<Boolean>;
-  title?: Maybe<String>;
-  menu_items?: Maybe<MenuItemUpdateManyWithoutMenuInput>;
-  organization?: Maybe<OrganizationUpdateOneRequiredWithoutMenusInput>;
-}
-
-export interface OrganizationUpdateOneRequiredWithoutMenusInput {
-  create?: Maybe<OrganizationCreateWithoutMenusInput>;
-  update?: Maybe<OrganizationUpdateWithoutMenusDataInput>;
-  upsert?: Maybe<OrganizationUpsertWithoutMenusInput>;
-  connect?: Maybe<OrganizationWhereUniqueInput>;
-}
-
-export interface OrganizationUpdateWithoutMenusDataInput {
-  name?: Maybe<String>;
-  users?: Maybe<UserUpdateManyInput>;
-  createdBy?: Maybe<UserUpdateOneRequiredWithoutOrganizationsInput>;
-}
-
-export interface UserUpdateOneRequiredWithoutOrganizationsInput {
-  create?: Maybe<UserCreateWithoutOrganizationsInput>;
-  update?: Maybe<UserUpdateWithoutOrganizationsDataInput>;
-  upsert?: Maybe<UserUpsertWithoutOrganizationsInput>;
-  connect?: Maybe<UserWhereUniqueInput>;
-}
-
-export interface UserUpdateWithoutOrganizationsDataInput {
-  email?: Maybe<String>;
-  name?: Maybe<String>;
-  password?: Maybe<String>;
-  table?: Maybe<TableUpdateOneWithoutCustomersInput>;
-  cart?: Maybe<CartUpdateOneWithoutCustomerInput>;
-  orders?: Maybe<OrderUpdateManyWithoutCustomerInput>;
-  permissions?: Maybe<Permission>;
-}
-
-export interface TableUpdateOneWithoutCustomersInput {
-  create?: Maybe<TableCreateWithoutCustomersInput>;
-  update?: Maybe<TableUpdateWithoutCustomersDataInput>;
-  upsert?: Maybe<TableUpsertWithoutCustomersInput>;
-  delete?: Maybe<Boolean>;
-  disconnect?: Maybe<Boolean>;
-  connect?: Maybe<TableWhereUniqueInput>;
-}
-
-export interface TableUpdateWithoutCustomersDataInput {
-  carts?: Maybe<CartUpdateManyWithoutTableInput>;
-}
-
-export interface CartUpdateManyWithoutTableInput {
-  create?: Maybe<CartCreateWithoutTableInput[] | CartCreateWithoutTableInput>;
-  delete?: Maybe<CartWhereUniqueInput[] | CartWhereUniqueInput>;
-  connect?: Maybe<CartWhereUniqueInput[] | CartWhereUniqueInput>;
-  set?: Maybe<CartWhereUniqueInput[] | CartWhereUniqueInput>;
-  disconnect?: Maybe<CartWhereUniqueInput[] | CartWhereUniqueInput>;
-  update?: Maybe<
-    | CartUpdateWithWhereUniqueWithoutTableInput[]
-    | CartUpdateWithWhereUniqueWithoutTableInput
-  >;
-  upsert?: Maybe<
-    | CartUpsertWithWhereUniqueWithoutTableInput[]
-    | CartUpsertWithWhereUniqueWithoutTableInput
-  >;
-  deleteMany?: Maybe<CartScalarWhereInput[] | CartScalarWhereInput>;
-  updateMany?: Maybe<
-    CartUpdateManyWithWhereNestedInput[] | CartUpdateManyWithWhereNestedInput
-  >;
-}
-
-export interface CartUpdateWithWhereUniqueWithoutTableInput {
-  where: CartWhereUniqueInput;
-  data: CartUpdateWithoutTableDataInput;
-}
-
-export interface CartUpdateWithoutTableDataInput {
-  orders?: Maybe<OrderUpdateManyInput>;
-  customer?: Maybe<UserUpdateOneRequiredWithoutCartInput>;
-  total?: Maybe<Int>;
-}
-
-export interface UserUpdateOneRequiredWithoutCartInput {
-  create?: Maybe<UserCreateWithoutCartInput>;
-  update?: Maybe<UserUpdateWithoutCartDataInput>;
-  upsert?: Maybe<UserUpsertWithoutCartInput>;
-  connect?: Maybe<UserWhereUniqueInput>;
-}
-
-export interface UserUpdateWithoutCartDataInput {
-  email?: Maybe<String>;
-  name?: Maybe<String>;
-  password?: Maybe<String>;
-  organizations?: Maybe<OrganizationUpdateManyWithoutCreatedByInput>;
-  table?: Maybe<TableUpdateOneWithoutCustomersInput>;
-  orders?: Maybe<OrderUpdateManyWithoutCustomerInput>;
-  permissions?: Maybe<Permission>;
-}
-
-export interface OrderUpdateManyWithoutCustomerInput {
-  create?: Maybe<
-    OrderCreateWithoutCustomerInput[] | OrderCreateWithoutCustomerInput
-  >;
-  delete?: Maybe<OrderWhereUniqueInput[] | OrderWhereUniqueInput>;
-  connect?: Maybe<OrderWhereUniqueInput[] | OrderWhereUniqueInput>;
-  set?: Maybe<OrderWhereUniqueInput[] | OrderWhereUniqueInput>;
-  disconnect?: Maybe<OrderWhereUniqueInput[] | OrderWhereUniqueInput>;
-  update?: Maybe<
-    | OrderUpdateWithWhereUniqueWithoutCustomerInput[]
-    | OrderUpdateWithWhereUniqueWithoutCustomerInput
-  >;
-  upsert?: Maybe<
-    | OrderUpsertWithWhereUniqueWithoutCustomerInput[]
-    | OrderUpsertWithWhereUniqueWithoutCustomerInput
-  >;
-  deleteMany?: Maybe<OrderScalarWhereInput[] | OrderScalarWhereInput>;
-  updateMany?: Maybe<
-    OrderUpdateManyWithWhereNestedInput[] | OrderUpdateManyWithWhereNestedInput
-  >;
-}
-
-export interface OrderUpdateWithWhereUniqueWithoutCustomerInput {
-  where: OrderWhereUniqueInput;
-  data: OrderUpdateWithoutCustomerDataInput;
-}
-
-export interface OrderUpdateWithoutCustomerDataInput {
-  items?: Maybe<OrderItemUpdateManyInput>;
-  total?: Maybe<Int>;
-  charge?: Maybe<String>;
-}
-
-export interface OrderUpsertWithWhereUniqueWithoutCustomerInput {
-  where: OrderWhereUniqueInput;
-  update: OrderUpdateWithoutCustomerDataInput;
-  create: OrderCreateWithoutCustomerInput;
-}
-
-export interface OrderScalarWhereInput {
-  id?: Maybe<ID_Input>;
-  id_not?: Maybe<ID_Input>;
-  id_in?: Maybe<ID_Input[] | ID_Input>;
-  id_not_in?: Maybe<ID_Input[] | ID_Input>;
-  id_lt?: Maybe<ID_Input>;
-  id_lte?: Maybe<ID_Input>;
-  id_gt?: Maybe<ID_Input>;
-  id_gte?: Maybe<ID_Input>;
-  id_contains?: Maybe<ID_Input>;
-  id_not_contains?: Maybe<ID_Input>;
-  id_starts_with?: Maybe<ID_Input>;
-  id_not_starts_with?: Maybe<ID_Input>;
-  id_ends_with?: Maybe<ID_Input>;
-  id_not_ends_with?: Maybe<ID_Input>;
-  total?: Maybe<Int>;
-  total_not?: Maybe<Int>;
-  total_in?: Maybe<Int[] | Int>;
-  total_not_in?: Maybe<Int[] | Int>;
-  total_lt?: Maybe<Int>;
-  total_lte?: Maybe<Int>;
-  total_gt?: Maybe<Int>;
-  total_gte?: Maybe<Int>;
-  charge?: Maybe<String>;
-  charge_not?: Maybe<String>;
-  charge_in?: Maybe<String[] | String>;
-  charge_not_in?: Maybe<String[] | String>;
-  charge_lt?: Maybe<String>;
-  charge_lte?: Maybe<String>;
-  charge_gt?: Maybe<String>;
-  charge_gte?: Maybe<String>;
-  charge_contains?: Maybe<String>;
-  charge_not_contains?: Maybe<String>;
-  charge_starts_with?: Maybe<String>;
-  charge_not_starts_with?: Maybe<String>;
-  charge_ends_with?: Maybe<String>;
-  charge_not_ends_with?: Maybe<String>;
-  createdAt?: Maybe<DateTimeInput>;
-  createdAt_not?: Maybe<DateTimeInput>;
-  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_lt?: Maybe<DateTimeInput>;
-  createdAt_lte?: Maybe<DateTimeInput>;
-  createdAt_gt?: Maybe<DateTimeInput>;
-  createdAt_gte?: Maybe<DateTimeInput>;
-  updatedAt?: Maybe<DateTimeInput>;
-  updatedAt_not?: Maybe<DateTimeInput>;
-  updatedAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  updatedAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  updatedAt_lt?: Maybe<DateTimeInput>;
-  updatedAt_lte?: Maybe<DateTimeInput>;
-  updatedAt_gt?: Maybe<DateTimeInput>;
-  updatedAt_gte?: Maybe<DateTimeInput>;
-  AND?: Maybe<OrderScalarWhereInput[] | OrderScalarWhereInput>;
-  OR?: Maybe<OrderScalarWhereInput[] | OrderScalarWhereInput>;
-  NOT?: Maybe<OrderScalarWhereInput[] | OrderScalarWhereInput>;
-}
-
-export interface OrderUpdateManyWithWhereNestedInput {
-  where: OrderScalarWhereInput;
-  data: OrderUpdateManyDataInput;
-}
-
-export interface OrderUpdateManyDataInput {
-  total?: Maybe<Int>;
-  charge?: Maybe<String>;
-}
-
-export interface UserUpsertWithoutCartInput {
-  update: UserUpdateWithoutCartDataInput;
-  create: UserCreateWithoutCartInput;
-}
-
-export interface CartUpsertWithWhereUniqueWithoutTableInput {
-  where: CartWhereUniqueInput;
-  update: CartUpdateWithoutTableDataInput;
-  create: CartCreateWithoutTableInput;
-}
-
-export interface CartScalarWhereInput {
-  id?: Maybe<ID_Input>;
-  id_not?: Maybe<ID_Input>;
-  id_in?: Maybe<ID_Input[] | ID_Input>;
-  id_not_in?: Maybe<ID_Input[] | ID_Input>;
-  id_lt?: Maybe<ID_Input>;
-  id_lte?: Maybe<ID_Input>;
-  id_gt?: Maybe<ID_Input>;
-  id_gte?: Maybe<ID_Input>;
-  id_contains?: Maybe<ID_Input>;
-  id_not_contains?: Maybe<ID_Input>;
-  id_starts_with?: Maybe<ID_Input>;
-  id_not_starts_with?: Maybe<ID_Input>;
-  id_ends_with?: Maybe<ID_Input>;
-  id_not_ends_with?: Maybe<ID_Input>;
-  total?: Maybe<Int>;
-  total_not?: Maybe<Int>;
-  total_in?: Maybe<Int[] | Int>;
-  total_not_in?: Maybe<Int[] | Int>;
-  total_lt?: Maybe<Int>;
-  total_lte?: Maybe<Int>;
-  total_gt?: Maybe<Int>;
-  total_gte?: Maybe<Int>;
-  AND?: Maybe<CartScalarWhereInput[] | CartScalarWhereInput>;
-  OR?: Maybe<CartScalarWhereInput[] | CartScalarWhereInput>;
-  NOT?: Maybe<CartScalarWhereInput[] | CartScalarWhereInput>;
-}
-
-export interface CartUpdateManyWithWhereNestedInput {
-  where: CartScalarWhereInput;
-  data: CartUpdateManyDataInput;
-}
-
-export interface CartUpdateManyDataInput {
-  total?: Maybe<Int>;
-}
-
-export interface TableUpsertWithoutCustomersInput {
-  update: TableUpdateWithoutCustomersDataInput;
-  create: TableCreateWithoutCustomersInput;
-}
-
-export interface CartUpdateOneWithoutCustomerInput {
-  create?: Maybe<CartCreateWithoutCustomerInput>;
-  update?: Maybe<CartUpdateWithoutCustomerDataInput>;
-  upsert?: Maybe<CartUpsertWithoutCustomerInput>;
-  delete?: Maybe<Boolean>;
-  disconnect?: Maybe<Boolean>;
-  connect?: Maybe<CartWhereUniqueInput>;
-}
-
-export interface CartUpdateWithoutCustomerDataInput {
-  orders?: Maybe<OrderUpdateManyInput>;
-  table?: Maybe<TableUpdateOneWithoutCartsInput>;
-  total?: Maybe<Int>;
-}
-
-export interface TableUpdateOneWithoutCartsInput {
-  create?: Maybe<TableCreateWithoutCartsInput>;
-  update?: Maybe<TableUpdateWithoutCartsDataInput>;
-  upsert?: Maybe<TableUpsertWithoutCartsInput>;
-  delete?: Maybe<Boolean>;
-  disconnect?: Maybe<Boolean>;
-  connect?: Maybe<TableWhereUniqueInput>;
-}
-
-export interface TableUpdateWithoutCartsDataInput {
-  customers?: Maybe<UserUpdateManyWithoutTableInput>;
-}
-
-export interface UserUpdateManyWithoutTableInput {
-  create?: Maybe<UserCreateWithoutTableInput[] | UserCreateWithoutTableInput>;
-  delete?: Maybe<UserWhereUniqueInput[] | UserWhereUniqueInput>;
-  connect?: Maybe<UserWhereUniqueInput[] | UserWhereUniqueInput>;
-  set?: Maybe<UserWhereUniqueInput[] | UserWhereUniqueInput>;
-  disconnect?: Maybe<UserWhereUniqueInput[] | UserWhereUniqueInput>;
-  update?: Maybe<
-    | UserUpdateWithWhereUniqueWithoutTableInput[]
-    | UserUpdateWithWhereUniqueWithoutTableInput
-  >;
-  upsert?: Maybe<
-    | UserUpsertWithWhereUniqueWithoutTableInput[]
-    | UserUpsertWithWhereUniqueWithoutTableInput
-  >;
-  deleteMany?: Maybe<UserScalarWhereInput[] | UserScalarWhereInput>;
-  updateMany?: Maybe<
-    UserUpdateManyWithWhereNestedInput[] | UserUpdateManyWithWhereNestedInput
-  >;
-}
-
-export interface UserUpdateWithWhereUniqueWithoutTableInput {
-  where: UserWhereUniqueInput;
-  data: UserUpdateWithoutTableDataInput;
-}
-
-export interface UserUpdateWithoutTableDataInput {
-  email?: Maybe<String>;
-  name?: Maybe<String>;
-  password?: Maybe<String>;
-  organizations?: Maybe<OrganizationUpdateManyWithoutCreatedByInput>;
-  cart?: Maybe<CartUpdateOneWithoutCustomerInput>;
-  orders?: Maybe<OrderUpdateManyWithoutCustomerInput>;
-  permissions?: Maybe<Permission>;
-}
-
-export interface UserUpsertWithWhereUniqueWithoutTableInput {
-  where: UserWhereUniqueInput;
-  update: UserUpdateWithoutTableDataInput;
-  create: UserCreateWithoutTableInput;
-}
-
-export interface TableUpsertWithoutCartsInput {
-  update: TableUpdateWithoutCartsDataInput;
-  create: TableCreateWithoutCartsInput;
-}
-
-export interface CartUpsertWithoutCustomerInput {
-  update: CartUpdateWithoutCustomerDataInput;
-  create: CartCreateWithoutCustomerInput;
-}
-
-export interface UserUpsertWithoutOrganizationsInput {
-  update: UserUpdateWithoutOrganizationsDataInput;
-  create: UserCreateWithoutOrganizationsInput;
-}
-
-export interface OrganizationUpsertWithoutMenusInput {
-  update: OrganizationUpdateWithoutMenusDataInput;
-  create: OrganizationCreateWithoutMenusInput;
-}
-
-export interface MenuUpsertNestedInput {
-  update: MenuUpdateDataInput;
-  create: MenuCreateInput;
 }
 
 export interface MenuHeaderUpsertWithoutMenu_itemsInput {
@@ -2738,36 +2242,490 @@ export interface OrderItemUpdateManyDataInput {
   quantity?: Maybe<Int>;
 }
 
-export interface UserUpdateOneRequiredWithoutOrdersInput {
-  create?: Maybe<UserCreateWithoutOrdersInput>;
-  update?: Maybe<UserUpdateWithoutOrdersDataInput>;
-  upsert?: Maybe<UserUpsertWithoutOrdersInput>;
-  connect?: Maybe<UserWhereUniqueInput>;
-}
-
-export interface UserUpdateWithoutOrdersDataInput {
-  email?: Maybe<String>;
-  name?: Maybe<String>;
-  password?: Maybe<String>;
-  organizations?: Maybe<OrganizationUpdateManyWithoutCreatedByInput>;
-  table?: Maybe<TableUpdateOneWithoutCustomersInput>;
-  cart?: Maybe<CartUpdateOneWithoutCustomerInput>;
-  permissions?: Maybe<Permission>;
-}
-
-export interface UserUpsertWithoutOrdersInput {
-  update: UserUpdateWithoutOrdersDataInput;
-  create: UserCreateWithoutOrdersInput;
-}
-
 export interface OrderUpsertWithWhereUniqueNestedInput {
   where: OrderWhereUniqueInput;
   update: OrderUpdateDataInput;
   create: OrderCreateInput;
 }
 
+export interface OrderScalarWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  total?: Maybe<Int>;
+  total_not?: Maybe<Int>;
+  total_in?: Maybe<Int[] | Int>;
+  total_not_in?: Maybe<Int[] | Int>;
+  total_lt?: Maybe<Int>;
+  total_lte?: Maybe<Int>;
+  total_gt?: Maybe<Int>;
+  total_gte?: Maybe<Int>;
+  charge?: Maybe<String>;
+  charge_not?: Maybe<String>;
+  charge_in?: Maybe<String[] | String>;
+  charge_not_in?: Maybe<String[] | String>;
+  charge_lt?: Maybe<String>;
+  charge_lte?: Maybe<String>;
+  charge_gt?: Maybe<String>;
+  charge_gte?: Maybe<String>;
+  charge_contains?: Maybe<String>;
+  charge_not_contains?: Maybe<String>;
+  charge_starts_with?: Maybe<String>;
+  charge_not_starts_with?: Maybe<String>;
+  charge_ends_with?: Maybe<String>;
+  charge_not_ends_with?: Maybe<String>;
+  createdAt?: Maybe<DateTimeInput>;
+  createdAt_not?: Maybe<DateTimeInput>;
+  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_lt?: Maybe<DateTimeInput>;
+  createdAt_lte?: Maybe<DateTimeInput>;
+  createdAt_gt?: Maybe<DateTimeInput>;
+  createdAt_gte?: Maybe<DateTimeInput>;
+  updatedAt?: Maybe<DateTimeInput>;
+  updatedAt_not?: Maybe<DateTimeInput>;
+  updatedAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  updatedAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  updatedAt_lt?: Maybe<DateTimeInput>;
+  updatedAt_lte?: Maybe<DateTimeInput>;
+  updatedAt_gt?: Maybe<DateTimeInput>;
+  updatedAt_gte?: Maybe<DateTimeInput>;
+  AND?: Maybe<OrderScalarWhereInput[] | OrderScalarWhereInput>;
+  OR?: Maybe<OrderScalarWhereInput[] | OrderScalarWhereInput>;
+  NOT?: Maybe<OrderScalarWhereInput[] | OrderScalarWhereInput>;
+}
+
+export interface OrderUpdateManyWithWhereNestedInput {
+  where: OrderScalarWhereInput;
+  data: OrderUpdateManyDataInput;
+}
+
+export interface OrderUpdateManyDataInput {
+  total?: Maybe<Int>;
+  charge?: Maybe<String>;
+}
+
+export interface TableUpdateOneWithoutCartsInput {
+  create?: Maybe<TableCreateWithoutCartsInput>;
+  update?: Maybe<TableUpdateWithoutCartsDataInput>;
+  upsert?: Maybe<TableUpsertWithoutCartsInput>;
+  delete?: Maybe<Boolean>;
+  disconnect?: Maybe<Boolean>;
+  connect?: Maybe<TableWhereUniqueInput>;
+}
+
+export interface TableUpdateWithoutCartsDataInput {
+  customers?: Maybe<UserUpdateManyInput>;
+}
+
+export interface UserUpdateManyInput {
+  create?: Maybe<UserCreateInput[] | UserCreateInput>;
+  update?: Maybe<
+    | UserUpdateWithWhereUniqueNestedInput[]
+    | UserUpdateWithWhereUniqueNestedInput
+  >;
+  upsert?: Maybe<
+    | UserUpsertWithWhereUniqueNestedInput[]
+    | UserUpsertWithWhereUniqueNestedInput
+  >;
+  delete?: Maybe<UserWhereUniqueInput[] | UserWhereUniqueInput>;
+  connect?: Maybe<UserWhereUniqueInput[] | UserWhereUniqueInput>;
+  set?: Maybe<UserWhereUniqueInput[] | UserWhereUniqueInput>;
+  disconnect?: Maybe<UserWhereUniqueInput[] | UserWhereUniqueInput>;
+  deleteMany?: Maybe<UserScalarWhereInput[] | UserScalarWhereInput>;
+  updateMany?: Maybe<
+    UserUpdateManyWithWhereNestedInput[] | UserUpdateManyWithWhereNestedInput
+  >;
+}
+
+export interface UserUpdateWithWhereUniqueNestedInput {
+  where: UserWhereUniqueInput;
+  data: UserUpdateDataInput;
+}
+
+export interface UserUpsertWithWhereUniqueNestedInput {
+  where: UserWhereUniqueInput;
+  update: UserUpdateDataInput;
+  create: UserCreateInput;
+}
+
+export interface UserScalarWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  email?: Maybe<String>;
+  email_not?: Maybe<String>;
+  email_in?: Maybe<String[] | String>;
+  email_not_in?: Maybe<String[] | String>;
+  email_lt?: Maybe<String>;
+  email_lte?: Maybe<String>;
+  email_gt?: Maybe<String>;
+  email_gte?: Maybe<String>;
+  email_contains?: Maybe<String>;
+  email_not_contains?: Maybe<String>;
+  email_starts_with?: Maybe<String>;
+  email_not_starts_with?: Maybe<String>;
+  email_ends_with?: Maybe<String>;
+  email_not_ends_with?: Maybe<String>;
+  name?: Maybe<String>;
+  name_not?: Maybe<String>;
+  name_in?: Maybe<String[] | String>;
+  name_not_in?: Maybe<String[] | String>;
+  name_lt?: Maybe<String>;
+  name_lte?: Maybe<String>;
+  name_gt?: Maybe<String>;
+  name_gte?: Maybe<String>;
+  name_contains?: Maybe<String>;
+  name_not_contains?: Maybe<String>;
+  name_starts_with?: Maybe<String>;
+  name_not_starts_with?: Maybe<String>;
+  name_ends_with?: Maybe<String>;
+  name_not_ends_with?: Maybe<String>;
+  password?: Maybe<String>;
+  password_not?: Maybe<String>;
+  password_in?: Maybe<String[] | String>;
+  password_not_in?: Maybe<String[] | String>;
+  password_lt?: Maybe<String>;
+  password_lte?: Maybe<String>;
+  password_gt?: Maybe<String>;
+  password_gte?: Maybe<String>;
+  password_contains?: Maybe<String>;
+  password_not_contains?: Maybe<String>;
+  password_starts_with?: Maybe<String>;
+  password_not_starts_with?: Maybe<String>;
+  password_ends_with?: Maybe<String>;
+  password_not_ends_with?: Maybe<String>;
+  permissions?: Maybe<Permission>;
+  permissions_not?: Maybe<Permission>;
+  permissions_in?: Maybe<Permission[] | Permission>;
+  permissions_not_in?: Maybe<Permission[] | Permission>;
+  AND?: Maybe<UserScalarWhereInput[] | UserScalarWhereInput>;
+  OR?: Maybe<UserScalarWhereInput[] | UserScalarWhereInput>;
+  NOT?: Maybe<UserScalarWhereInput[] | UserScalarWhereInput>;
+}
+
+export interface UserUpdateManyWithWhereNestedInput {
+  where: UserScalarWhereInput;
+  data: UserUpdateManyDataInput;
+}
+
+export interface UserUpdateManyDataInput {
+  email?: Maybe<String>;
+  name?: Maybe<String>;
+  password?: Maybe<String>;
+  permissions?: Maybe<Permission>;
+}
+
+export interface TableUpsertWithoutCartsInput {
+  update: TableUpdateWithoutCartsDataInput;
+  create: TableCreateWithoutCartsInput;
+}
+
 export interface CartUpdateManyMutationInput {
   total?: Maybe<Int>;
+}
+
+export interface CustomerCreateInput {
+  id?: Maybe<ID_Input>;
+  email: String;
+  name?: Maybe<String>;
+  password: String;
+  organizations?: Maybe<OrganizationCreateManyInput>;
+  table?: Maybe<TableCreateOneInput>;
+  cart?: Maybe<CartCreateOneInput>;
+  orders?: Maybe<OrderCreateManyInput>;
+  permissions?: Maybe<Permission>;
+}
+
+export interface OrganizationCreateManyInput {
+  create?: Maybe<OrganizationCreateInput[] | OrganizationCreateInput>;
+  connect?: Maybe<
+    OrganizationWhereUniqueInput[] | OrganizationWhereUniqueInput
+  >;
+}
+
+export interface OrganizationCreateInput {
+  id?: Maybe<ID_Input>;
+  name: String;
+  menus?: Maybe<MenuCreateManyWithoutOrganizationInput>;
+  createdBy: UserCreateOneWithoutOrganizationsInput;
+}
+
+export interface UserCreateOneWithoutOrganizationsInput {
+  create?: Maybe<UserCreateWithoutOrganizationsInput>;
+  connect?: Maybe<UserWhereUniqueInput>;
+}
+
+export interface UserCreateWithoutOrganizationsInput {
+  id?: Maybe<ID_Input>;
+  email: String;
+  name?: Maybe<String>;
+  password: String;
+  permissions?: Maybe<Permission>;
+}
+
+export interface TableCreateOneInput {
+  create?: Maybe<TableCreateInput>;
+  connect?: Maybe<TableWhereUniqueInput>;
+}
+
+export interface TableCreateInput {
+  id?: Maybe<ID_Input>;
+  customers?: Maybe<UserCreateManyInput>;
+  carts?: Maybe<CartCreateManyWithoutTableInput>;
+}
+
+export interface CartCreateManyWithoutTableInput {
+  create?: Maybe<CartCreateWithoutTableInput[] | CartCreateWithoutTableInput>;
+  connect?: Maybe<CartWhereUniqueInput[] | CartWhereUniqueInput>;
+}
+
+export interface CartCreateWithoutTableInput {
+  id?: Maybe<ID_Input>;
+  orders?: Maybe<OrderCreateManyInput>;
+  customer: UserCreateOneInput;
+  total: Int;
+}
+
+export interface CartCreateOneInput {
+  create?: Maybe<CartCreateInput>;
+  connect?: Maybe<CartWhereUniqueInput>;
+}
+
+export interface CustomerUpdateInput {
+  email?: Maybe<String>;
+  name?: Maybe<String>;
+  password?: Maybe<String>;
+  organizations?: Maybe<OrganizationUpdateManyInput>;
+  table?: Maybe<TableUpdateOneInput>;
+  cart?: Maybe<CartUpdateOneInput>;
+  orders?: Maybe<OrderUpdateManyInput>;
+  permissions?: Maybe<Permission>;
+}
+
+export interface OrganizationUpdateManyInput {
+  create?: Maybe<OrganizationCreateInput[] | OrganizationCreateInput>;
+  update?: Maybe<
+    | OrganizationUpdateWithWhereUniqueNestedInput[]
+    | OrganizationUpdateWithWhereUniqueNestedInput
+  >;
+  upsert?: Maybe<
+    | OrganizationUpsertWithWhereUniqueNestedInput[]
+    | OrganizationUpsertWithWhereUniqueNestedInput
+  >;
+  delete?: Maybe<OrganizationWhereUniqueInput[] | OrganizationWhereUniqueInput>;
+  connect?: Maybe<
+    OrganizationWhereUniqueInput[] | OrganizationWhereUniqueInput
+  >;
+  set?: Maybe<OrganizationWhereUniqueInput[] | OrganizationWhereUniqueInput>;
+  disconnect?: Maybe<
+    OrganizationWhereUniqueInput[] | OrganizationWhereUniqueInput
+  >;
+  deleteMany?: Maybe<
+    OrganizationScalarWhereInput[] | OrganizationScalarWhereInput
+  >;
+  updateMany?: Maybe<
+    | OrganizationUpdateManyWithWhereNestedInput[]
+    | OrganizationUpdateManyWithWhereNestedInput
+  >;
+}
+
+export interface OrganizationUpdateWithWhereUniqueNestedInput {
+  where: OrganizationWhereUniqueInput;
+  data: OrganizationUpdateDataInput;
+}
+
+export interface OrganizationUpdateDataInput {
+  name?: Maybe<String>;
+  menus?: Maybe<MenuUpdateManyWithoutOrganizationInput>;
+  createdBy?: Maybe<UserUpdateOneRequiredWithoutOrganizationsInput>;
+}
+
+export interface UserUpdateOneRequiredWithoutOrganizationsInput {
+  create?: Maybe<UserCreateWithoutOrganizationsInput>;
+  update?: Maybe<UserUpdateWithoutOrganizationsDataInput>;
+  upsert?: Maybe<UserUpsertWithoutOrganizationsInput>;
+  connect?: Maybe<UserWhereUniqueInput>;
+}
+
+export interface UserUpdateWithoutOrganizationsDataInput {
+  email?: Maybe<String>;
+  name?: Maybe<String>;
+  password?: Maybe<String>;
+  permissions?: Maybe<Permission>;
+}
+
+export interface UserUpsertWithoutOrganizationsInput {
+  update: UserUpdateWithoutOrganizationsDataInput;
+  create: UserCreateWithoutOrganizationsInput;
+}
+
+export interface OrganizationUpsertWithWhereUniqueNestedInput {
+  where: OrganizationWhereUniqueInput;
+  update: OrganizationUpdateDataInput;
+  create: OrganizationCreateInput;
+}
+
+export interface TableUpdateOneInput {
+  create?: Maybe<TableCreateInput>;
+  update?: Maybe<TableUpdateDataInput>;
+  upsert?: Maybe<TableUpsertNestedInput>;
+  delete?: Maybe<Boolean>;
+  disconnect?: Maybe<Boolean>;
+  connect?: Maybe<TableWhereUniqueInput>;
+}
+
+export interface TableUpdateDataInput {
+  customers?: Maybe<UserUpdateManyInput>;
+  carts?: Maybe<CartUpdateManyWithoutTableInput>;
+}
+
+export interface CartUpdateManyWithoutTableInput {
+  create?: Maybe<CartCreateWithoutTableInput[] | CartCreateWithoutTableInput>;
+  delete?: Maybe<CartWhereUniqueInput[] | CartWhereUniqueInput>;
+  connect?: Maybe<CartWhereUniqueInput[] | CartWhereUniqueInput>;
+  set?: Maybe<CartWhereUniqueInput[] | CartWhereUniqueInput>;
+  disconnect?: Maybe<CartWhereUniqueInput[] | CartWhereUniqueInput>;
+  update?: Maybe<
+    | CartUpdateWithWhereUniqueWithoutTableInput[]
+    | CartUpdateWithWhereUniqueWithoutTableInput
+  >;
+  upsert?: Maybe<
+    | CartUpsertWithWhereUniqueWithoutTableInput[]
+    | CartUpsertWithWhereUniqueWithoutTableInput
+  >;
+  deleteMany?: Maybe<CartScalarWhereInput[] | CartScalarWhereInput>;
+  updateMany?: Maybe<
+    CartUpdateManyWithWhereNestedInput[] | CartUpdateManyWithWhereNestedInput
+  >;
+}
+
+export interface CartUpdateWithWhereUniqueWithoutTableInput {
+  where: CartWhereUniqueInput;
+  data: CartUpdateWithoutTableDataInput;
+}
+
+export interface CartUpdateWithoutTableDataInput {
+  orders?: Maybe<OrderUpdateManyInput>;
+  customer?: Maybe<UserUpdateOneRequiredInput>;
+  total?: Maybe<Int>;
+}
+
+export interface CartUpsertWithWhereUniqueWithoutTableInput {
+  where: CartWhereUniqueInput;
+  update: CartUpdateWithoutTableDataInput;
+  create: CartCreateWithoutTableInput;
+}
+
+export interface CartScalarWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  total?: Maybe<Int>;
+  total_not?: Maybe<Int>;
+  total_in?: Maybe<Int[] | Int>;
+  total_not_in?: Maybe<Int[] | Int>;
+  total_lt?: Maybe<Int>;
+  total_lte?: Maybe<Int>;
+  total_gt?: Maybe<Int>;
+  total_gte?: Maybe<Int>;
+  AND?: Maybe<CartScalarWhereInput[] | CartScalarWhereInput>;
+  OR?: Maybe<CartScalarWhereInput[] | CartScalarWhereInput>;
+  NOT?: Maybe<CartScalarWhereInput[] | CartScalarWhereInput>;
+}
+
+export interface CartUpdateManyWithWhereNestedInput {
+  where: CartScalarWhereInput;
+  data: CartUpdateManyDataInput;
+}
+
+export interface CartUpdateManyDataInput {
+  total?: Maybe<Int>;
+}
+
+export interface TableUpsertNestedInput {
+  update: TableUpdateDataInput;
+  create: TableCreateInput;
+}
+
+export interface CartUpdateOneInput {
+  create?: Maybe<CartCreateInput>;
+  update?: Maybe<CartUpdateDataInput>;
+  upsert?: Maybe<CartUpsertNestedInput>;
+  delete?: Maybe<Boolean>;
+  disconnect?: Maybe<Boolean>;
+  connect?: Maybe<CartWhereUniqueInput>;
+}
+
+export interface CartUpdateDataInput {
+  orders?: Maybe<OrderUpdateManyInput>;
+  customer?: Maybe<UserUpdateOneRequiredInput>;
+  table?: Maybe<TableUpdateOneWithoutCartsInput>;
+  total?: Maybe<Int>;
+}
+
+export interface CartUpsertNestedInput {
+  update: CartUpdateDataInput;
+  create: CartCreateInput;
+}
+
+export interface CustomerUpdateManyMutationInput {
+  email?: Maybe<String>;
+  name?: Maybe<String>;
+  password?: Maybe<String>;
+  permissions?: Maybe<Permission>;
+}
+
+export interface MenuCreateInput {
+  id?: Maybe<ID_Input>;
+  published?: Maybe<Boolean>;
+  title: String;
+  menu_items?: Maybe<MenuItemCreateManyWithoutMenuInput>;
+  organization: OrganizationCreateOneWithoutMenusInput;
+}
+
+export interface OrganizationCreateOneWithoutMenusInput {
+  create?: Maybe<OrganizationCreateWithoutMenusInput>;
+  connect?: Maybe<OrganizationWhereUniqueInput>;
+}
+
+export interface OrganizationCreateWithoutMenusInput {
+  id?: Maybe<ID_Input>;
+  name: String;
+  createdBy: UserCreateOneWithoutOrganizationsInput;
 }
 
 export interface MenuUpdateInput {
@@ -2775,6 +2733,23 @@ export interface MenuUpdateInput {
   title?: Maybe<String>;
   menu_items?: Maybe<MenuItemUpdateManyWithoutMenuInput>;
   organization?: Maybe<OrganizationUpdateOneRequiredWithoutMenusInput>;
+}
+
+export interface OrganizationUpdateOneRequiredWithoutMenusInput {
+  create?: Maybe<OrganizationCreateWithoutMenusInput>;
+  update?: Maybe<OrganizationUpdateWithoutMenusDataInput>;
+  upsert?: Maybe<OrganizationUpsertWithoutMenusInput>;
+  connect?: Maybe<OrganizationWhereUniqueInput>;
+}
+
+export interface OrganizationUpdateWithoutMenusDataInput {
+  name?: Maybe<String>;
+  createdBy?: Maybe<UserUpdateOneRequiredWithoutOrganizationsInput>;
+}
+
+export interface OrganizationUpsertWithoutMenusInput {
+  update: OrganizationUpdateWithoutMenusDataInput;
+  create: OrganizationCreateWithoutMenusInput;
 }
 
 export interface MenuUpdateManyMutationInput {
@@ -2901,7 +2876,6 @@ export interface MenuHeaderCreateInput {
   name: String;
   subHeader?: Maybe<String>;
   menu_items?: Maybe<MenuItemCreateManyWithoutMenuHeaderInput>;
-  menu?: Maybe<MenuCreateOneInput>;
 }
 
 export interface MenuItemCreateManyWithoutMenuHeaderInput {
@@ -2927,7 +2901,6 @@ export interface MenuHeaderUpdateInput {
   name?: Maybe<String>;
   subHeader?: Maybe<String>;
   menu_items?: Maybe<MenuItemUpdateManyWithoutMenuHeaderInput>;
-  menu?: Maybe<MenuUpdateOneInput>;
 }
 
 export interface MenuItemUpdateManyWithoutMenuHeaderInput {
@@ -3067,7 +3040,7 @@ export interface MenuSelectionUpdateManyMutationInput {
 export interface OrderUpdateInput {
   items?: Maybe<OrderItemUpdateManyInput>;
   total?: Maybe<Int>;
-  customer?: Maybe<UserUpdateOneRequiredWithoutOrdersInput>;
+  customer?: Maybe<UserUpdateOneRequiredInput>;
   charge?: Maybe<String>;
 }
 
@@ -3089,17 +3062,8 @@ export interface OrderItemUpdateManyMutationInput {
   quantity?: Maybe<Int>;
 }
 
-export interface OrganizationCreateInput {
-  id?: Maybe<ID_Input>;
-  name: String;
-  users?: Maybe<UserCreateManyInput>;
-  menus?: Maybe<MenuCreateManyWithoutOrganizationInput>;
-  createdBy: UserCreateOneWithoutOrganizationsInput;
-}
-
 export interface OrganizationUpdateInput {
   name?: Maybe<String>;
-  users?: Maybe<UserUpdateManyInput>;
   menus?: Maybe<MenuUpdateManyWithoutOrganizationInput>;
   createdBy?: Maybe<UserUpdateOneRequiredWithoutOrganizationsInput>;
 }
@@ -3108,14 +3072,8 @@ export interface OrganizationUpdateManyMutationInput {
   name?: Maybe<String>;
 }
 
-export interface TableCreateInput {
-  id?: Maybe<ID_Input>;
-  customers?: Maybe<UserCreateManyWithoutTableInput>;
-  carts?: Maybe<CartCreateManyWithoutTableInput>;
-}
-
 export interface TableUpdateInput {
-  customers?: Maybe<UserUpdateManyWithoutTableInput>;
+  customers?: Maybe<UserUpdateManyInput>;
   carts?: Maybe<CartUpdateManyWithoutTableInput>;
 }
 
@@ -3124,9 +3082,6 @@ export interface UserUpdateInput {
   name?: Maybe<String>;
   password?: Maybe<String>;
   organizations?: Maybe<OrganizationUpdateManyWithoutCreatedByInput>;
-  table?: Maybe<TableUpdateOneWithoutCustomersInput>;
-  cart?: Maybe<CartUpdateOneWithoutCustomerInput>;
-  orders?: Maybe<OrderUpdateManyWithoutCustomerInput>;
   permissions?: Maybe<Permission>;
 }
 
@@ -3146,6 +3101,21 @@ export interface CartSubscriptionWhereInput {
   AND?: Maybe<CartSubscriptionWhereInput[] | CartSubscriptionWhereInput>;
   OR?: Maybe<CartSubscriptionWhereInput[] | CartSubscriptionWhereInput>;
   NOT?: Maybe<CartSubscriptionWhereInput[] | CartSubscriptionWhereInput>;
+}
+
+export interface CustomerSubscriptionWhereInput {
+  mutation_in?: Maybe<MutationType[] | MutationType>;
+  updatedFields_contains?: Maybe<String>;
+  updatedFields_contains_every?: Maybe<String[] | String>;
+  updatedFields_contains_some?: Maybe<String[] | String>;
+  node?: Maybe<CustomerWhereInput>;
+  AND?: Maybe<
+    CustomerSubscriptionWhereInput[] | CustomerSubscriptionWhereInput
+  >;
+  OR?: Maybe<CustomerSubscriptionWhereInput[] | CustomerSubscriptionWhereInput>;
+  NOT?: Maybe<
+    CustomerSubscriptionWhereInput[] | CustomerSubscriptionWhereInput
+  >;
 }
 
 export interface MenuSubscriptionWhereInput {
@@ -3476,17 +3446,6 @@ export interface UserPromise extends Promise<User>, Fragmentable {
     first?: Int;
     last?: Int;
   }) => T;
-  table: <T = TablePromise>() => T;
-  cart: <T = CartPromise>() => T;
-  orders: <T = FragmentableArray<Order>>(args?: {
-    where?: OrderWhereInput;
-    orderBy?: OrderOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
   permissions: () => Promise<Permission>;
 }
 
@@ -3500,17 +3459,6 @@ export interface UserSubscription
   organizations: <T = Promise<AsyncIterator<OrganizationSubscription>>>(args?: {
     where?: OrganizationWhereInput;
     orderBy?: OrganizationOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  table: <T = TableSubscription>() => T;
-  cart: <T = CartSubscription>() => T;
-  orders: <T = Promise<AsyncIterator<OrderSubscription>>>(args?: {
-    where?: OrderWhereInput;
-    orderBy?: OrderOrderByInput;
     skip?: Int;
     after?: String;
     before?: String;
@@ -3536,17 +3484,6 @@ export interface UserNullablePromise
     first?: Int;
     last?: Int;
   }) => T;
-  table: <T = TablePromise>() => T;
-  cart: <T = CartPromise>() => T;
-  orders: <T = FragmentableArray<Order>>(args?: {
-    where?: OrderWhereInput;
-    orderBy?: OrderOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
   permissions: () => Promise<Permission>;
 }
 
@@ -3560,15 +3497,6 @@ export interface OrganizationPromise
     Fragmentable {
   id: () => Promise<ID_Output>;
   name: () => Promise<String>;
-  users: <T = FragmentableArray<User>>(args?: {
-    where?: UserWhereInput;
-    orderBy?: UserOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
   menus: <T = FragmentableArray<Menu>>(args?: {
     where?: MenuWhereInput;
     orderBy?: MenuOrderByInput;
@@ -3586,15 +3514,6 @@ export interface OrganizationSubscription
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
   name: () => Promise<AsyncIterator<String>>;
-  users: <T = Promise<AsyncIterator<UserSubscription>>>(args?: {
-    where?: UserWhereInput;
-    orderBy?: UserOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
   menus: <T = Promise<AsyncIterator<MenuSubscription>>>(args?: {
     where?: MenuWhereInput;
     orderBy?: MenuOrderByInput;
@@ -3612,15 +3531,6 @@ export interface OrganizationNullablePromise
     Fragmentable {
   id: () => Promise<ID_Output>;
   name: () => Promise<String>;
-  users: <T = FragmentableArray<User>>(args?: {
-    where?: UserWhereInput;
-    orderBy?: UserOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
   menus: <T = FragmentableArray<Menu>>(args?: {
     where?: MenuWhereInput;
     orderBy?: MenuOrderByInput;
@@ -3910,7 +3820,6 @@ export interface MenuHeaderPromise extends Promise<MenuHeader>, Fragmentable {
     first?: Int;
     last?: Int;
   }) => T;
-  menu: <T = MenuPromise>() => T;
 }
 
 export interface MenuHeaderSubscription
@@ -3928,7 +3837,6 @@ export interface MenuHeaderSubscription
     first?: Int;
     last?: Int;
   }) => T;
-  menu: <T = MenuSubscription>() => T;
 }
 
 export interface MenuHeaderNullablePromise
@@ -3946,7 +3854,6 @@ export interface MenuHeaderNullablePromise
     first?: Int;
     last?: Int;
   }) => T;
-  menu: <T = MenuPromise>() => T;
 }
 
 export interface Table {
@@ -4096,6 +4003,158 @@ export interface AggregateCartPromise
 
 export interface AggregateCartSubscription
   extends Promise<AsyncIterator<AggregateCart>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface Customer {
+  id: ID_Output;
+  email: String;
+  name?: String;
+  password: String;
+  permissions: Permission;
+}
+
+export interface CustomerPromise extends Promise<Customer>, Fragmentable {
+  id: () => Promise<ID_Output>;
+  email: () => Promise<String>;
+  name: () => Promise<String>;
+  password: () => Promise<String>;
+  organizations: <T = FragmentableArray<Organization>>(args?: {
+    where?: OrganizationWhereInput;
+    orderBy?: OrganizationOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  table: <T = TablePromise>() => T;
+  cart: <T = CartPromise>() => T;
+  orders: <T = FragmentableArray<Order>>(args?: {
+    where?: OrderWhereInput;
+    orderBy?: OrderOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  permissions: () => Promise<Permission>;
+}
+
+export interface CustomerSubscription
+  extends Promise<AsyncIterator<Customer>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  email: () => Promise<AsyncIterator<String>>;
+  name: () => Promise<AsyncIterator<String>>;
+  password: () => Promise<AsyncIterator<String>>;
+  organizations: <T = Promise<AsyncIterator<OrganizationSubscription>>>(args?: {
+    where?: OrganizationWhereInput;
+    orderBy?: OrganizationOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  table: <T = TableSubscription>() => T;
+  cart: <T = CartSubscription>() => T;
+  orders: <T = Promise<AsyncIterator<OrderSubscription>>>(args?: {
+    where?: OrderWhereInput;
+    orderBy?: OrderOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  permissions: () => Promise<AsyncIterator<Permission>>;
+}
+
+export interface CustomerNullablePromise
+  extends Promise<Customer | null>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  email: () => Promise<String>;
+  name: () => Promise<String>;
+  password: () => Promise<String>;
+  organizations: <T = FragmentableArray<Organization>>(args?: {
+    where?: OrganizationWhereInput;
+    orderBy?: OrganizationOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  table: <T = TablePromise>() => T;
+  cart: <T = CartPromise>() => T;
+  orders: <T = FragmentableArray<Order>>(args?: {
+    where?: OrderWhereInput;
+    orderBy?: OrderOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  permissions: () => Promise<Permission>;
+}
+
+export interface CustomerConnection {
+  pageInfo: PageInfo;
+  edges: CustomerEdge[];
+}
+
+export interface CustomerConnectionPromise
+  extends Promise<CustomerConnection>,
+    Fragmentable {
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<CustomerEdge>>() => T;
+  aggregate: <T = AggregateCustomerPromise>() => T;
+}
+
+export interface CustomerConnectionSubscription
+  extends Promise<AsyncIterator<CustomerConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<CustomerEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateCustomerSubscription>() => T;
+}
+
+export interface CustomerEdge {
+  node: Customer;
+  cursor: String;
+}
+
+export interface CustomerEdgePromise
+  extends Promise<CustomerEdge>,
+    Fragmentable {
+  node: <T = CustomerPromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface CustomerEdgeSubscription
+  extends Promise<AsyncIterator<CustomerEdge>>,
+    Fragmentable {
+  node: <T = CustomerSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface AggregateCustomer {
+  count: Int;
+}
+
+export interface AggregateCustomerPromise
+  extends Promise<AggregateCustomer>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateCustomerSubscription
+  extends Promise<AsyncIterator<AggregateCustomer>>,
     Fragmentable {
   count: () => Promise<AsyncIterator<Int>>;
 }
@@ -4712,6 +4771,59 @@ export interface CartPreviousValuesSubscription
   total: () => Promise<AsyncIterator<Int>>;
 }
 
+export interface CustomerSubscriptionPayload {
+  mutation: MutationType;
+  node: Customer;
+  updatedFields: String[];
+  previousValues: CustomerPreviousValues;
+}
+
+export interface CustomerSubscriptionPayloadPromise
+  extends Promise<CustomerSubscriptionPayload>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = CustomerPromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = CustomerPreviousValuesPromise>() => T;
+}
+
+export interface CustomerSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<CustomerSubscriptionPayload>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = CustomerSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = CustomerPreviousValuesSubscription>() => T;
+}
+
+export interface CustomerPreviousValues {
+  id: ID_Output;
+  email: String;
+  name?: String;
+  password: String;
+  permissions: Permission;
+}
+
+export interface CustomerPreviousValuesPromise
+  extends Promise<CustomerPreviousValues>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  email: () => Promise<String>;
+  name: () => Promise<String>;
+  password: () => Promise<String>;
+  permissions: () => Promise<Permission>;
+}
+
+export interface CustomerPreviousValuesSubscription
+  extends Promise<AsyncIterator<CustomerPreviousValues>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  email: () => Promise<AsyncIterator<String>>;
+  name: () => Promise<AsyncIterator<String>>;
+  password: () => Promise<AsyncIterator<String>>;
+  permissions: () => Promise<AsyncIterator<Permission>>;
+}
+
 export interface MenuSubscriptionPayload {
   mutation: MutationType;
   node: Menu;
@@ -5250,6 +5362,10 @@ export const models: Model[] = [
   },
   {
     name: "User",
+    embedded: false
+  },
+  {
+    name: "Customer",
     embedded: false
   },
   {

@@ -133,18 +133,6 @@ export const Mutation = mutationType({
   }
 });
 
-export const Menu = objectType({
-  name: "Menu",
-  definition(t) {
-    t.string("title", { nullable: false });
-    t.field("organization", {
-      type: "Organization",
-      nullable: false,
-      list: true
-    });
-  }
-});
-
 // User Authentication
 export const AuthPayload = objectType({
   name: "AuthPayload",
@@ -184,6 +172,67 @@ export const loginUser = mutationField("loginUser", {
     password: stringArg({ required: true })
   },
   resolve: async (parent, { email, password }, context) => {
+    const user = await context.prisma.user({ email });
+    if (!user) {
+      throw new Error(`No user found for email: ${email}`);
+    }
+    const passwordValid = await compare(password, user.password);
+    if (!passwordValid) {
+      throw new Error("Invalid password");
+    }
+    return {
+      token: sign({ userId: user.id }, APP_SECRET),
+      user
+    };
+  }
+});
+
+// Customer Authentication
+export const CustomerAuthPayload = objectType({
+  name: "CustomerAuthPayload",
+  definition(t) {
+    t.field("customer", {
+      type: "Customer"
+    });
+    t.string("token");
+  }
+});
+
+export const registerCustomer = mutationField("registerCustomer", {
+  type: "CustomerAuthPayload",
+  args: {
+    name: stringArg({ nullable: true }),
+    email: stringArg({ required: true }),
+    password: stringArg({ required: true }),
+    id: stringArg({ required: true })
+  },
+  resolve: async (parent, { name, email, password, id }, context) => {
+    const hashedPassword = await hash(password, 10);
+    const user = await context.prisma.createCustomer({
+      name,
+      email,
+      password: hashedPassword,
+      organizations: {
+        connect: {
+          id
+        }
+      }
+    });
+    return {
+      token: sign({ userId: user.id }, APP_SECRET),
+      user
+    };
+  }
+});
+
+export const loginCustomer = mutationField("loginCustomer", {
+  type: "CustomerAuthPayload",
+  args: {
+    email: stringArg({ required: true }),
+    password: stringArg({ required: true }),
+    id: stringArg({ required: true })
+  },
+  resolve: async (parent, { email, password, id }, context) => {
     const user = await context.prisma.user({ email });
     if (!user) {
       throw new Error(`No user found for email: ${email}`);

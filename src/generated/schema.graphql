@@ -60,6 +60,23 @@ input CartWhereInput {
   total_not_in: [Int!]
 }
 
+type Customer {
+  cart: Cart
+  email: String!
+  id: ID!
+  name: String
+  orders(after: String, before: String, first: Int, last: Int, orderBy: OrderOrderByInput, skip: Int, where: OrderWhereInput): [Order!]
+  organizations(after: String, before: String, first: Int, last: Int, orderBy: OrganizationOrderByInput, skip: Int, where: OrganizationWhereInput): [Organization!]
+  password: String!
+  permissions: Permission!
+  table: Table
+}
+
+type CustomerAuthPayload {
+  customer: Customer
+  token: String
+}
+
 scalar DateTime
 
 """Menu that the admin has created within an organization"""
@@ -152,7 +169,6 @@ input MenuChoiceWhereInput {
 """MenuHeader that the admin has created"""
 type MenuHeader {
   id: ID!
-  menu: Menu
   menu_items(after: String, before: String, first: Int, last: Int, orderBy: MenuItemOrderByInput, skip: Int, where: MenuItemWhereInput): [MenuItem!]
   name: String!
   subHeader: String
@@ -174,7 +190,6 @@ input MenuHeaderWhereInput {
   id_not_in: [ID!]
   id_not_starts_with: ID
   id_starts_with: ID
-  menu: MenuWhereInput
   menu_items_every: MenuItemWhereInput
   menu_items_none: MenuItemWhereInput
   menu_items_some: MenuItemWhereInput
@@ -488,7 +503,9 @@ type Mutation {
   createMenuItem(basePrice: String!, id: String!, name: String!): MenuItem
   createMenuSelection(id: String!, name: String!): MenuSelection
   createOrganization(id: String!, name: String!): Organization
+  loginCustomer(email: String!, id: String!, password: String!): CustomerAuthPayload
   loginUser(email: String!, password: String!): AuthPayload
+  registerCustomer(email: String!, id: String!, name: String, password: String!): CustomerAuthPayload
   registerUser(email: String!, name: String, password: String!): AuthPayload
 }
 
@@ -659,7 +676,17 @@ type Organization {
   id: ID!
   menus(after: String, before: String, first: Int, last: Int, orderBy: MenuOrderByInput, skip: Int, where: MenuWhereInput): [Menu!]
   name: String!
-  users(after: String, before: String, first: Int, last: Int, orderBy: UserOrderByInput, skip: Int, where: UserWhereInput): [User!]
+}
+
+enum OrganizationOrderByInput {
+  createdAt_ASC
+  createdAt_DESC
+  id_ASC
+  id_DESC
+  name_ASC
+  name_DESC
+  updatedAt_ASC
+  updatedAt_DESC
 }
 
 input OrganizationWhereInput {
@@ -698,9 +725,6 @@ input OrganizationWhereInput {
   name_starts_with: String
   NOT: [OrganizationWhereInput!]
   OR: [OrganizationWhereInput!]
-  users_every: UserWhereInput
-  users_none: UserWhereInput
-  users_some: UserWhereInput
 }
 
 enum Permission {
@@ -711,7 +735,29 @@ enum Permission {
 }
 
 type Query {
+  customer: Customer
+
+  """Get a customer by ID"""
+  customerById(id: String!): Customer
+
+  """A list of all customers"""
+  customers: [Customer!]
+
+  """Get a customer by ID"""
+  customersByOrganization(id: String!): [Customer!]
   me: User
+
+  """Get a menu by ID"""
+  menuById(id: String!): Menu
+
+  """Get a menu by ID"""
+  menusByOrganization(id: String!): [Menu!]
+
+  """Get a user by ID"""
+  userById(id: String!): [User!]
+
+  """A list of all users"""
+  users: [User!]
 }
 
 """Table that the customer has created"""
@@ -747,12 +793,13 @@ input TableWhereInput {
   OR: [TableWhereInput!]
 }
 
-"""The user of the application"""
+"""The owner of the application"""
 type User {
   email: String!
   id: ID!
   name: String
   organizations: [Organization!]
+  permissions: Permission!
 }
 
 enum UserOrderByInput {
@@ -774,7 +821,6 @@ enum UserOrderByInput {
 
 input UserWhereInput {
   AND: [UserWhereInput!]
-  cart: CartWhereInput
   email: String
   email_contains: String
   email_ends_with: String
@@ -819,9 +865,6 @@ input UserWhereInput {
   name_starts_with: String
   NOT: [UserWhereInput!]
   OR: [UserWhereInput!]
-  orders_every: OrderWhereInput
-  orders_none: OrderWhereInput
-  orders_some: OrderWhereInput
   organizations_every: OrganizationWhereInput
   organizations_none: OrganizationWhereInput
   organizations_some: OrganizationWhereInput
@@ -843,5 +886,4 @@ input UserWhereInput {
   permissions_in: [Permission!]
   permissions_not: Permission
   permissions_not_in: [Permission!]
-  table: TableWhereInput
 }
