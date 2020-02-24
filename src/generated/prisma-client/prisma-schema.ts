@@ -2626,7 +2626,7 @@ type PageInfo {
 
 enum Permission {
   DEVELOPER
-  OWNER
+  DIRECTOR
   ADMIN
   CUSTOMER
 }

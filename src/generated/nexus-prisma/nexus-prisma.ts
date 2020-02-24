@@ -11416,7 +11416,7 @@ export type OrderItemSubscriptionWhereInputInputObject =
 
 export type PermissionValues =
   | 'DEVELOPER'
-  | 'OWNER'
+  | 'DIRECTOR'
   | 'ADMIN'
   | 'CUSTOMER'
   

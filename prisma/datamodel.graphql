@@ -1,6 +1,6 @@
 enum Permission {
   DEVELOPER
-  OWNER
+  DIRECTOR
   ADMIN
   CUSTOMER
 }
@@ -10,7 +10,7 @@ type User {
   email: String! @unique
   name: String
   password: String!
-  organizations: [Organization!]! @relation(name: "OrganizationsByOwner")
+  organizations: [Organization!]!
   permissions: Permission! @default(value: ADMIN)
 }
 
@@ -19,7 +19,7 @@ type Customer {
   email: String! @unique
   name: String
   password: String!
-  organizations: [Organization!]! @relation(name: "OrganizationsByCustomer")
+  organizations: [Organization!]!
   table: Table
   cart: Cart @relation(link: TABLE)
   orders: [Order]
@@ -29,10 +29,8 @@ type Customer {
 type Organization {
   id: ID! @id
   name: String!
-  menus: [Menu!]! @relation(name: "MenuByOrganization")
-  createdBy: User!
-    @relation(name: "OrganizationsByOwner", link: INLINE)
-    @db(name: "created_by")
+  menus: [Menu!]! @relation(name: "MenuByOrganization", onDelete: CASCADE)
+  createdBy: User! @db(name: "created_by")
 }
 
 type Menu {
@@ -42,7 +40,8 @@ type Menu {
   published: Boolean! @default(value: false)
   title: String!
   menu_items: [MenuItem]
-  organization: Organization! @relation(name: "MenuByOrganization")
+  organization: Organization!
+    @relation(name: "MenuByOrganization", onDelete: CASCADE)
 }
 
 type MenuItem {

@@ -28,6 +28,16 @@ export const Mutation = mutationType({
         });
       }
     });
+    t.field("deleteOrganization", {
+      type: "Organization",
+      nullable: true,
+      args: {
+        id: stringArg({ required: true })
+      },
+      resolve: (parent, { id }, context) => {
+        return context.prisma.deleteOrganization({ id });
+      }
+    });
     t.field("createMenu", {
       type: "Menu",
       args: {
@@ -46,6 +56,31 @@ export const Mutation = mutationType({
             }
           }
         });
+      }
+    });
+    t.field("publishMenu", {
+      type: "Menu",
+      nullable: true,
+      args: {
+        id: stringArg({ required: true })
+      },
+      resolve: async (parent, { id }, context) => {
+        return context.prisma.updateMenu({
+          where: { id },
+          data: {
+            published: true
+          }
+        });
+      }
+    });
+    t.field("deleteMenu", {
+      type: "Menu",
+      nullable: true,
+      args: {
+        id: stringArg({ required: true })
+      },
+      resolve: async (parent, { id }, context) => {
+        return context.prisma.deleteMenu({ id });
       }
     });
     t.field("createMenuItem", {
@@ -70,6 +105,16 @@ export const Mutation = mutationType({
         });
       }
     });
+    t.field("deleteMenuItem", {
+      type: "MenuItem",
+      args: {
+        id: stringArg({ required: true })
+      },
+      resolve: async (parent, { id }, context) => {
+        const { prisma } = context;
+        return prisma.deleteMenuItem({ id });
+      }
+    });
     t.field("createMenuChoice", {
       type: "MenuChoice",
       args: {
@@ -88,6 +133,16 @@ export const Mutation = mutationType({
             }
           }
         });
+      }
+    });
+    t.field("deleteMenuChoice", {
+      type: "MenuChoice",
+      args: {
+        id: stringArg({ required: true })
+      },
+      resolve: async (parent, { id }, context) => {
+        const { prisma } = context;
+        return prisma.deleteMenuChoice({ id });
       }
     });
     t.field("createMenuHeader", {
@@ -110,6 +165,16 @@ export const Mutation = mutationType({
         });
       }
     });
+    t.field("deleteMenuHeader", {
+      type: "MenuHeader",
+      args: {
+        id: stringArg({ required: true })
+      },
+      resolve: async (parent, { id }, context) => {
+        const { prisma } = context;
+        return prisma.deleteMenuHeader({ id });
+      }
+    });
     t.field("createMenuSelection", {
       type: "MenuSelection",
       args: {
@@ -128,6 +193,16 @@ export const Mutation = mutationType({
             }
           }
         });
+      }
+    });
+    t.field("deleteMenuSelection", {
+      type: "MenuSelection",
+      args: {
+        id: stringArg({ required: true })
+      },
+      resolve: async (parent, { id }, context) => {
+        const { prisma } = context;
+        return prisma.deleteMenuSelection({ id });
       }
     });
   }

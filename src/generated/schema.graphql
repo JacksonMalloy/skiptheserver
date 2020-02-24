@@ -60,6 +60,7 @@ input CartWhereInput {
   total_not_in: [Int!]
 }
 
+"""The customer using the application"""
 type Customer {
   cart: Cart
   email: String!
@@ -352,19 +353,6 @@ input MenuItemWhereInput {
   OR: [MenuItemWhereInput!]
 }
 
-enum MenuOrderByInput {
-  createdAt_ASC
-  createdAt_DESC
-  id_ASC
-  id_DESC
-  published_ASC
-  published_DESC
-  title_ASC
-  title_DESC
-  updatedAt_ASC
-  updatedAt_DESC
-}
-
 """MenuSelection that the admin has created"""
 type MenuSelection {
   id: ID!
@@ -503,8 +491,15 @@ type Mutation {
   createMenuItem(basePrice: String!, id: String!, name: String!): MenuItem
   createMenuSelection(id: String!, name: String!): MenuSelection
   createOrganization(id: String!, name: String!): Organization
+  deleteMenu(id: String!): Menu
+  deleteMenuChoice(id: String!): MenuChoice
+  deleteMenuHeader(id: String!): MenuHeader
+  deleteMenuItem(id: String!): MenuItem
+  deleteMenuSelection(id: String!): MenuSelection
+  deleteOrganization(id: String!): Organization
   loginCustomer(email: String!, id: String!, password: String!): CustomerAuthPayload
   loginUser(email: String!, password: String!): AuthPayload
+  publishMenu(id: String!): Menu
   registerCustomer(email: String!, id: String!, name: String, password: String!): CustomerAuthPayload
   registerUser(email: String!, name: String, password: String!): AuthPayload
 }
@@ -674,7 +669,7 @@ input OrderWhereInput {
 type Organization {
   createdBy: User!
   id: ID!
-  menus(after: String, before: String, first: Int, last: Int, orderBy: MenuOrderByInput, skip: Int, where: MenuWhereInput): [Menu!]
+  menus: [Menu!]
   name: String!
 }
 
@@ -731,10 +726,11 @@ enum Permission {
   ADMIN
   CUSTOMER
   DEVELOPER
-  OWNER
+  DIRECTOR
 }
 
 type Query {
+  """Get the active customer"""
   customer: Customer
 
   """Get a customer by ID"""
@@ -743,14 +739,16 @@ type Query {
   """A list of all customers"""
   customers: [Customer!]
 
-  """Get a customer by ID"""
+  """Get all customers associated with an organization"""
   customersByOrganization(id: String!): [Customer!]
+
+  """Get the active user"""
   me: User
 
   """Get a menu by ID"""
   menuById(id: String!): Menu
 
-  """Get a menu by ID"""
+  """Get all menus associated with an organization"""
   menusByOrganization(id: String!): [Menu!]
 
   """Get a user by ID"""

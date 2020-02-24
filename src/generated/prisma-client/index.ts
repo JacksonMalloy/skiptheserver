@@ -538,7 +538,7 @@ export interface ClientConstructor<T> {
  * Types
  */
 
-export type Permission = "DEVELOPER" | "OWNER" | "ADMIN" | "CUSTOMER";
+export type Permission = "DEVELOPER" | "DIRECTOR" | "ADMIN" | "CUSTOMER";
 
 export type OrderOrderByInput =
   | "id_ASC"

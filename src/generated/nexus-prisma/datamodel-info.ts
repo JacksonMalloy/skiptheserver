@@ -7386,7 +7386,7 @@ export default {
             "deprecationReason": null
           },
           {
-            "name": "OWNER",
+            "name": "DIRECTOR",
             "description": null,
             "isDeprecated": false,
             "deprecationReason": null
