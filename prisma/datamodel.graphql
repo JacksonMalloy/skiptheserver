@@ -30,7 +30,8 @@ type Organization {
   id: ID! @id
   name: String!
   menus: [Menu!]! @relation(name: "MenuByOrganization", onDelete: CASCADE)
-  createdBy: User! @db(name: "created_by")
+  admins: [User]
+  customers: [Customer]
 }
 
 type Menu {
