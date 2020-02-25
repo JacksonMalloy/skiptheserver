@@ -500,8 +500,10 @@ type Mutation {
   loginCustomer(email: String!, id: String!, password: String!): CustomerAuthPayload
   loginUser(email: String!, password: String!): AuthPayload
   publishMenu(id: String!): Menu
+  registerAdmin(email: String!, id: String!, name: String, password: String!): AuthPayload
   registerCustomer(email: String!, id: String!, name: String, password: String!): CustomerAuthPayload
-  registerUser(email: String!, name: String, password: String!): AuthPayload
+  registerDeveloper(email: String!, name: String, password: String!): AuthPayload
+  registerDirector(email: String!, name: String, password: String!): AuthPayload
 }
 
 """Order that the customer has created"""

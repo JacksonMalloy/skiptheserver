@@ -219,7 +219,8 @@ export const AuthPayload = objectType({
   }
 });
 
-export const registerUser = mutationField("registerUser", {
+// Must remember to remove in production
+export const registerDeveloper = mutationField("registerDeveloper", {
   type: "AuthPayload",
   args: {
     name: stringArg({ nullable: true }),
@@ -231,7 +232,58 @@ export const registerUser = mutationField("registerUser", {
     const user = await context.prisma.createUser({
       name,
       email,
-      password: hashedPassword
+      password: hashedPassword,
+      permissions: "DEVELOPER"
+    });
+    return {
+      token: sign({ userId: user.id }, APP_SECRET),
+      user
+    };
+  }
+});
+
+export const registerDirector = mutationField("registerDirector", {
+  type: "AuthPayload",
+  args: {
+    name: stringArg({ nullable: true }),
+    email: stringArg({ required: true }),
+    password: stringArg({ required: true })
+  },
+  resolve: async (parent, { name, email, password }, context) => {
+    const hashedPassword = await hash(password, 10);
+    const user = await context.prisma.createUser({
+      name,
+      email,
+      password: hashedPassword,
+      permissions: "DIRECTOR"
+    });
+    return {
+      token: sign({ userId: user.id }, APP_SECRET),
+      user
+    };
+  }
+});
+
+export const registerAdmin = mutationField("registerAdmin", {
+  type: "AuthPayload",
+  args: {
+    name: stringArg({ nullable: true }),
+    email: stringArg({ required: true }),
+    password: stringArg({ required: true }),
+    id: stringArg({ required: true })
+  },
+  resolve: async (parent, { name, email, password, id }, context) => {
+    const hashedPassword = await hash(password, 10);
+    const user = await context.prisma.createUser({
+      name,
+      email,
+      password: hashedPassword,
+      permissions: "ADMIN",
+      organizations: {
+        connect: {
+          id
+        }
+      }
     });
     return {
       token: sign({ userId: user.id }, APP_SECRET),

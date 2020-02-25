@@ -11,7 +11,7 @@ type User {
   name: String
   password: String!
   organizations: [Organization!]!
-  permissions: Permission! @default(value: ADMIN)
+  permissions: Permission! @default(value: DIRECTOR)
 }
 
 type Customer {

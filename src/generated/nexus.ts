@@ -793,8 +793,10 @@ export interface NexusGenFieldTypes {
     loginCustomer: NexusGenRootTypes['CustomerAuthPayload'] | null; // CustomerAuthPayload
     loginUser: NexusGenRootTypes['AuthPayload'] | null; // AuthPayload
     publishMenu: NexusGenRootTypes['Menu'] | null; // Menu
+    registerAdmin: NexusGenRootTypes['AuthPayload'] | null; // AuthPayload
     registerCustomer: NexusGenRootTypes['CustomerAuthPayload'] | null; // CustomerAuthPayload
-    registerUser: NexusGenRootTypes['AuthPayload'] | null; // AuthPayload
+    registerDeveloper: NexusGenRootTypes['AuthPayload'] | null; // AuthPayload
+    registerDirector: NexusGenRootTypes['AuthPayload'] | null; // AuthPayload
   }
   Order: { // field return type
     charge: string; // String!
@@ -984,13 +986,24 @@ export interface NexusGenArgTypes {
     publishMenu: { // args
       id: string; // String!
     }
+    registerAdmin: { // args
+      email: string; // String!
+      id: string; // String!
+      name?: string | null; // String
+      password: string; // String!
+    }
     registerCustomer: { // args
       email: string; // String!
       id: string; // String!
       name?: string | null; // String
       password: string; // String!
     }
-    registerUser: { // args
+    registerDeveloper: { // args
+      email: string; // String!
+      name?: string | null; // String
+      password: string; // String!
+    }
+    registerDirector: { // args
       email: string; // String!
       name?: string | null; // String
       password: string; // String!

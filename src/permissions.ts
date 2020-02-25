@@ -51,6 +51,8 @@ export const permissions = shield({
     menusByOrganization: rules.isAuthenticated
   },
   Mutation: {
+    registerDeveloper: rules.isDeveloper,
+    registerAdmin: or(rules.isDeveloper, rules.isDirector),
     createOrganization: or(rules.isDeveloper, rules.isDirector),
     deleteOrganization: or(rules.isDeveloper, rules.isDirector),
     createMenu: or(rules.isAdmin, rules.isDeveloper, rules.isDirector),
