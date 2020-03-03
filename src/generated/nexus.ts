@@ -757,6 +757,7 @@ export interface NexusGenRootTypes {
     email: string; // String!
     id: string; // ID!
     name?: string | null; // String
+    password: string; // String!
     permissions: NexusGenEnums['Permission']; // Permission!
   }
   String: string;
@@ -925,6 +926,7 @@ export interface NexusGenFieldTypes {
     id: string; // ID!
     name: string | null; // String
     organizations: NexusGenRootTypes['Organization'][] | null; // [Organization!]
+    password: string; // String!
     permissions: NexusGenEnums['Permission']; // Permission!
   }
 }
@@ -1168,6 +1170,17 @@ export interface NexusGenArgTypes {
       orderBy?: NexusGenEnums['UserOrderByInput'] | null; // UserOrderByInput
       skip?: number | null; // Int
       where?: NexusGenInputs['UserWhereInput'] | null; // UserWhereInput
+    }
+  }
+  User: {
+    organizations: { // args
+      after?: string | null; // String
+      before?: string | null; // String
+      first?: number | null; // Int
+      last?: number | null; // Int
+      orderBy?: NexusGenEnums['OrganizationOrderByInput'] | null; // OrganizationOrderByInput
+      skip?: number | null; // Int
+      where?: NexusGenInputs['OrganizationWhereInput'] | null; // OrganizationWhereInput
     }
   }
 }

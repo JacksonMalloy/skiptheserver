@@ -908,7 +908,8 @@ type User {
   email: String!
   id: ID!
   name: String
-  organizations: [Organization!]
+  organizations(after: String, before: String, first: Int, last: Int, orderBy: OrganizationOrderByInput, skip: Int, where: OrganizationWhereInput): [Organization!]
+  password: String!
   permissions: Permission!
 }
 

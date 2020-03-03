@@ -20,9 +20,9 @@ export const Mutation = mutationType({
       resolve: (parent, { name, id }, context) => {
         return context.prisma.createOrganization({
           name,
-          createdBy: {
+          admins: {
             connect: {
-              id
+              id: id
             }
           }
         });
