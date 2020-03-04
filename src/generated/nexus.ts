@@ -1062,7 +1062,7 @@ export interface NexusGenArgTypes {
     }
     loginCustomer: { // args
       email: string; // String!
-      id: string; // String!
+      id?: string | null; // String
       password: string; // String!
     }
     loginUser: { // args

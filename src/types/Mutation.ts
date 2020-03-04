@@ -357,20 +357,32 @@ export const loginCustomer = mutationField("loginCustomer", {
   args: {
     email: stringArg({ required: true }),
     password: stringArg({ required: true }),
-    id: stringArg({ required: true })
+    id: stringArg({ required: false })
   },
   resolve: async (parent, { email, password, id }, context) => {
-    const user = await context.prisma.user({ email });
-    if (!user) {
+    let customer = await context.prisma.updateCustomer({
+      data: {
+        organizations: {
+          connect: {
+            id
+          }
+        }
+      },
+      where: { email }
+    });
+
+    if (!customer) {
       throw new Error(`No user found for email: ${email}`);
     }
-    const passwordValid = await compare(password, user.password);
+
+    const passwordValid = await compare(password, customer.password);
     if (!passwordValid) {
       throw new Error("Invalid password");
     }
+
     return {
-      token: sign({ userId: user.id }, APP_SECRET),
-      user
+      token: sign({ userId: customer.id }, APP_SECRET),
+      customer
     };
   }
 });

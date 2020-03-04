@@ -601,7 +601,7 @@ type Mutation {
   deleteMenuItem(id: String!): MenuItem
   deleteMenuSelection(id: String!): MenuSelection
   deleteOrganization(id: String!): Organization
-  loginCustomer(email: String!, id: String!, password: String!): CustomerAuthPayload
+  loginCustomer(email: String!, id: String, password: String!): CustomerAuthPayload
   loginUser(email: String!, password: String!): AuthPayload
   publishMenu(id: String!): Menu
   registerAdmin(email: String!, id: String!, name: String, password: String!): AuthPayload
